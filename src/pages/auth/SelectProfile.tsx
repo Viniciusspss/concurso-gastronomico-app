@@ -7,11 +7,11 @@ export function SelectProfile() {
         <div className="flex flex-col justify-center items-center w-full">
             <h1 className="mb-4 text-2xl font-medium">Escolha como deseja realizar login</h1>
             <div className="flex flex-col gap-4 justify-center items-center">
-                <Button className="bg-amber-50 w-60 shadow-lg" asChild>
-                    <Link to="/">Restaurante</Link>
+                <Button className=" w-60 shadow-lg" asChild>
+                    <Link to="/SignIn/Restaurant">Restaurante</Link>
                 </Button>
-                <Button className="bg-amber-50 w-60 shadow-lg" asChild>
-                    <Link to="/SignIn">Cliente</Link>
+                <Button className=" w-60 shadow-lg" asChild>
+                    <Link to="/SignIn/User">Cliente</Link>
                 </Button>
             </div>
         </div>

@@ -1,8 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AuthLayout } from "./pages/_layouts/auth";
-import { SignIn } from "./pages/auth/user/Sign-in";
+import { SignIn as SignInUser } from "./pages/auth/user/Sign-in";
+import { SignUp as SignUpUser } from "./pages/auth/user/Sign-up";
+import { SignIn as SignInRestaurant } from "./pages/auth/restaurant/Sign-in";
+import { SignUp as SignUpRestaurant } from "./pages/auth/restaurant/Sign-up";
 import { SelectProfile } from "./pages/auth/SelectProfile";
-import { SingUp } from "./pages/auth/user/Sign-up";
 
 export const router = createBrowserRouter([
     {
@@ -13,12 +15,17 @@ export const router = createBrowserRouter([
                 path: "/", element: <SelectProfile />
             },
             {
-                path: "/SignIn", element: <SignIn />
+                path: "SignIn", children: [
+                    { path: "User", element: <SignInUser /> },
+                    { path: "Restaurant", element: <SignInRestaurant /> }
+                ]
             },
             {
-                path: "/SignUp", element: <SingUp />
-            }
+                path: "SignUp", children: [
+                    { path: "User", element: <SignUpUser /> },
+                    { path: "Restaurant", element: <SignUpRestaurant /> }
+                ]
+            },
         ]
-
     }
 ])

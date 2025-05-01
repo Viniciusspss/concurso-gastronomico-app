@@ -9,16 +9,12 @@ export function SignUp() {
         <DefaultForm >
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="firstName">Primeiro Nome:</Label>
-                    <Input id="firstName" placeholder="Digite seu primeiro nome" />
+                    <Label htmlFor="firstName">CNPJ:</Label>
+                    <Input id="firstName" placeholder="Digite seu CNPJ" />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="lastName">Último Nome:</Label>
-                    <Input id="lastName" placeholder="Digite seu último nome" />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <Label htmlFor="email">Email:</Label>
-                    <Input id="email" placeholder="Digite seu email" />
+                    <Label htmlFor="lastName">Nome:</Label>
+                    <Input id="lastName" placeholder="Digite seu nome" />
                 </div>
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="password">Senha:</Label>
@@ -28,7 +24,7 @@ export function SignUp() {
                     <Label htmlFor="repeatPassword">Repetir senha:</Label>
                     <Input id="repeatPassword" placeholder="Digite sua senha novamente" />
                 </div>
-                <p className="text-xs">Já tenho uma conta. <Link to="/SignIn/User" className="font-bold text-red-500">Fazer Login</Link></p>
+                <p className="text-xs">Já tenho uma conta. <Link to="/SignIn/restaurant" className="font-bold text-red-500">Fazer Login</Link></p>
             </div>
             <Button className="rounded-xl" variant="dark">Cadastre-se</Button>
         </DefaultForm>
