@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import { AuthLayout } from "./pages/_layouts/auth";
-import { SignIn as SignInUser } from "./pages/auth/user/Sign-in";
-import { SignUp as SignUpUser } from "./pages/auth/user/Sign-up";
-import { SignIn as SignInRestaurant } from "./pages/auth/restaurant/Sign-in";
-import { SignUp as SignUpRestaurant } from "./pages/auth/restaurant/Sign-up";
-import { SelectProfile } from "./pages/auth/SelectProfile";
+import { AuthLayout } from "../pages/_layouts/auth";
+import { SignIn as SignInUser } from "../pages/auth/user/Sign-in";
+import { SignUp as SignUpUser } from "../pages/auth/user/Sign-up";
+import { SignIn as SignInRestaurant } from "../pages/auth/restaurant/Sign-in";
+import { SignUp as SignUpRestaurant } from "../pages/auth/restaurant/Sign-up";
+import { SelectProfile } from "../pages/auth/SelectProfile";
+import { AppLayout } from "@/pages/_layouts/app";
+import { Dishs } from "@/pages/app/dishs/Dishs";
 
 export const router = createBrowserRouter([
     {
@@ -26,6 +28,16 @@ export const router = createBrowserRouter([
                     { path: "Restaurant", element: <SignUpRestaurant /> }
                 ]
             },
+        ],
+
+    },
+    {
+        path: "/",
+        element: <AppLayout />,
+        children: [
+            {
+                path: "/Dishs", element: <Dishs />
+            }
         ]
     }
 ])
