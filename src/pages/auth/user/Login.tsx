@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 
 export function Login() {
     return (
-        <div className="flex flex-col w-full h-screen items-center justify-center">
+        <div >
             <form className="flex flex-col gap-6 w-100">
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-2">
@@ -19,8 +19,6 @@ export function Login() {
 
                 </div>
                 <Button variant="dark">Conecte-se</Button>
-
-
             </form>
         </div>
     )
