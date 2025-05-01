@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 export function SignIn() {
     return (
         <div >
+            <Button variant="dark" className="absolute left-8 top-8" asChild><Link to="/">Escolher outro tipo de login</Link></Button>
             <DefaultForm>
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-2">
