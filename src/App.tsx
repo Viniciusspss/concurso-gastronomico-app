@@ -1,9 +1,9 @@
-import { SelectProfile } from "./pages/auth/SelectProfile"
+import { Login } from "./pages/auth/user/Login"
 
 function App() {
 
   return (
-    <SelectProfile />
+    <Login />
   )
 }
 
