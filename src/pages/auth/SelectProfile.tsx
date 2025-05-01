@@ -11,7 +11,7 @@ export function SelectProfile() {
                     <Link to="/">Restaurante</Link>
                 </Button>
                 <Button className="bg-amber-50 w-60 shadow-lg" asChild>
-                    <Link to="/Login">Cliente</Link>
+                    <Link to="/SignIn">Cliente</Link>
                 </Button>
             </div>
         </div>

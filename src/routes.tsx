@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AuthLayout } from "./pages/_layouts/auth";
-import { Login } from "./pages/auth/user/Login";
+import { SignIn } from "./pages/auth/user/Sign-in";
 import { SelectProfile } from "./pages/auth/SelectProfile";
+import { SingUp } from "./pages/auth/user/Sign-up";
 
 export const router = createBrowserRouter([
     {
@@ -12,7 +13,10 @@ export const router = createBrowserRouter([
                 path: "/", element: <SelectProfile />
             },
             {
-                path: "/Login", element: <Login />
+                path: "/SignIn", element: <SignIn />
+            },
+            {
+                path: "/SignUp", element: <SingUp />
             }
         ]
 

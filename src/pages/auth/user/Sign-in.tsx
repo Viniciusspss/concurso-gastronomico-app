@@ -1,11 +1,13 @@
+import { DefaultForm } from "@/components/DefaultForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
-export function Login() {
+export function SignIn() {
     return (
         <div >
-            <form className="flex flex-col gap-6 w-100">
+            <DefaultForm>
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-2">
                         <Label htmlFor="email">Email:</Label>
@@ -15,11 +17,11 @@ export function Login() {
                         <Label htmlFor="password">Senha:</Label>
                         <Input id="password" type="password" placeholder="Digite sua senha" />
                     </div>
-                    <p className="text-xs">Ainda não tenho uma conta. <a href="http://" className="font-bold text-red-500">Criar conta</a></p>
+                    <p className="text-xs">Ainda não tenho uma conta. <Link to="/SignUp" className="font-bold text-red-500">Criar conta</Link></p>
 
                 </div>
-                <Button variant="dark">Conecte-se</Button>
-            </form>
+                <Button className="rounded-xl" variant="dark">Conecte-se</Button>
+            </DefaultForm>
         </div>
     )
 }
