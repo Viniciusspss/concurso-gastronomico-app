@@ -1,11 +1,9 @@
-import './App.css'
+import { SelectProfile } from "./pages/auth/SelectProfile"
 
 function App() {
 
   return (
-    <>
-
-    </>
+    <SelectProfile />
   )
 }
 
