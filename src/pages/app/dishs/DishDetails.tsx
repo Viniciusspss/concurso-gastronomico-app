@@ -20,10 +20,10 @@ export function DishDetails({ dish }: DishDetailsProps) {
                             <DialogTitle className="text-amber-500 font-bold">{dish.title}</DialogTitle>
                             <DialogDescription className="text-amber-50">{dish.description}</DialogDescription>
                             <DialogDescription>
-                                <p className="text-amber-50"><span className="text-amber-500">Restaurante: </span>em branco</p>
+                                <p className="text-amber-50"><span className="text-amber-500">Restaurante: </span>{dish.restaurant.name}</p>
                             </DialogDescription>
                             <DialogDescription>
-                                <p className="text-amber-50"><span className="text-amber-500">Preço: </span>em branco</p>
+                                <p className="text-amber-50"><span className="text-amber-500">Preço: </span>R${dish.price}</p>
                             </DialogDescription>
                         </DialogHeader>
 
