@@ -12,7 +12,7 @@ export function DefaultHeader() {
                 <DefaultButton className="rounded-2xl text-xs">RESTAURANTES</DefaultButton>
                 <DefaultButton className="rounded-2xl text-xs">SOBRE</DefaultButton>
             </div>
-            <Link to=""><img className="w-6 h-6" src={userImage} alt="Perfil do usuário" /></Link>
+            <Link to="/Profile"><img className="w-6 h-6" src={userImage} alt="Perfil do usuário" /></Link>
         </div>
     )
 }

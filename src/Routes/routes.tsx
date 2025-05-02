@@ -7,6 +7,7 @@ import { SignUp as SignUpRestaurant } from "../pages/auth/restaurant/Sign-up";
 import { SelectProfile } from "../pages/auth/SelectProfile";
 import { AppLayout } from "@/pages/_layouts/app";
 import { Dishs } from "@/pages/app/dishs/Dishs";
+import { Profile } from "@/pages/app/profile/Profile";
 
 export const router = createBrowserRouter([
     {
@@ -37,6 +38,9 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/Dishs", element: <Dishs />
+            },
+            {
+                path: "/Profile", element: <Profile />
             }
         ]
     }
