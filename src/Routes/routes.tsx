@@ -10,38 +10,42 @@ import { Dishs } from "@/pages/app/dishs/Dishs";
 import { Profile } from "@/pages/app/profile/Profile";
 
 export const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
         path: "/",
-        element: <AuthLayout />,
+        element: <SelectProfile />,
+      },
+      {
+        path: "SignIn",
         children: [
-            {
-                path: "/", element: <SelectProfile />
-            },
-            {
-                path: "SignIn", children: [
-                    { path: "User", element: <SignInUser /> },
-                    { path: "Restaurant", element: <SignInRestaurant /> }
-                ]
-            },
-            {
-                path: "SignUp", children: [
-                    { path: "User", element: <SignUpUser /> },
-                    { path: "Restaurant", element: <SignUpRestaurant /> }
-                ]
-            },
+          { path: "User", element: <SignInUser /> },
+          { path: "Restaurant", element: <SignInRestaurant /> },
         ],
-
-    },
-    {
-        path: "/",
-        element: <AppLayout />,
+      },
+      {
+        path: "SignUp",
         children: [
-            {
-                path: "/Dishs", element: <Dishs />
-            },
-            {
-                path: "/Profile", element: <Profile />
-            }
-        ]
-    }
-])
+          { path: "User", element: <SignUpUser /> },
+          { path: "Restaurant", element: <SignUpRestaurant /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/Dishs",
+        element: <Dishs />,
+      },
+      {
+        path: "/Profile",
+        element: <Profile />,
+      },
+    ],
+  },
+]);

@@ -1,9 +1,9 @@
 export type DishsType = {
-    imageURL: string,
-    title: string,
-    description: string,
-    price: number
-    restaurant: {
-        name: string
-    }
-}
+  imageURL: string;
+  title: string;
+  description: string;
+  price: number;
+  restaurant: {
+    name: string;
+  };
+};

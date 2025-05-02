@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 
 export function AppLayout() {
-    return (
-        <div className="w-full h-screen flex flex-col bg-[#1E1E1E] items-center">
-            <div className="flex flex-col w-[80%] px-4 py-8 items-center justify-center">
-                <Outlet />
-            </div>
-        </div>
-    )
+  return (
+    <div className="flex h-screen w-full flex-col items-center bg-[#1E1E1E]">
+      <div className="flex w-[80%] flex-col items-center justify-center px-4 py-8">
+        <Outlet />
+      </div>
+    </div>
+  );
 }
