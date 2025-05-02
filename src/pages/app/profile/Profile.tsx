@@ -24,7 +24,7 @@ export function Profile() {
                 <div className="flex justify-between">
                     <DefaultButton className="px-4 min-w-[100px] text-xs">EDITAR</DefaultButton>
                     <DefaultButton className="px-4 min-w-[100px] text-xs">EXCLUIR</DefaultButton>
-                    <Link to="/Dishs"><DefaultButton className="px-4 min-w-[100px] text-xs">Fechar</DefaultButton></Link>
+                    <Link to="/Dishs"><DefaultButton className="px-4 min-w-[100px] text-xs">FECHAR</DefaultButton></Link>
                 </div>
             </DefaultForm>
         </div>

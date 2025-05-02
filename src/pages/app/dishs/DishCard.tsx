@@ -12,9 +12,9 @@ export function DishCard({ dish }: DishCardProps) {
             <div className="w-full h-30 overflow-hidden">
                 <img src={pratoImage} alt="Foto do prato" />
             </div>
-            <div className="flex flex-col mx-3 my-2 gap-2">
+            <div className="flex flex-col py-3 px-3 gap-2">
                 <h1 className="text-amber-500 font-bold">{dish.title}</h1>
-                <p className="text-sm text-amber-100">{dish.description}</p>
+                <p className="text-sm text-amber-100 ">{dish.description}</p>
                 <div className="flex gap-2">
                     <StarIcon className="text-amber-400" />
                     <StarIcon className="text-amber-400" />
