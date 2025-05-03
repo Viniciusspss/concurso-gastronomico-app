@@ -8,6 +8,7 @@ import { SelectProfile } from "../pages/auth/SelectProfile";
 import { AppLayout } from "@/pages/_layouts/app";
 import { Dishs } from "@/pages/app/dishs/Dishs";
 import { Profile } from "@/pages/app/profile/Profile";
+import { EditProfile } from "@/pages/app/profile/EditProfile";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "/Profile",
         element: <Profile />,
+      },
+      {
+        path: "/EditProfile",
+        element: <EditProfile />,
       },
     ],
   },

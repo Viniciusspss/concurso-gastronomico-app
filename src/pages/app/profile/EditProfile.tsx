@@ -4,10 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 
-export function Profile() {
+export function EditProfile() {
   return (
     <div className="flex w-full max-w-lg flex-col items-center justify-center gap-10 px-4">
-      <h1 className="text-2xl text-amber-50">PERFIL</h1>
+      <h1 className="text-2xl text-amber-50">EDITAR PERFIL</h1>
       <DefaultForm>
         <div className="flex flex-col gap-2">
           <Label className="text-amber-50" htmlFor="firstName">
@@ -39,12 +39,20 @@ export function Profile() {
             placeholder="Email do usuário"
           ></Input>
         </div>
+        <div className="flex flex-col gap-2">
+          <Label className="text-amber-50" htmlFor="password">
+            Senha:
+          </Label>
+          <Input
+            className="bg-amber-50"
+            id="password"
+            placeholder="Nova senha do usuário"
+          ></Input>
+        </div>
         <div className="flex justify-between">
-          <Link to="/EditProfile">
-            <DefaultButton className="min-w-[100px] px-4 text-xs">
-              EDITAR
-            </DefaultButton>
-          </Link>
+          <DefaultButton className="min-w-[100px] px-4 text-xs">
+            EDITAR
+          </DefaultButton>
           <DefaultButton className="min-w-[100px] px-4 text-xs">
             EXCLUIR
           </DefaultButton>
