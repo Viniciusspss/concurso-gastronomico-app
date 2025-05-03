@@ -1,16 +1,16 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
-import { dishs } from "./../../../data/dishs";
+import { dishs } from "../../../data/dishs";
 import { DishCard } from "./DishCard";
 import { Dialog } from "@/components/ui/dialog";
 import { DishDetails } from "./DishDetails";
 import { useState } from "react";
-import { DishsType } from "@/types/dishs";
+import { DishesType } from "@/types/dishes";
 
-export function Dishs() {
+export function Dishes() {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [selectedDish, setSelectedDish] = useState<DishsType | null>(null);
+  const [selectedDish, setSelectedDish] = useState<DishesType | null>(null);
 
-  const handleOpenDialog = (dish: DishsType) => {
+  const handleOpenDialog = (dish: DishesType) => {
     setIsDetailsOpen(true);
     setSelectedDish(dish);
   };

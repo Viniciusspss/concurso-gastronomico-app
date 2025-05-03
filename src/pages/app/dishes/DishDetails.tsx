@@ -1,4 +1,4 @@
-import { DishsType } from "@/types/dishs";
+import { DishsType } from "@/types/dishes";
 import imageDish from "@/assets/pratoImage.jpg";
 import { DefaultButton } from "@/components/DefaultButton";
 import {

@@ -1,4 +1,4 @@
-export type DishsType = {
+export type DishesType = {
   imageURL: string;
   title: string;
   description: string;

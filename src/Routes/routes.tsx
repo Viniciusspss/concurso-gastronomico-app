@@ -6,7 +6,7 @@ import { SignIn as SignInRestaurant } from "../pages/auth/restaurant/Sign-in";
 import { SignUp as SignUpRestaurant } from "../pages/auth/restaurant/Sign-up";
 import { SelectProfile } from "../pages/auth/SelectProfile";
 import { AppLayout } from "@/pages/_layouts/app";
-import { Dishs } from "@/pages/app/dishs/Dishs";
+import { Dishes } from "@/pages/app/dishes/Dishes";
 import { Profile } from "@/pages/app/profile/Profile";
 import { EditProfile } from "@/pages/app/profile/EditProfile";
 
@@ -40,8 +40,8 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/Dishs",
-        element: <Dishs />,
+        path: "/Dishes",
+        element: <Dishes />,
       },
       {
         path: "/Profile",

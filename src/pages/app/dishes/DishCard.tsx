@@ -1,4 +1,4 @@
-import { DishsType } from "@/types/dishs";
+import { DishsType } from "@/types/dishes";
 import pratoImage from "@/assets/pratoImage.jpg";
 import { StarIcon } from "lucide-react";
 
