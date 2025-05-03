@@ -5,7 +5,6 @@ export const mockClients = [
     password: "123456",
     firstName: "João",
     lastName: "Silva",
-    role: "client",
   },
 ];
 
@@ -15,6 +14,5 @@ export const mockRestaurants = [
     cnpj: "000",
     password: "654321",
     name: "Restaurante",
-    role: "restaurant",
   },
 ];

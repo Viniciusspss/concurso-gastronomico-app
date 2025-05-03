@@ -4,5 +4,4 @@ export type ClientType = {
   lastName: string;
   email: string;
   password: string;
-  role: string;
 };

@@ -3,5 +3,4 @@ export type RestaurantType = {
   cnpj: string;
   name: string;
   password: string;
-  role: string;
 };
