@@ -1,9 +1,9 @@
-import { DishsType } from "@/types/dishes";
+import { DishesType } from "@/types/dishes";
 import pratoImage from "@/assets/pratoImage.jpg";
 import { StarIcon } from "lucide-react";
 
 type DishCardProps = {
-  dish: DishsType;
+  dish: DishesType;
 };
 
 export function DishCard({ dish }: DishCardProps) {

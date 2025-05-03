@@ -9,6 +9,7 @@ import { AppLayout } from "@/pages/_layouts/app";
 import { Dishes } from "@/pages/app/dishes/Dishes";
 import { Profile } from "@/pages/app/profile/Profile";
 import { EditProfile } from "@/pages/app/profile/EditProfile";
+import { NotFound } from "@/pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -52,5 +53,9 @@ export const router = createBrowserRouter([
         element: <EditProfile />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
