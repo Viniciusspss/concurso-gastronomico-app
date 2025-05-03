@@ -1,4 +1,4 @@
-import { DishsType } from "@/types/dishes";
+import { DishesType } from "@/types/dishes";
 import imageDish from "@/assets/pratoImage.jpg";
 import { DefaultButton } from "@/components/DefaultButton";
 import {
@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/dialog";
 
 type DishDetailsProps = {
-  dish: DishsType;
+  dish: DishesType;
+  onClose: () => void;
 };
 
-export function DishDetails({ dish }: DishDetailsProps) {
+export function DishDetails({ dish, onClose }: DishDetailsProps) {
   return (
     <DialogContent className="w-full max-w-3xl border-0 bg-[#272727]">
       <div className="flex gap-5 px-5 py-5">
@@ -43,7 +44,9 @@ export function DishDetails({ dish }: DishDetailsProps) {
           </div>
           <div className="flex gap-3">
             <DefaultButton className="text-xs">AVALIAR</DefaultButton>
-            <DefaultButton className="text-xs">FECHAR</DefaultButton>
+            <DefaultButton className="text-xs" onClick={() => onClose()}>
+              FECHAR
+            </DefaultButton>
           </div>
         </div>
       </div>

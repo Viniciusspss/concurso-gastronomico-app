@@ -29,7 +29,12 @@ export function Dishes() {
           })}
       </div>
       <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
-        {selectedDish && <DishDetails dish={selectedDish} />}
+        {selectedDish && (
+          <DishDetails
+            dish={selectedDish}
+            onClose={() => setIsDetailsOpen(false)}
+          />
+        )}
       </Dialog>
     </div>
   );

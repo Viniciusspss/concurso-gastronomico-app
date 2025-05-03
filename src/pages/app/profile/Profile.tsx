@@ -48,7 +48,7 @@ export function Profile() {
           <DefaultButton className="min-w-[100px] px-4 text-xs">
             EXCLUIR
           </DefaultButton>
-          <Link to="/Dishs">
+          <Link to="/Dishes">
             <DefaultButton className="min-w-[100px] px-4 text-xs">
               FECHAR
             </DefaultButton>
