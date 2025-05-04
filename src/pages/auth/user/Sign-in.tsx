@@ -2,22 +2,49 @@ import { DefaultForm } from "@/components/DefaultForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+type LoginClientFormData = {
+  email: string;
+  password: string;
+};
 
 export function SignIn() {
+  const { loginClient } = useAuthContext();
+  const { register, handleSubmit } = useForm<LoginClientFormData>();
+  const navigate = useNavigate();
+
+  function onSubmit(data: LoginClientFormData) {
+    const sucess = loginClient(data.email, data.password);
+    if (sucess) {
+      navigate("/Dishes");
+    } else {
+      alert("Email ou senha inválidos");
+    }
+  }
+
   return (
     <div>
       <Button variant="dark" className="absolute top-8 left-8" asChild>
         <Link to="/">Escolher outro tipo de login</Link>
       </Button>
-      <DefaultForm>
+      <DefaultForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3">
           <div className="flex gap-2">
             <Label htmlFor="email">Email:</Label>
-            <Input id="email" type="email" placeholder="Digite seu email" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="Digite seu email"
+              {...register("email")}
+            />
           </div>
           <div className="flex gap-1">
-            <Label htmlFor="password">Senha:</Label>
+            <Label htmlFor="password" {...register("password")}>
+              Senha:
+            </Label>
             <Input
               id="password"
               type="password"
@@ -31,7 +58,7 @@ export function SignIn() {
             </Link>
           </p>
         </div>
-        <Button className="rounded-xl" variant="dark">
+        <Button type="submit" className="rounded-xl" variant="dark">
           Conecte-se
         </Button>
       </DefaultForm>
