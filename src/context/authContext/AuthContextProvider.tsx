@@ -1,6 +1,6 @@
 import { mockClients, mockRestaurants } from "@/data/users";
 import { UserType } from "@/types/user/user";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 
 export type LoginResponse = {
@@ -20,6 +20,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     const parsedStorageUser = JSON.parse(storageUser) as UserType;
     return parsedStorageUser;
   });
+
+  useEffect(() => {
+    if (!localStorage.getItem("clients")) {
+      localStorage.setItem("clients", JSON.stringify(mockClients));
+    }
+    if (!localStorage.getItem("restaurants")) {
+      localStorage.setItem("restaurants", JSON.stringify(mockRestaurants));
+    }
+  }, []);
 
   function loginClient(email: string, password: string): LoginResponse {
     const client = mockClients.find(

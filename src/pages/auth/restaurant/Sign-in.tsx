@@ -13,8 +13,8 @@ export function SignIn() {
       <DefaultForm>
         <div className="flex flex-col gap-3">
           <div className="flex gap-2">
-            <Label htmlFor="email">CNPJ:</Label>
-            <Input id="email" type="email" placeholder="Digite seu CNPJ" />
+            <Label htmlFor="cnpj">CNPJ:</Label>
+            <Input id="cnpj" placeholder="Digite seu CNPJ" />
           </div>
           <div className="flex gap-1">
             <Label htmlFor="password">Senha:</Label>

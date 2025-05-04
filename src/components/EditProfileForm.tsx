@@ -3,8 +3,15 @@ import { DefaultButton } from "./DefaultButton";
 import { DefaultForm } from "./DefaultForm";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { useState } from "react";
+import { Dialog } from "./ui/dialog";
+import { DeleteProfile } from "./DeleteProfile";
 
 export function EditProfileForm() {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  function handleOpenDialog() {
+    setIsDeleteOpen(true);
+  }
   return (
     <div className="flex w-full max-w-lg flex-col items-center justify-center gap-10 px-4">
       <h1 className="text-2xl text-amber-50">EDITAR PERFIL</h1>
@@ -53,9 +60,16 @@ export function EditProfileForm() {
           <DefaultButton className="min-w-[100px] px-4 text-xs">
             EDITAR
           </DefaultButton>
-          <DefaultButton className="min-w-[100px] px-4 text-xs">
+          <DefaultButton
+            onClick={() => handleOpenDialog()}
+            className="min-w-[100px] px-4 text-xs"
+            type="button"
+          >
             EXCLUIR
           </DefaultButton>
+          <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+            <DeleteProfile onClose={() => setIsDeleteOpen(false)} />
+          </Dialog>
           <Link to="/Dishes">
             <DefaultButton className="min-w-[100px] px-4 text-xs">
               FECHAR
