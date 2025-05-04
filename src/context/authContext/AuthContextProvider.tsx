@@ -4,7 +4,7 @@ import { ReactNode, useState } from "react";
 import { AuthContext } from "./AuthContext";
 
 export type LoginResponse = {
-  sucess: boolean;
+  success: boolean;
   message: string;
 };
 
@@ -13,7 +13,13 @@ type AuthContextProviderProps = {
 };
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<UserType | null>(null);
+  const [user, setUser] = useState<UserType | null>(() => {
+    const storageUser = localStorage.getItem("authUser");
+    if (!storageUser) return null;
+
+    const parsedStorageUser = JSON.parse(storageUser) as UserType;
+    return parsedStorageUser;
+  });
 
   function loginClient(email: string, password: string): LoginResponse {
     const client = mockClients.find(
@@ -21,9 +27,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     );
     if (client) {
       setUser(client);
-      return { sucess: true, message: "Usuário logado com sucesso" };
+      return { success: true, message: "Usuário logado com sucesso" };
     }
-    return { sucess: false, message: "Email ou senha inválido" };
+    return { success: false, message: "Email ou senha inválido" };
   }
 
   function loginRestaurant(cnpj: string, password: string): LoginResponse {
@@ -32,13 +38,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     );
     if (restaurant) {
       setUser(restaurant);
-      return { sucess: true, message: "Restaurante logado com sucesso" };
+      return { success: true, message: "Restaurante logado com sucesso" };
     }
-    return { sucess: false, message: "Cnpj ou senha inválido" };
+    return { success: false, message: "Cnpj ou senha inválido" };
   }
 
   function logout() {
     setUser(null);
+    localStorage.removeItem("authUser");
   }
 
   return (

@@ -18,10 +18,10 @@ export function SignIn() {
 
   function onSubmit(data: LoginClientFormData) {
     const sucess = loginClient(data.email, data.password);
-    if (sucess) {
+    if (sucess.success === true) {
       navigate("/Dishes");
     } else {
-      alert("Email ou senha inválidos");
+      return alert("Email ou senha inválidos");
     }
   }
 
@@ -38,17 +38,16 @@ export function SignIn() {
               id="email"
               type="email"
               placeholder="Digite seu email"
-              {...register("email")}
+              {...register("email", { required: "Email é obrigatório" })}
             />
           </div>
           <div className="flex gap-1">
-            <Label htmlFor="password" {...register("password")}>
-              Senha:
-            </Label>
+            <Label htmlFor="password">Senha:</Label>
             <Input
               id="password"
               type="password"
               placeholder="Digite sua senha"
+              {...register("password", { required: "Senha é obrigatório" })}
             />
           </div>
           <p className="text-xs">

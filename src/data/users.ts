@@ -2,7 +2,7 @@ export const mockClients = [
   {
     id: "1",
     email: "cliente@email.com",
-    password: "123456",
+    password: "1254",
     firstName: "João",
     lastName: "Silva",
   },
