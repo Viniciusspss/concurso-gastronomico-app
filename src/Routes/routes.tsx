@@ -10,6 +10,7 @@ import { Dishes } from "@/pages/app/dishes/Dishes";
 import { Profile } from "@/pages/app/profile/Profile";
 import { EditProfile } from "@/pages/app/profile/EditProfile";
 import { NotFound } from "@/pages/NotFound";
+import { PrivateRoute } from "@/components/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +43,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/Dishes",
-        element: <Dishes />,
+        element: (
+          <PrivateRoute type="client">
+            <Dishes />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "/Profile",

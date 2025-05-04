@@ -22,5 +22,5 @@ export function PrivateRoute({ children, type }: PrivateRouteProps) {
     return <Navigate to="/" />;
   }
 
-  return { children };
+  return children;
 }
