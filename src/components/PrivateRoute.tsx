@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 type PrivateRouteProps = {
   children: ReactNode;
-  type: "client" | "restaurant";
+  type?: "client" | "restaurant";
 };
 
 export function PrivateRoute({ children, type }: PrivateRouteProps) {

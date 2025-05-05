@@ -12,6 +12,7 @@ import { EditProfile } from "@/pages/app/profile/EditProfile";
 import { NotFound } from "@/pages/NotFound";
 import { PrivateRoute } from "@/components/PrivateRoute";
 import { EvaluateDish } from "@/pages/app/dishes/EvaluateDish";
+import { About } from "@/pages/app/About";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute type="client">
             <EvaluateDish />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about",
+        element: (
+          <PrivateRoute>
+            <About />
           </PrivateRoute>
         ),
       },

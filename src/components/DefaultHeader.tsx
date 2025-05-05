@@ -7,11 +7,15 @@ export function DefaultHeader() {
     <div className="flex justify-between">
       <div></div>
       <div className="flex gap-4">
-        <DefaultButton className="rounded-2xl text-xs">PRATOS</DefaultButton>
+        <Link to="/dishes">
+          <DefaultButton className="rounded-2xl text-xs">PRATOS</DefaultButton>
+        </Link>
         <DefaultButton className="rounded-2xl text-xs">
           RESTAURANTES
         </DefaultButton>
-        <DefaultButton className="rounded-2xl text-xs">SOBRE</DefaultButton>
+        <Link to="/about">
+          <DefaultButton className="rounded-2xl text-xs">SOBRE</DefaultButton>
+        </Link>
       </div>
       <Link to="/Profile">
         <img className="h-6 w-6" src={userImage} alt="Perfil do usuário" />
