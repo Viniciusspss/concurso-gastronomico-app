@@ -18,7 +18,7 @@ export function Dishes() {
   return (
     <div className="flex flex-col gap-15">
       <DefaultHeader />
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {dishs &&
           dishs.map((dish, index) => {
             return (
