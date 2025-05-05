@@ -3,7 +3,7 @@ import { UserType } from "@/types/user/user";
 import { useNavigate } from "react-router-dom";
 
 export function useDeleteUser() {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
   const navigate = useNavigate();
 
   function deleteUser(cb?: () => void) {
@@ -24,7 +24,7 @@ export function useDeleteUser() {
       user && storageRestaurants.filter((r) => r.id !== user.id);
     localStorage.setItem("restaurants", JSON.stringify(restaurants));
 
-    localStorage.removeItem("authUser");
+    logout();
     if (cb) cb();
     navigate("/");
   }

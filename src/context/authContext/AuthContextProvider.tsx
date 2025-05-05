@@ -2,6 +2,8 @@ import { mockClients, mockRestaurants } from "@/data/users";
 import { UserType } from "@/types/user/user";
 import { ReactNode, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import { ClientType } from "@/types/user/client";
+import { RestaurantType } from "@/types/user/restaurant";
 
 export type LoginResponse = {
   success: boolean;
@@ -31,9 +33,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, []);
 
   function loginClient(email: string, password: string): LoginResponse {
-    const client = mockClients.find(
+    const clients = localStorage.getItem("clients");
+    const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
+
+    const client = clientsParsed.find(
       (c) => c.email === email && c.password === password,
     );
+
     if (client) {
       setUser(client);
       localStorage.setItem("authUser", JSON.stringify(client));
@@ -43,7 +49,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }
 
   function loginRestaurant(cnpj: string, password: string): LoginResponse {
-    const restaurant = mockRestaurants.find(
+    const restaurants = localStorage.getItem("restaurants");
+    const restaurantsParsed: RestaurantType[] = restaurants
+      ? JSON.parse(restaurants)
+      : [];
+
+    const restaurant = restaurantsParsed.find(
       (c) => c.cnpj === cnpj && c.password === password,
     );
     if (restaurant) {
