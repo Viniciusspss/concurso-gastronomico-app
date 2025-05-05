@@ -36,6 +36,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     );
     if (client) {
       setUser(client);
+      localStorage.setItem("authUser", JSON.stringify(client));
       return { success: true, message: "Usuário logado com sucesso" };
     }
     return { success: false, message: "Email ou senha inválido" };
@@ -47,6 +48,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     );
     if (restaurant) {
       setUser(restaurant);
+      localStorage.setItem("authUser", JSON.stringify(restaurant));
       return { success: true, message: "Restaurante logado com sucesso" };
     }
     return { success: false, message: "Cnpj ou senha inválido" };
