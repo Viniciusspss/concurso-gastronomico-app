@@ -21,7 +21,7 @@ export function SignIn() {
     if (sucess.success === true) {
       navigate("/Dishes");
     } else {
-      return alert("Email ou senha inválidos");
+      alert("Email ou senha inválidos");
     }
   }
 

@@ -13,6 +13,7 @@ import { NotFound } from "@/pages/NotFound";
 import { PrivateRoute } from "@/components/PrivateRoute";
 import { EvaluateDish } from "@/pages/app/dishes/EvaluateDish";
 import { About } from "@/pages/app/About";
+import { RestaurantDishes } from "@/pages/app/restaurant/dishes/RestaurantDishes";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <About />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/restaurant-dishes",
+        element: (
+          <PrivateRoute type="restaurant">
+            <RestaurantDishes />
           </PrivateRoute>
         ),
       },
