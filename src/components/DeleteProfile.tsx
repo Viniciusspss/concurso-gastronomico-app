@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { DefaultButton } from "./DefaultButton";
 import { DialogContent, DialogTitle } from "./ui/dialog";
 import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
-import { deleteUser } from "@/utils/deleteUser";
+import { useDeleteUser } from "@/hooks/useDeleteUser";
 
 type DeleteProfileProps = {
   onClose: () => void;
@@ -11,11 +10,11 @@ type DeleteProfileProps = {
 
 export function DeleteProfile({ onClose }: DeleteProfileProps) {
   const [isLoad, setIsLoad] = useState(false);
-  const navigate = useNavigate();
+  const { deleteUser } = useDeleteUser();
   function handleDeleteUser() {
     setIsLoad(true);
     setTimeout(() => {
-      deleteUser(navigate);
+      deleteUser();
     }, 1000);
   }
 
