@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Link } from "react-router-dom";
 
 type DishDetailsProps = {
   dish: DishesType;
@@ -43,7 +44,9 @@ export function DishDetails({ dish, onClose }: DishDetailsProps) {
             </DialogHeader>
           </div>
           <div className="flex gap-3">
-            <DefaultButton className="text-xs">AVALIAR</DefaultButton>
+            <Link to="/evaluate-dish">
+              <DefaultButton className="text-xs">AVALIAR</DefaultButton>
+            </Link>
             <DefaultButton className="text-xs" onClick={() => onClose()}>
               FECHAR
             </DefaultButton>

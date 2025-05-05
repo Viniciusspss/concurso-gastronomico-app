@@ -11,6 +11,7 @@ import { Profile } from "@/pages/app/profile/Profile";
 import { EditProfile } from "@/pages/app/profile/EditProfile";
 import { NotFound } from "@/pages/NotFound";
 import { PrivateRoute } from "@/components/PrivateRoute";
+import { EvaluateDish } from "@/pages/app/dishes/EvaluateDish";
 
 export const router = createBrowserRouter([
   {
@@ -51,11 +52,27 @@ export const router = createBrowserRouter([
       },
       {
         path: "/Profile",
-        element: <Profile />,
+        element: (
+          <PrivateRoute type="client">
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/EditProfile",
-        element: <EditProfile />,
+        element: (
+          <PrivateRoute type="client">
+            <EditProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/evaluate-dish",
+        element: (
+          <PrivateRoute type="client">
+            <EvaluateDish />
+          </PrivateRoute>
+        ),
       },
     ],
   },

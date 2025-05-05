@@ -1,8 +1,8 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
 import { dishs } from "../../../data/dishs";
-import { DishCard } from "./DishCard";
+import { DishCard } from "../../../components/DishCard";
 import { Dialog } from "@/components/ui/dialog";
-import { DishDetails } from "./DishDetails";
+import { DishDetails } from "../../../components/DishDetails";
 import { useState } from "react";
 import { DishesType } from "@/types/dishes";
 
