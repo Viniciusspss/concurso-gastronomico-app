@@ -19,7 +19,7 @@ export function SignIn() {
   function onSubmit(data: LoginRestaurantFormData) {
     const success = loginRestaurant(data.cnpj, data.password);
     if (success.success === true) {
-      navigate("/restaurant-dishes");
+      navigate(`/restaurant-dishes/${success.restaurant.id}`);
     } else {
       alert("Email ou senha inválidos");
     }

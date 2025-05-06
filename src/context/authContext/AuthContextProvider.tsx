@@ -5,9 +5,15 @@ import { AuthContext } from "./AuthContext";
 import { ClientType } from "@/types/user/client";
 import { RestaurantType } from "@/types/user/restaurant";
 
-export type LoginResponse = {
+export type LoginResponseClient = {
   success: boolean;
   message: string;
+  client?: ClientType;
+};
+export type LoginResponseRestaurant = {
+  success: boolean;
+  message: string;
+  restaurant?: RestaurantType;
 };
 
 type AuthContextProviderProps = {
@@ -32,7 +38,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }, []);
 
-  function loginClient(email: string, password: string): LoginResponse {
+  function loginClient(email: string, password: string): LoginResponseClient {
     const clients = localStorage.getItem("clients");
     const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
 
@@ -43,12 +49,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     if (client) {
       setUser(client);
       localStorage.setItem("authUser", JSON.stringify(client));
-      return { success: true, message: "Usuário logado com sucesso" };
+      return { success: true, message: "Usuário logado com sucesso", client };
     }
     return { success: false, message: "Email ou senha inválido" };
   }
 
-  function loginRestaurant(cnpj: string, password: string): LoginResponse {
+  function loginRestaurant(
+    cnpj: string,
+    password: string,
+  ): LoginResponseRestaurant {
     const restaurants = localStorage.getItem("restaurants");
     const restaurantsParsed: RestaurantType[] = restaurants
       ? JSON.parse(restaurants)
@@ -60,7 +69,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     if (restaurant) {
       setUser(restaurant);
       localStorage.setItem("authUser", JSON.stringify(restaurant));
-      return { success: true, message: "Restaurante logado com sucesso" };
+      return {
+        success: true,
+        message: "Restaurante logado com sucesso",
+        restaurant,
+      };
     }
     return { success: false, message: "Cnpj ou senha inválido" };
   }
