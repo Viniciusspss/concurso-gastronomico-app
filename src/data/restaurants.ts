@@ -13,9 +13,6 @@ export const restaurants: RestaurantType[] = [
         description:
           " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         price: 35,
-        restaurant: {
-          name: "BDC",
-        },
       },
       {
         imageURL: "https://",
@@ -23,9 +20,6 @@ export const restaurants: RestaurantType[] = [
         description:
           " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         price: 35,
-        restaurant: {
-          name: "BDC",
-        },
       },
       {
         imageURL: "https://",
@@ -33,9 +27,6 @@ export const restaurants: RestaurantType[] = [
         description:
           " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         price: 35,
-        restaurant: {
-          name: "BDC",
-        },
       },
       {
         imageURL: "https://",
@@ -43,9 +34,21 @@ export const restaurants: RestaurantType[] = [
         description:
           " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         price: 35,
-        restaurant: {
-          name: "BDC",
-        },
+      },
+    ],
+  },
+  {
+    id: "2",
+    cnpj: "001",
+    name: "Bar da Curva",
+    password: "123",
+    dishes: [
+      {
+        imageURL: "https://",
+        title: "Cuscuz",
+        description:
+          " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+        price: 10,
       },
     ],
   },

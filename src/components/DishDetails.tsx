@@ -1,4 +1,4 @@
-import { DishesType } from "@/types/dishes";
+import { DishesWithRestaurant } from "@/types/dishes";
 import imageDish from "@/assets/pratoImage.jpg";
 import { DefaultButton } from "@/components/DefaultButton";
 import {
@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 
 type DishDetailsProps = {
-  dish: DishesType;
+  dish: DishesWithRestaurant;
   onClose: () => void;
 };
 
@@ -30,16 +30,12 @@ export function DishDetails({ dish, onClose }: DishDetailsProps) {
               <DialogDescription className="text-amber-50">
                 {dish.description}
               </DialogDescription>
-              <DialogDescription>
-                <p className="text-amber-50">
-                  <span className="text-amber-500">Restaurante: </span>
-                  {dish.restaurant.name}
-                </p>
+              <DialogDescription className="text-amber-50">
+                <span className="text-amber-500">Restaurante: </span>
+                {dish.restaurant?.name}
               </DialogDescription>
-              <DialogDescription>
-                <p className="text-amber-50">
-                  <span className="text-amber-500">Preço: </span>R${dish.price}
-                </p>
+              <DialogDescription className="text-amber-50">
+                <span className="text-amber-500">Preço: </span>R${dish.price}
               </DialogDescription>
             </DialogHeader>
           </div>

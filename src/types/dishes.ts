@@ -3,6 +3,9 @@ export type DishesType = {
   title: string;
   description: string;
   price: number;
+};
+
+export type DishesWithRestaurant = DishesType & {
   restaurant: {
     name: string;
   };
