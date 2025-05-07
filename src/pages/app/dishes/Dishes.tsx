@@ -1,5 +1,5 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
-import { dishs } from "../../../data/dishs";
+import { dishes } from "../../../data/dishes";
 import { DishCard } from "../../../components/DishCard";
 import { Dialog } from "@/components/ui/dialog";
 import { DishDetails } from "../../../components/DishDetails";
@@ -19,8 +19,8 @@ export function Dishes() {
     <div className="flex flex-col gap-15">
       <DefaultHeader />
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {dishs &&
-          dishs.map((dish, index) => {
+        {dishes &&
+          dishes.map((dish, index) => {
             return (
               <button key={index} onClick={() => handleOpenDialog(dish)}>
                 <DishCard dish={dish} />

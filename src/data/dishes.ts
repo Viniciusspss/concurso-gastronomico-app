@@ -1,6 +1,6 @@
 import { DishesType } from "@/types/dishes";
 
-export const dishs: DishesType[] = [
+export const dishes: DishesType[] = [
   {
     imageURL: "https://",
     title: "TÍTULO DO PRATO",
