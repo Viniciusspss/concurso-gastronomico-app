@@ -3,7 +3,7 @@ import { RestaurantType } from "@/types/user/restaurant";
 export const restaurants: RestaurantType[] = [
   {
     id: "1",
-    cnpj: "00",
+    cnpj: "000",
     name: "BDC",
     password: "123",
     dishes: [
