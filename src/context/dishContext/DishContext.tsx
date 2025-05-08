@@ -1,8 +1,8 @@
-import { DishesType } from "@/types/dishes";
+import { DishesWithRestaurant } from "@/types/dishes";
 import { createContext } from "react";
 
 type DishContextProps = {
-  dishes: DishesType[];
+  dishes: DishesWithRestaurant[];
   loadAllDishes: () => void;
 };
 
