@@ -2,8 +2,12 @@ import { DefaultButton } from "@/components/DefaultButton";
 import { DefaultForm } from "@/components/DefaultForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { Link } from "react-router-dom";
 
 export function EditDish() {
+  const { user } = useAuthContext();
+
   return (
     <div className="flex w-full max-w-lg flex-col items-center justify-center gap-12 px-4 py-4 text-amber-50">
       <h1 className="text-2xl">EDITAR PRATO</h1>
@@ -12,7 +16,7 @@ export function EditDish() {
           <Label htmlFor="dishName">
             Novo nome:
             <Input
-              className="bg-amber-50"
+              className="bg-amber-50 text-black"
               id="dishName"
               placeholder="Digite o novo nome do prato"
             />
@@ -22,7 +26,7 @@ export function EditDish() {
           <Label htmlFor="dishPrice">
             Novo Preço:
             <Input
-              className="bg-amber-50"
+              className="bg-amber-50 text-black"
               id="dishPrice"
               placeholder="Digite o novo preço do prato"
             />
@@ -42,7 +46,11 @@ export function EditDish() {
         </div>
         <div className="flex items-center justify-center gap-4">
           <DefaultButton className="px-17 text-xs">EDITAR</DefaultButton>
-          <DefaultButton className="px-17 text-xs">FECHAR</DefaultButton>
+          <Link to={`/restaurant-dishes/${user?.id}`}>
+            <DefaultButton type="button" className="px-17 text-xs">
+              FECHAR
+            </DefaultButton>
+          </Link>
         </div>
       </DefaultForm>
     </div>
