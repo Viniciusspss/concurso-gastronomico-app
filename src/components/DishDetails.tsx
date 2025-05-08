@@ -60,7 +60,7 @@ export function DishDetails({
               </>
             ) : (
               <>
-                <Link to="/">
+                <Link to="/restaurant-edit-dish">
                   <DefaultButton className="text-xs">EDITAR</DefaultButton>
                 </Link>
                 <DefaultButton className="text-xs">EXCLUIR</DefaultButton>
