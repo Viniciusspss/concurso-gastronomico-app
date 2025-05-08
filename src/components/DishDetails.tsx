@@ -49,12 +49,26 @@ export function DishDetails({
             </DialogHeader>
           </div>
           <div className="flex gap-3">
-            <Link to="/evaluate-dish">
-              <DefaultButton className="text-xs">AVALIAR</DefaultButton>
-            </Link>
-            <DefaultButton className="text-xs" onClick={() => onClose()}>
-              FECHAR
-            </DefaultButton>
+            {dish ? (
+              <>
+                <Link to="/evaluate-dish">
+                  <DefaultButton className="text-xs">AVALIAR</DefaultButton>
+                </Link>
+                <DefaultButton className="text-xs" onClick={() => onClose()}>
+                  FECHAR
+                </DefaultButton>{" "}
+              </>
+            ) : (
+              <>
+                <Link to="/">
+                  <DefaultButton className="text-xs">EDITAR</DefaultButton>
+                </Link>
+                <DefaultButton className="text-xs">EXCLUIR</DefaultButton>
+                <DefaultButton className="text-xs" onClick={() => onClose()}>
+                  FECHAR
+                </DefaultButton>
+              </>
+            )}
           </div>
         </div>
       </div>
