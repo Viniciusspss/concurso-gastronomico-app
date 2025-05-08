@@ -1,3 +1,4 @@
+import { DefaultHeader } from "@/components/DefaultHeader";
 import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -15,9 +16,10 @@ export function RestaurantDishes() {
     navigate("/");
     return null;
   }
+
   return (
-    <div>
-      <h1>DISHES</h1>
+    <div className="flex w-full">
+      <DefaultHeader />
     </div>
   );
 }

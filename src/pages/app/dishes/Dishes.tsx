@@ -28,7 +28,7 @@ export function Dishes() {
   };
 
   return (
-    <div className="flex flex-col gap-15">
+    <div className="flex w-full flex-col gap-15">
       <DefaultHeader />
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {dishes &&

@@ -4,7 +4,7 @@ import userImage from "@/assets/userImage.png";
 
 export function DefaultHeader() {
   return (
-    <div className="flex justify-between">
+    <div className="flex w-full justify-between">
       <div></div>
       <div className="flex gap-4">
         <Link to="/dishes">
