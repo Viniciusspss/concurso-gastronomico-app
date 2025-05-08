@@ -1,4 +1,5 @@
 export type DishesType = {
+  id: string;
   imageURL: string;
   title: string;
   description: string;

@@ -8,6 +8,7 @@ export const restaurants: RestaurantType[] = [
     password: "123",
     dishes: [
       {
+        id: "2",
         imageURL: "https://",
         title: "TÍTULO DO PRATO",
         description:
@@ -15,6 +16,7 @@ export const restaurants: RestaurantType[] = [
         price: 35,
       },
       {
+        id: "3",
         imageURL: "https://",
         title: "TÍTULO DO PRATO",
         description:
@@ -22,6 +24,7 @@ export const restaurants: RestaurantType[] = [
         price: 35,
       },
       {
+        id: "4",
         imageURL: "https://",
         title: "TÍTULO DO PRATO",
         description:
@@ -29,6 +32,7 @@ export const restaurants: RestaurantType[] = [
         price: 35,
       },
       {
+        id: "5",
         imageURL: "https://",
         title: "TÍTULO DO PRATO",
         description:
@@ -44,6 +48,7 @@ export const restaurants: RestaurantType[] = [
     password: "123",
     dishes: [
       {
+        id: "2",
         imageURL: "https://",
         title: "Cuscuz",
         description:
