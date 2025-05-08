@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { DishContext } from "./DishContext";
 import { DishesWithRestaurant } from "@/types/dishes";
 import { restaurants } from "@/data/restaurants";
@@ -21,6 +21,10 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     );
     setDishes(allDishes);
   }
+
+  useEffect(() => {
+    loadAllDishes();
+  }, []);
 
   return (
     <DishContext.Provider value={{ dishes, loadAllDishes }}>
