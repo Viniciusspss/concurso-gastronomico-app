@@ -9,10 +9,14 @@ import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 export function RestaurantDishes() {
-  const { loadRestaurantDishes, restaurantDishes } = useDishContext();
+  const {
+    loadRestaurantDishes,
+    restaurantDishes,
+    selectedDish,
+    setSelectedDish,
+  } = useDishContext();
   const { user } = useAuthContext();
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [selectedDish, setSelectedDish] = useState<DishesType | null>(null);
   const { id } = useParams();
 
   useEffect(() => {

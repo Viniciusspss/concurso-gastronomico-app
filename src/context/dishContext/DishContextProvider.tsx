@@ -43,6 +43,12 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
   }, []);
 
   const loadRestaurantDishes = useCallback((restaurantId: string) => {
+    const storageDishes = localStorage.getItem("restaurantDishes");
+    if (storageDishes) {
+      const parsedDishes = JSON.parse(storageDishes) as DishesType[];
+      setRestaurantDishes(parsedDishes);
+      return;
+    }
     const restaurant = restaurants.find(
       (restaurant) => restaurantId === restaurant.id,
     );
