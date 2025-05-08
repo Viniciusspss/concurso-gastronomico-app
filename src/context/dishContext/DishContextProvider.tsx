@@ -8,7 +8,15 @@ type DishContextProviderProps = {
 };
 
 export function DishContextProvider({ children }: DishContextProviderProps) {
-  const [dishes, setDishes] = useState<DishesWithRestaurant[]>([]);
+  const [dishes, setDishes] = useState<DishesWithRestaurant[]>(() => {
+    const storageDishes = localStorage.getItem("dishes");
+    if (!storageDishes) return [];
+
+    const parsedstorageDishes = JSON.parse(
+      storageDishes,
+    ) as DishesWithRestaurant[];
+    return parsedstorageDishes;
+  });
 
   function loadAllDishes() {
     const allDishes: DishesWithRestaurant[] = restaurants.flatMap(
@@ -20,6 +28,7 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
       },
     );
     setDishes(allDishes);
+    localStorage.setItem("dishes", JSON.stringify(allDishes));
   }
 
   useEffect(() => {
