@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { DishContext } from "./DishContext";
-import { DishesWithRestaurant } from "@/types/dishes";
+import { DishesType, DishesWithRestaurant } from "@/types/dishes";
 import { restaurants } from "@/data/restaurants";
 
 type DishContextProviderProps = {
@@ -18,6 +18,16 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     return parsedstorageDishes;
   });
 
+  const [restaurantDishes, setRestaurantDishes] = useState<DishesType[]>(() => {
+    const storageRestaurantDishes = localStorage.getItem("restaurantDishes");
+    if (!storageRestaurantDishes) return [];
+
+    const parsedstorageRestaurantDishes = JSON.parse(
+      storageRestaurantDishes,
+    ) as DishesType[];
+    return parsedstorageRestaurantDishes;
+  });
+
   function loadAllDishes() {
     const allDishes: DishesWithRestaurant[] = restaurants.flatMap(
       (restaurant) => {
@@ -31,12 +41,24 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     localStorage.setItem("dishes", JSON.stringify(allDishes));
   }
 
+  function loadRestaurantDishes(restaurantId: string) {
+    const restaurant = restaurants.find(
+      (restaurant) => restaurantId === restaurant.id,
+    );
+    if (!restaurant) return;
+
+    setRestaurantDishes(restaurant.dishes);
+    localStorage.setItem("restaurantDishes", JSON.stringify(restaurant.dishes));
+  }
+
   useEffect(() => {
     loadAllDishes();
   }, []);
 
   return (
-    <DishContext.Provider value={{ dishes, loadAllDishes }}>
+    <DishContext.Provider
+      value={{ dishes, loadAllDishes, loadRestaurantDishes, restaurantDishes }}
+    >
       {children}
     </DishContext.Provider>
   );
