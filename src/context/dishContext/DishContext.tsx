@@ -6,6 +6,12 @@ type DishContextProps = {
   loadAllDishes: () => void;
   restaurantDishes: DishesType[];
   loadRestaurantDishes: (restaurantId: string) => void;
+  editDish: (
+    dishId: string,
+    title: string,
+    price: number,
+    description: string,
+  ) => void;
 };
 
 export const DishContext = createContext<DishContextProps>(

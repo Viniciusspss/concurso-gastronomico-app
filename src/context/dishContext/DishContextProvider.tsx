@@ -51,9 +51,37 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     localStorage.setItem("restaurantDishes", JSON.stringify(restaurant.dishes));
   }, []);
 
+  function editDish(
+    dishId: string,
+    title: string,
+    price: number,
+    description: string,
+  ) {
+    const editedDishes = restaurantDishes.map((dish) => {
+      if (dish.id === dishId) {
+        return {
+          ...dish,
+          title,
+          price,
+          description,
+        };
+      }
+      return dish;
+    });
+
+    setRestaurantDishes(editedDishes);
+    localStorage.setItem("restaurantDishes", JSON.stringify(editedDishes));
+  }
+
   return (
     <DishContext.Provider
-      value={{ dishes, loadAllDishes, loadRestaurantDishes, restaurantDishes }}
+      value={{
+        dishes,
+        loadAllDishes,
+        loadRestaurantDishes,
+        restaurantDishes,
+        editDish,
+      }}
     >
       {children}
     </DishContext.Provider>
