@@ -1,4 +1,4 @@
-import { DishesWithRestaurant } from "@/types/dishes";
+import { DishesType, DishesWithRestaurant } from "@/types/dishes";
 import imageDish from "@/assets/pratoImage.jpg";
 import { DefaultButton } from "@/components/DefaultButton";
 import {
@@ -8,13 +8,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "@/context/authContext/useAuthContext";
 
 type DishDetailsProps = {
-  dish: DishesWithRestaurant;
+  dish?: DishesWithRestaurant;
+  restaurantDish?: DishesType;
   onClose: () => void;
 };
 
-export function DishDetails({ dish, onClose }: DishDetailsProps) {
+export function DishDetails({
+  dish,
+  restaurantDish,
+  onClose,
+}: DishDetailsProps) {
+  const { user } = useAuthContext();
   return (
     <DialogContent className="w-full max-w-3xl border-0 bg-[#272727]">
       <div className="flex gap-5 px-5 py-5">
@@ -25,17 +32,19 @@ export function DishDetails({ dish, onClose }: DishDetailsProps) {
           <div className="flex flex-col gap-3">
             <DialogHeader>
               <DialogTitle className="font-bold text-amber-500">
-                {dish.title}
+                {dish ? dish.title : restaurantDish?.title}
               </DialogTitle>
               <DialogDescription className="text-amber-50">
-                {dish.description}
+                {dish ? dish.description : restaurantDish?.description}
               </DialogDescription>
               <DialogDescription className="text-amber-50">
                 <span className="text-amber-500">Restaurante: </span>
-                {dish.restaurant?.name}
+                {user && "cnpj" in user && user.name}
+                {dish && dish.restaurant?.name}
               </DialogDescription>
               <DialogDescription className="text-amber-50">
-                <span className="text-amber-500">Preço: </span>R${dish.price}
+                <span className="text-amber-500">Preço: </span>R$
+                {dish ? dish.price : restaurantDish?.price}
               </DialogDescription>
             </DialogHeader>
           </div>
