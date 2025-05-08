@@ -12,6 +12,8 @@ type DishContextProps = {
     price: number,
     description: string,
   ) => void;
+  selectedDish: DishesType | null;
+  setSelectedDish: (dish: DishesType | null) => void;
 };
 
 export const DishContext = createContext<DishContextProps>(

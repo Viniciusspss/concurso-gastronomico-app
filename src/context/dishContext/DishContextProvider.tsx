@@ -8,6 +8,7 @@ type DishContextProviderProps = {
 };
 
 export function DishContextProvider({ children }: DishContextProviderProps) {
+  const [selectedDish, setSelectedDish] = useState<DishesType | null>(null);
   const [dishes, setDishes] = useState<DishesWithRestaurant[]>(() => {
     const storageDishes = localStorage.getItem("dishes");
     if (!storageDishes) return [];
@@ -81,6 +82,8 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
         loadRestaurantDishes,
         restaurantDishes,
         editDish,
+        selectedDish,
+        setSelectedDish,
       }}
     >
       {children}
