@@ -1,9 +1,12 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
+import { RestaurantHeader } from "@/components/RestaurantHeader";
+import { useAuthContext } from "@/context/authContext/useAuthContext";
 
 export function About() {
+  const { user } = useAuthContext();
   return (
     <div className="flex flex-col gap-15">
-      <DefaultHeader />
+      {user && "email" in user ? <DefaultHeader /> : <RestaurantHeader />}
       <div className="flex flex-col gap-7">
         <h1 className="text-3xl text-amber-400">SOBRE NÓS</h1>
         <p className="text-amber-50">

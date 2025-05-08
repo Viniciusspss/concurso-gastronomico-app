@@ -1,6 +1,6 @@
-import { DefaultHeader } from "@/components/DefaultHeader";
 import { DishCard } from "@/components/DishCard";
 import { DishDetails } from "@/components/DishDetails";
+import { RestaurantHeader } from "@/components/RestaurantHeader";
 import { Dialog } from "@/components/ui/dialog";
 import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { useDishContext } from "@/context/dishContext/useDishContext";
@@ -37,7 +37,7 @@ export function RestaurantDishes() {
 
   return (
     <div className="flex w-full flex-col gap-15">
-      <DefaultHeader />
+      <RestaurantHeader />
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {restaurantDishes &&
           restaurantDishes.map((dish, index) => {
