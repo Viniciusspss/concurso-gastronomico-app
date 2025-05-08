@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { DishContext } from "./DishContext";
 import { DishesType, DishesWithRestaurant } from "@/types/dishes";
 import { restaurants } from "@/data/restaurants";
@@ -28,7 +28,7 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     return parsedstorageRestaurantDishes;
   });
 
-  function loadAllDishes() {
+  const loadAllDishes = useCallback(() => {
     const allDishes: DishesWithRestaurant[] = restaurants.flatMap(
       (restaurant) => {
         return restaurant.dishes.map((dish) => ({
@@ -39,7 +39,7 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     );
     setDishes(allDishes);
     localStorage.setItem("dishes", JSON.stringify(allDishes));
-  }
+  }, []);
 
   function loadRestaurantDishes(restaurantId: string) {
     const restaurant = restaurants.find(
@@ -50,10 +50,6 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     setRestaurantDishes(restaurant.dishes);
     localStorage.setItem("restaurantDishes", JSON.stringify(restaurant.dishes));
   }
-
-  useEffect(() => {
-    loadAllDishes();
-  }, []);
 
   return (
     <DishContext.Provider

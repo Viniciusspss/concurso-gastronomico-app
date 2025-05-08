@@ -2,16 +2,20 @@ import { DefaultHeader } from "@/components/DefaultHeader";
 import { DishCard } from "../../../components/DishCard";
 import { Dialog } from "@/components/ui/dialog";
 import { DishDetails } from "../../../components/DishDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DishesWithRestaurant } from "@/types/dishes";
 import { useDishContext } from "@/context/dishContext/useDishContext";
 
 export function Dishes() {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const { dishes } = useDishContext();
+  const { dishes, loadAllDishes } = useDishContext();
   const [selectedDish, setSelectedDish] = useState<DishesWithRestaurant | null>(
     null,
   );
+
+  useEffect(() => {
+    loadAllDishes();
+  }, [loadAllDishes]);
 
   const handleOpenDialog = (dish: DishesWithRestaurant) => {
     setIsDetailsOpen(true);
