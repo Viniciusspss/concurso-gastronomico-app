@@ -80,6 +80,13 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
     localStorage.setItem("restaurantDishes", JSON.stringify(editedDishes));
   }
 
+  function deleteDish(dishId: string) {
+    const updatedDishes = restaurantDishes.filter((dish) => dish.id !== dishId);
+
+    setRestaurantDishes(updatedDishes);
+    localStorage.setItem("restaurantDishes", JSON.stringify(updatedDishes));
+  }
+
   return (
     <DishContext.Provider
       value={{
@@ -90,6 +97,7 @@ export function DishContextProvider({ children }: DishContextProviderProps) {
         editDish,
         selectedDish,
         setSelectedDish,
+        deleteDish,
       }}
     >
       {children}

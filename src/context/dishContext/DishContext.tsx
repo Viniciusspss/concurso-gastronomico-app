@@ -6,6 +6,7 @@ type DishContextProps = {
   loadAllDishes: () => void;
   restaurantDishes: DishesType[];
   loadRestaurantDishes: (restaurantId: string) => void;
+  deleteDish: (dishId: string) => void;
   editDish: (
     dishId: string,
     title: string,
