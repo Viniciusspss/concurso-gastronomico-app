@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { showMessage } from "@/adapters/showMessage";
+import { useDishContext } from "@/context/dishContext/useDishContext";
 
 type DishDetailsProps = {
   dish?: DishesWithRestaurant;
@@ -22,6 +24,19 @@ export function DishDetails({
   onClose,
 }: DishDetailsProps) {
   const { user } = useAuthContext();
+  const { deleteDish, selectedDish } = useDishContext();
+
+  function handleDelete(dish: DishesType) {
+    showMessage.confirm(
+      "Tem certeza que deseja limpar o histórico?",
+      (confirmation) => {
+        if (confirmation) {
+          deleteDish(dish.id);
+        }
+      },
+    );
+  }
+
   return (
     <DialogContent className="w-full max-w-3xl border-0 bg-[#272727]">
       <div className="flex gap-5 px-5 py-5">
@@ -63,7 +78,15 @@ export function DishDetails({
                 <Link to="/restaurant-edit-dish">
                   <DefaultButton className="text-xs">EDITAR</DefaultButton>
                 </Link>
-                <DefaultButton className="text-xs">EXCLUIR</DefaultButton>
+                {selectedDish && (
+                  <DefaultButton
+                    className="text-xs"
+                    onClick={() => handleDelete(selectedDish)}
+                  >
+                    EXCLUIR
+                  </DefaultButton>
+                )}
+
                 <DefaultButton className="text-xs" onClick={() => onClose()}>
                   FECHAR
                 </DefaultButton>
