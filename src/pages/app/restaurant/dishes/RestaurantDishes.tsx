@@ -42,6 +42,12 @@ export function RestaurantDishes() {
   return (
     <div className="flex w-full flex-col gap-15">
       <RestaurantHeader />
+      {restaurantDishes.length === 0 && (
+        <h1 className="mx-auto text-2xl text-amber-50">
+          Não há nenhum prato cadastrado pelo seu restaurante!
+        </h1>
+      )}
+
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {restaurantDishes &&
           restaurantDishes.map((dish, index) => {
