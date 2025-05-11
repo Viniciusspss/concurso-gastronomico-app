@@ -66,6 +66,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
 
     clientsParsed.push(client);
+    localStorage.setItem("clients", JSON.stringify(clientsParsed));
+    setUser(client);
     return { success: true, message: "Usuário registrado com sucesso", client };
   }
 

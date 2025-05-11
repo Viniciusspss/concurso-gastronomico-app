@@ -2,9 +2,10 @@ import { DefaultForm } from "@/components/DefaultForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { ClientType } from "@/types/user/client";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type SignUpFormData = ClientType & {
   repeatPassword: string;
@@ -12,8 +13,20 @@ type SignUpFormData = ClientType & {
 
 export function SignUp() {
   const { register, handleSubmit, watch } = useForm<SignUpFormData>();
+  const { registerClient } = useAuthContext();
+  const navigate = useNavigate();
 
-  function onSubmit(data: SignUpFormData) {}
+  function onSubmit(data: SignUpFormData) {
+    if (data.password === data.repeatPassword) {
+      const success = registerClient(
+        data.email,
+        data.password,
+        data.firstName,
+        data.lastName,
+      );
+      if (success.success) navigate("/Dishes");
+    }
+  }
 
   return (
     <DefaultForm onSubmit={handleSubmit(onSubmit)}>
