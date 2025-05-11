@@ -6,6 +6,7 @@ import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { ClientType } from "@/types/user/client";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type SignUpFormData = ClientType & {
   repeatPassword: string;
@@ -24,7 +25,11 @@ export function SignUp() {
         data.firstName,
         data.lastName,
       );
-      if (success.success) navigate("/Dishes");
+      if (success.success) {
+        navigate("/Dishes");
+      } else {
+        toast.error(success.message);
+      }
     }
   }
 

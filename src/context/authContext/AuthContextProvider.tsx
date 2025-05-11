@@ -65,10 +65,18 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     const clients = localStorage.getItem("clients");
     const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
 
-    clientsParsed.push(client);
-    localStorage.setItem("clients", JSON.stringify(clientsParsed));
-    setUser(client);
-    return { success: true, message: "Usuário registrado com sucesso", client };
+    if (clientsParsed.some((client) => client.email === email)) {
+      return { success: false, message: "Email já existe" };
+    } else {
+      clientsParsed.push(client);
+      localStorage.setItem("clients", JSON.stringify(clientsParsed));
+      setUser(client);
+      return {
+        success: true,
+        message: "Usuário registrado com sucesso",
+        client,
+      };
+    }
   }
 
   function loginRestaurant(
