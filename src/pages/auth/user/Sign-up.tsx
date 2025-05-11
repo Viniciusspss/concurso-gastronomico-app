@@ -26,8 +26,11 @@ export function SignUp() {
         data.lastName,
       );
       if (success.success) {
-        navigate("/Dishes");
+        toast.dismiss();
+        toast.success(success.message);
+        setTimeout(() => navigate("/Dishes"), 1000);
       } else {
+        toast.dismiss();
         toast.error(success.message);
       }
     }
