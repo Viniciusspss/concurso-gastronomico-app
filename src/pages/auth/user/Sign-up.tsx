@@ -2,31 +2,70 @@ import { DefaultForm } from "@/components/DefaultForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ClientType } from "@/types/user/client";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
+type SignUpFormData = ClientType & {
+  repeatPassword: string;
+};
+
 export function SignUp() {
+  const { register, handleSubmit, watch } = useForm<SignUpFormData>();
+
+  function onSubmit(data: SignUpFormData) {}
+
   return (
-    <DefaultForm>
+    <DefaultForm onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
           <Label htmlFor="firstName">Primeiro Nome:</Label>
-          <Input id="firstName" placeholder="Digite seu primeiro nome" />
+          <Input
+            id="firstName"
+            placeholder="Digite seu primeiro nome"
+            {...register("firstName", {
+              required: "Primeiro nome é obrigatório",
+            })}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="lastName">Último Nome:</Label>
-          <Input id="lastName" placeholder="Digite seu último nome" />
+          <Input
+            id="lastName"
+            placeholder="Digite seu último nome"
+            {...register("lastName", { required: "Ultimo nome é obrigatório" })}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="email">Email:</Label>
-          <Input id="email" placeholder="Digite seu email" />
+          <Input
+            id="email"
+            placeholder="Digite seu email"
+            type="email"
+            {...register("email", { required: "Email é obrigatório" })}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="password">Senha:</Label>
-          <Input id="password" placeholder="Digite sua senha" />
+          <Input
+            type="password"
+            id="password"
+            placeholder="Digite sua senha"
+            {...register("password", { required: "Senha é obrigatório" })}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="repeatPassword">Repetir senha:</Label>
-          <Input id="repeatPassword" placeholder="Digite sua senha novamente" />
+          <Input
+            type="password"
+            id="repeatPassword"
+            placeholder="Digite sua senha novamente"
+            {...register("repeatPassword", {
+              required: "Repetir a senha é obrigatório",
+              validate: (value) =>
+                value === watch("password") || "As senhas não coincidem",
+            })}
+          />
         </div>
         <p className="text-xs">
           Já tenho uma conta.{" "}
