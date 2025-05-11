@@ -54,6 +54,21 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     return { success: false, message: "Email ou senha inválido" };
   }
 
+  function registerClient(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ): LoginResponseClient {
+    const id = "2";
+    const client: ClientType = { email, password, firstName, lastName, id };
+    const clients = localStorage.getItem("clients");
+    const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
+
+    clientsParsed.push(client);
+    return { success: true, message: "Usuário registrado com sucesso", client };
+  }
+
   function loginRestaurant(
     cnpj: string,
     password: string,
@@ -85,7 +100,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, loginClient, loginRestaurant, logout }}
+      value={{ user, loginClient, loginRestaurant, logout, registerClient }}
     >
       {children}
     </AuthContext.Provider>
