@@ -10,7 +10,7 @@ export function About() {
       <div className="flex flex-col gap-7">
         <h1 className="text-3xl text-amber-400">SOBRE NÓS</h1>
         <p className="text-amber-50">
-          Cozinha Arretada é um projeto acadêmico desenvolvido com o objetivo
+          O Cozinha Arretada é um projeto acadêmico desenvolvido com o objetivo
           de valorizar a gastronomia regional e dar visibilidade aos
           restaurantes locais, especialmente em cidades pequenas. Através desta
           plataforma, buscamos criar uma ponte entre os estabelecimentos e os
