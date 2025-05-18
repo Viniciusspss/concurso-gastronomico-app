@@ -2,8 +2,8 @@ import { DishCard } from "@/components/DishCard";
 import { DishDetails } from "@/components/DishDetails";
 import { RestaurantHeader } from "@/components/RestaurantHeader";
 import { Dialog } from "@/components/ui/dialog";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { useDishContext } from "@/context/dishContext/useDishContext";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { DishesType } from "@/types/dishes";
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ export function RestaurantDishes() {
     selectedDish,
     setSelectedDish,
   } = useDishContext();
-  const { user } = useAuthContext();
+  const { user } = useAppSelector(state => state.auth);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { id } = useParams();
 

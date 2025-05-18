@@ -20,3 +20,32 @@ export const LoginRestaurant = createAsyncThunk(
     }
   },
 );
+
+export const RegisterRestaurant = createAsyncThunk(
+  "auth/registerRestaurant",
+  async (
+    { cnpj, name, password }: { cnpj: string; name: string; password: string },
+    thunkAPI,
+  ) => {
+    const restaurant: RestaurantType = {
+      cnpj,
+      name,
+      password,
+      id: "1",
+      dishes: [],
+    };
+    const allRestaurants = localStorage.getItem("restaurants");
+    const parsedAllRestaurants: RestaurantType[] = allRestaurants
+      ? JSON.parse(allRestaurants)
+      : null;
+
+    if (parsedAllRestaurants.some((restaurant) => restaurant.cnpj === cnpj)) {
+      return thunkAPI.rejectWithValue("cnpj já cadastrado!");
+    } else {
+      parsedAllRestaurants.push(restaurant);
+      localStorage.setItem("restaurants", JSON.stringify(parsedAllRestaurants));
+      localStorage.setItem("authUser", JSON.stringify(restaurant));
+      return restaurant;
+    }
+  },
+);

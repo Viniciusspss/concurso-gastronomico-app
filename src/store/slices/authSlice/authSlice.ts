@@ -2,7 +2,7 @@ import { mockClients, mockRestaurants } from "@/data/users";
 import { UserType } from "@/types/user/user";
 import { createSlice } from "@reduxjs/toolkit";
 import { loginClient, registerClient } from "./clientThunks";
-import { LoginRestaurant } from "./restaurantThunks";
+import { LoginRestaurant, RegisterRestaurant } from "./restaurantThunks";
 
 interface AuthState {
   user: UserType | null;
@@ -77,6 +77,19 @@ const authSlice = createSlice({
 
     builder.addCase(LoginRestaurant.pending, (state) => {
       state.errorLogin = null;
+    });
+
+    builder.addCase(RegisterRestaurant.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.errorRegister = null;
+    });
+
+    builder.addCase(RegisterRestaurant.pending, (state) => {
+      state.errorRegister = null;
+    });
+
+    builder.addCase(RegisterRestaurant.rejected, (state, action) => {
+      state.errorRegister = action.payload as string;
     });
   },
 });
