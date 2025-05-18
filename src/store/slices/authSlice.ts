@@ -25,7 +25,12 @@ if (!localStorage.getItem("restaurants")) {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      localStorage.removeItem("authUser");
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginClient.fulfilled, (state, action) => {
       state.user = action.payload;
@@ -37,5 +42,6 @@ const authSlice = createSlice({
     });
   },
 });
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

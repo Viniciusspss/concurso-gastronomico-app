@@ -9,10 +9,12 @@ import {
 } from "./ui/dropdown-menu";
 import { LogOutIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/slices/authSlice";
 
 export function DropDownMenu() {
-  const { logout } = useAuthContext();
+
+  const dispatch = useDispatch()
 
   return (
     <DropdownMenu>
@@ -26,7 +28,7 @@ export function DropDownMenu() {
           <DropdownMenuItem>Editar perfil</DropdownMenuItem>
         </Link>
         <DropdownMenuItem>
-          <button className="flex items-center gap-2" onClick={() => logout()}>
+          <button className="flex items-center gap-2" onClick={() => dispatch(logout())}>
             Sair <LogOutIcon className="text-red-500" />
           </button>
         </DropdownMenuItem>

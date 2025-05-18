@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -8,8 +8,7 @@ type PrivateRouteProps = {
 };
 
 export function PrivateRoute({ children, type }: PrivateRouteProps) {
-  const { user } = useAuthContext();
-
+  const { user } = useAppSelector(state => state.auth)
   if (!user) {
     return <Navigate to="/" />;
   }
