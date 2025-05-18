@@ -1,18 +1,20 @@
 import { mockClients, mockRestaurants } from "@/data/users";
 import { UserType } from "@/types/user/user";
 import { createSlice } from "@reduxjs/toolkit";
-import { loginClient, registerClient } from "./authThunks";
+import { loginClient, registerClient } from "./clientThunks";
 
 interface AuthState {
   user: UserType | null;
-  error: string | null;
+  errorLogin: string | null;
+  errorRegister: string | null;
 }
 
 const storageUser = localStorage.getItem("authUser");
 
 const initialState: AuthState = {
   user: storageUser ? (JSON.parse(storageUser) as UserType) : null,
-  error: null,
+  errorLogin: null,
+  errorRegister: null,
 };
 
 if (!localStorage.getItem("clients")) {
@@ -32,30 +34,31 @@ const authSlice = createSlice({
     },
 
     clearError: (state) => {
-      state.error = null;
+      state.errorLogin = null;
+      state.errorRegister = null;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(loginClient.fulfilled, (state, action) => {
       state.user = action.payload;
-      state.error = null;
+      state.errorLogin = null;
     });
 
     builder.addCase(loginClient.rejected, (state, action) => {
-      state.error = action.payload as string;
+      state.errorLogin = action.payload as string;
     });
 
     builder.addCase(loginClient.pending, (state) => {
-      state.error = null;
+      state.errorLogin = null;
     });
 
     builder.addCase(registerClient.fulfilled, (state, action) => {
       state.user = action.payload;
-      state.error = null;
+      state.errorRegister = null;
     });
 
     builder.addCase(registerClient.rejected, (state, action) => {
-      state.error = action.payload as string;
+      state.errorRegister = action.payload as string;
     });
   },
 });

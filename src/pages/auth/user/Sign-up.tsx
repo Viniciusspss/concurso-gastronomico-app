@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { registerClient } from "@/store/slices/authThunks";
+import { clearError } from "@/store/slices/authSlice/authSlice";
+import { registerClient } from "@/store/slices/authSlice/clientThunks";
 import { ClientType } from "@/types/user/client";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -17,8 +18,7 @@ type SignUpFormData = ClientType & {
 
 export function SignUp() {
   const { register, handleSubmit, watch } = useForm<SignUpFormData>();
-  // const { registerClient } = useAuthContext();
-  const { user, error } = useAppSelector(state => state.auth)
+  const { user, errorRegister } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate();
 
@@ -28,11 +28,16 @@ export function SignUp() {
       toast.success("Usuário registrado com sucesso!");
       setTimeout(() => navigate("/Dishes"), 3000);
     }
-    if (error) {
+    if (errorRegister) {
       toast.dismiss();
-      toast.error(error);
+      toast.error(errorRegister);
     }
-  }, [user, error, navigate])
+  }, [user, errorRegister, navigate])
+
+
+  useEffect(() => {
+    return () => { dispatch(clearError()) }
+  }, [dispatch])
 
   function onSubmit(data: SignUpFormData) {
     if (data.password === data.repeatPassword) {

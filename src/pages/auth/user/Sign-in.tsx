@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useEffect } from "react";
-import { loginClient } from "@/store/slices/authThunks";
-import { clearError } from "@/store/slices/authSlice";
+import { loginClient } from "@/store/slices/authSlice/clientThunks";
+import { clearError } from "@/store/slices/authSlice/authSlice";
 
 type LoginClientFormData = {
   email: string;
@@ -18,7 +18,7 @@ type LoginClientFormData = {
 export function SignIn() {
   const { register, handleSubmit } = useForm<LoginClientFormData>();
   const navigate = useNavigate();
-  const { user, error } = useAppSelector(state => state.auth)
+  const { user, errorLogin } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -26,13 +26,13 @@ export function SignIn() {
       navigate("/Dishes")
     }
 
-    if (error) {
-      alert(error)
+    if (errorLogin) {
+      alert(errorLogin)
     }
-  }, [user, error, navigate])
+  }, [user, errorLogin, navigate])
 
   useEffect(() => {
-    dispatch(clearError())
+    return () => { dispatch(clearError()) }
   }, [dispatch])
 
   function onSubmit(data: LoginClientFormData) {
