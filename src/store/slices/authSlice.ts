@@ -1,16 +1,18 @@
 import { mockClients, mockRestaurants } from "@/data/users";
 import { ClientType } from "@/types/user/client";
 import { UserType } from "@/types/user/user";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
   user: UserType | null;
+  error: string | null;
 }
 
 const storageUser = localStorage.getItem("authUser");
 
 const initialState: AuthState = {
   user: storageUser ? (JSON.parse(storageUser) as UserType) : null,
+  error: null,
 };
 
 if (!localStorage.getItem("clients")) {
@@ -23,31 +25,39 @@ if (!localStorage.getItem("restaurants")) {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(loginClient.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.error = null;
+    });
 
-    loginClient(
-      state,
-      action: PayloadAction<{ email: string; password: string }>,
-    ) {
-      const clients = localStorage.getItem("clients");
-      const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
-
-      const client = clientsParsed.find(
-        (c) =>
-          c.email === action.payload.email &&
-          c.password === action.payload.password,
-      );
-
-      if (client) {
-      localStorage.setItem("authUser", JSON.stringify(client));
-      state.user = client
-    }
-    },
-
-    
+    builder.addCase(loginClient.rejected, (state, action) => {
+      state.error = action.payload as string;
+    });
   },
 });
 
-export const { loginClient } = authSlice.actions;
+export const loginClient = createAsyncThunk(
+  "auth/loginClient",
+  async (
+    { email, password }: { email: string; password: string },
+    thunkAPI,
+  ) => {
+    const clients = localStorage.getItem("clients");
+    const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
+
+    const client = clientsParsed.find(
+      (c) => c.email === email && c.password === password,
+    );
+
+    if (client) {
+      localStorage.setItem("authUser", JSON.stringify(client));
+      return client;
+    } else {
+      return thunkAPI.rejectWithValue("Email ou senha inválidos!");
+    }
+  },
+);
 
 export default authSlice.reducer;

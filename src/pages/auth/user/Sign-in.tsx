@@ -2,9 +2,12 @@ import { DefaultForm } from "@/components/DefaultForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { loginClient } from "@/store/slices/authSlice";
+import { useEffect } from "react";
 
 type LoginClientFormData = {
   email: string;
@@ -12,17 +15,23 @@ type LoginClientFormData = {
 };
 
 export function SignIn() {
-  const { loginClient } = useAuthContext();
   const { register, handleSubmit } = useForm<LoginClientFormData>();
   const navigate = useNavigate();
+  const { user, error } = useAppSelector(state => state.auth)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (user) {
+      navigate("/Dishes")
+    }
+
+    if (error) {
+      alert(error)
+    }
+  }, [user, error, navigate])
 
   function onSubmit(data: LoginClientFormData) {
-    const sucess = loginClient(data.email, data.password);
-    if (sucess.success === true) {
-      navigate("/Dishes");
-    } else {
-      alert("Email ou senha inválidos");
-    }
+    dispatch(loginClient({ email: data.email, password: data.password }))
   }
 
   return (
