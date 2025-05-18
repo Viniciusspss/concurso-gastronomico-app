@@ -2,7 +2,11 @@ import { DefaultForm } from "@/components/DefaultForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { clearError } from "@/store/slices/authSlice/authSlice";
+import { LoginRestaurant } from "@/store/slices/authSlice/restaurantThunks";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,17 +16,27 @@ type LoginRestaurantFormData = {
 };
 
 export function SignIn() {
-  const { loginRestaurant } = useAuthContext();
   const { register, handleSubmit } = useForm<LoginRestaurantFormData>();
+  const dispatch = useAppDispatch()
+  const { user, errorLogin } = useAppSelector(state => state.auth)
   const navigate = useNavigate();
 
-  function onSubmit(data: LoginRestaurantFormData) {
-    const success = loginRestaurant(data.cnpj, data.password);
-    if (success.success === true) {
-      navigate(`/restaurant-dishes/${success.restaurant.id}`);
-    } else {
-      alert("Email ou senha inválidos");
+  useEffect(() => {
+    if (user) {
+      navigate(`/restaurant-dishes/${user.id}`)
     }
+
+    if (errorLogin) {
+      alert(errorLogin)
+    }
+  }, [user, errorLogin, navigate])
+
+  useEffect(() => {
+    return () => { dispatch(clearError()) }
+  }, [dispatch])
+
+  function onSubmit(data: LoginRestaurantFormData) {
+    dispatch(LoginRestaurant({ cnpj: data.cnpj, password: data.password }))
   }
 
   return (
@@ -56,7 +70,7 @@ export function SignIn() {
             </Link>
           </p>
         </div>
-        <Button className="rounded-xl" variant="dark">
+        <Button type="submit" className="rounded-xl" variant="dark">
           Conecte-se
         </Button>
       </DefaultForm>

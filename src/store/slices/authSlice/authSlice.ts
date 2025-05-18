@@ -68,11 +68,11 @@ const authSlice = createSlice({
 
     builder.addCase(LoginRestaurant.fulfilled, (state, action) => {
       state.user = action.payload;
-      state.errorRegister = null;
+      state.errorLogin = null;
     });
 
     builder.addCase(LoginRestaurant.rejected, (state, action) => {
-      state.errorRegister = action.payload as string;
+      state.errorLogin = action.payload as string;
     });
 
     builder.addCase(LoginRestaurant.pending, (state) => {
