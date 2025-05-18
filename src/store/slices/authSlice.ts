@@ -30,6 +30,10 @@ const authSlice = createSlice({
       state.user = null;
       localStorage.removeItem("authUser");
     },
+
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginClient.fulfilled, (state, action) => {
@@ -41,8 +45,13 @@ const authSlice = createSlice({
       state.error = action.payload as string;
     });
 
+    builder.addCase(loginClient.pending, (state) => {
+      state.error = null;
+    });
+
     builder.addCase(registerClient.fulfilled, (state, action) => {
       state.user = action.payload;
+      state.error = null;
     });
 
     builder.addCase(registerClient.rejected, (state, action) => {
@@ -50,6 +59,6 @@ const authSlice = createSlice({
     });
   },
 });
-export const { logout } = authSlice.actions;
+export const { logout, clearError } = authSlice.actions;
 
 export default authSlice.reducer;

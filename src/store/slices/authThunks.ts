@@ -51,6 +51,7 @@ export const registerClient = createAsyncThunk(
     } else {
       parsedAllClients.push(client);
       localStorage.setItem("clients", JSON.stringify(parsedAllClients));
+      localStorage.setItem("authUser", JSON.stringify(client));
       return client;
     }
   },

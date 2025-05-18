@@ -8,6 +8,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useEffect } from "react";
 import { loginClient } from "@/store/slices/authThunks";
+import { clearError } from "@/store/slices/authSlice";
 
 type LoginClientFormData = {
   email: string;
@@ -29,6 +30,10 @@ export function SignIn() {
       alert(error)
     }
   }, [user, error, navigate])
+
+  useEffect(() => {
+    dispatch(clearError())
+  }, [dispatch])
 
   function onSubmit(data: LoginClientFormData) {
     dispatch(loginClient({ email: data.email, password: data.password }))
