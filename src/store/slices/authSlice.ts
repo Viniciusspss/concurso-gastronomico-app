@@ -1,7 +1,7 @@
 import { mockClients, mockRestaurants } from "@/data/users";
-import { ClientType } from "@/types/user/client";
 import { UserType } from "@/types/user/user";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { loginClient } from "./authThunks";
 
 interface AuthState {
   user: UserType | null;
@@ -37,27 +37,5 @@ const authSlice = createSlice({
     });
   },
 });
-
-export const loginClient = createAsyncThunk(
-  "auth/loginClient",
-  async (
-    { email, password }: { email: string; password: string },
-    thunkAPI,
-  ) => {
-    const clients = localStorage.getItem("clients");
-    const clientsParsed: ClientType[] = clients ? JSON.parse(clients) : [];
-
-    const client = clientsParsed.find(
-      (c) => c.email === email && c.password === password,
-    );
-
-    if (client) {
-      localStorage.setItem("authUser", JSON.stringify(client));
-      return client;
-    } else {
-      return thunkAPI.rejectWithValue("Email ou senha inválidos!");
-    }
-  },
-);
 
 export default authSlice.reducer;

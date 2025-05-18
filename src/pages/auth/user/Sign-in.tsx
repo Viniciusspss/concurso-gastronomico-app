@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { loginClient } from "@/store/slices/authSlice";
 import { useEffect } from "react";
+import { loginClient } from "@/store/slices/authThunks";
 
 type LoginClientFormData = {
   email: string;
