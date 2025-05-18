@@ -1,7 +1,7 @@
 import { mockClients, mockRestaurants } from "@/data/users";
 import { UserType } from "@/types/user/user";
 import { createSlice } from "@reduxjs/toolkit";
-import { loginClient } from "./authThunks";
+import { loginClient, registerClient } from "./authThunks";
 
 interface AuthState {
   user: UserType | null;
@@ -38,6 +38,14 @@ const authSlice = createSlice({
     });
 
     builder.addCase(loginClient.rejected, (state, action) => {
+      state.error = action.payload as string;
+    });
+
+    builder.addCase(registerClient.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
+
+    builder.addCase(registerClient.rejected, (state, action) => {
       state.error = action.payload as string;
     });
   },

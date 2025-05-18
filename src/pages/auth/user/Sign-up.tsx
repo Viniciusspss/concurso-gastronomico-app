@@ -2,8 +2,11 @@ import { DefaultForm } from "@/components/DefaultForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { registerClient } from "@/store/slices/authThunks";
 import { ClientType } from "@/types/user/client";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,25 +17,34 @@ type SignUpFormData = ClientType & {
 
 export function SignUp() {
   const { register, handleSubmit, watch } = useForm<SignUpFormData>();
-  const { registerClient } = useAuthContext();
+  // const { registerClient } = useAuthContext();
+  const { user, error } = useAppSelector(state => state.auth)
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      toast.dismiss();
+      toast.success("Usuário registrado com sucesso!");
+      setTimeout(() => navigate("/Dishes"), 3000);
+    }
+    if (error) {
+      toast.dismiss();
+      toast.error(error);
+    }
+  }, [user, error, navigate])
 
   function onSubmit(data: SignUpFormData) {
     if (data.password === data.repeatPassword) {
-      const success = registerClient(
-        data.email,
-        data.password,
-        data.firstName,
-        data.lastName,
-      );
-      if (success.success) {
-        toast.dismiss();
-        toast.success(success.message);
-        setTimeout(() => navigate("/Dishes"), 1000);
-      } else {
-        toast.dismiss();
-        toast.error(success.message);
-      }
+      dispatch(registerClient(
+        {
+          email: data.email,
+          password: data.password,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        }
+      ));
+
     }
   }
 

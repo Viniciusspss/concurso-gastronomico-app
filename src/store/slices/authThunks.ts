@@ -22,3 +22,36 @@ export const loginClient = createAsyncThunk(
     }
   },
 );
+
+export const registerClient = createAsyncThunk(
+  "auth/registerClient",
+  async (
+    {
+      email,
+      password,
+      firstName,
+      lastName,
+    }: { email: string; password: string; firstName: string; lastName: string },
+    thunkAPI,
+  ) => {
+    const client: ClientType = {
+      email,
+      password,
+      firstName,
+      lastName,
+      id: "1",
+    };
+    const allClients = localStorage.getItem("clients");
+    const parsedAllClients: ClientType[] = allClients
+      ? JSON.parse(allClients)
+      : null;
+
+    if (parsedAllClients.some((client) => client.email === email)) {
+      return thunkAPI.rejectWithValue("Email já cadastrado");
+    } else {
+      parsedAllClients.push(client);
+      localStorage.setItem("clients", JSON.stringify(parsedAllClients));
+      return client;
+    }
+  },
+);
