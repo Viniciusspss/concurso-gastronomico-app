@@ -9,6 +9,7 @@ import { LoginRestaurant } from "@/store/slices/authSlice/restaurantThunks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type LoginRestaurantFormData = {
   cnpj: string;
@@ -27,7 +28,7 @@ export function SignIn() {
     }
 
     if (errorLogin) {
-      alert(errorLogin)
+      toast.error(errorLogin)
     }
   }, [user, errorLogin, navigate])
 
