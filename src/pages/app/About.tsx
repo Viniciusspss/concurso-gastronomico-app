@@ -1,9 +1,9 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
 import { RestaurantHeader } from "@/components/RestaurantHeader";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export function About() {
-  const { user } = useAuthContext();
+  const { user } = useAppSelector(state => state.auth)
   return (
     <div className="flex flex-col gap-15">
       {user && "email" in user ? <DefaultHeader /> : <RestaurantHeader />}

@@ -52,6 +52,8 @@ export function SignUp() {
   function onSubmit({ cnpj, name, password, repeatPassword }: SignUpFormData) {
     if (password === repeatPassword) {
       dispatch(RegisterRestaurant({ cnpj, name, password }));
+    } else {
+      toast.error("As senhas não coincidem!")
     }
   }
 
