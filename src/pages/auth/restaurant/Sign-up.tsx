@@ -6,20 +6,28 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { clearError } from "@/store/slices/authSlice/authSlice";
 import { RegisterRestaurant } from "@/store/slices/authSlice/restaurantThunks";
-import { RestaurantType } from "@/types/user/restaurant";
+import { restaurantSchema } from "@/types/user/restaurant";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 
-type SignUpFormData = RestaurantType & {
-  repeatPassword: string;
-};
+export const signUpFormDataSchema = restaurantSchema.omit({ id: true, dishes: true }).extend(
+  {
+    repeatPassword: z.string()
+  }
+)
+
+export type SignUpFormData = z.infer<typeof signUpFormDataSchema>
 
 export function SignUp() {
   const { user, errorRegister } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { register, handleSubmit, watch } = useForm<SignUpFormData>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpFormDataSchema)
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,6 +65,7 @@ export function SignUp() {
             placeholder="Digite seu CNPJ"
             {...register("cnpj", { required: "cnpj é obrigatório" })}
           />
+          {errors.cnpj && <span>{errors.cnpj?.message}</span>}
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="name">Nome:</Label>
