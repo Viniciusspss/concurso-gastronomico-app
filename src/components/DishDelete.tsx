@@ -1,9 +1,12 @@
-import { useDishContext } from "@/context/dishContext/useDishContext";
 import { DefaultButton } from "./DefaultButton";
 import { DialogContent } from "./ui/dialog";
 import { DishesType } from "@/types/dishes";
 import { useState } from "react";
 import { Loader2Icon } from "lucide-react";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { deleteDish } from "@/store/slices/dishSlice/dishSlice";
+import { toast } from "react-toastify";
 
 type DishDeleteProps = {
   onCloseDelete: () => void;
@@ -11,14 +14,18 @@ type DishDeleteProps = {
 };
 
 export function DishDelete({ onCloseDelete, onCloseMain }: DishDeleteProps) {
-  const { deleteDish, selectedDish } = useDishContext();
+  const { selectedDish } = useAppSelector(state => state.dishes)
+  const dispatch = useAppDispatch()
   const [isLoading, setIsLoading] = useState(false);
 
   function handleDeleteDish(dish: DishesType) {
     setIsLoading(true);
+
     setTimeout(() => {
-      deleteDish(dish.id);
+      dispatch(deleteDish({ dishId: dish.id }));
+      setIsLoading(false);
       onCloseMain();
+      toast.success("Prato excluído com sucesso!")
     }, 1000);
   }
 

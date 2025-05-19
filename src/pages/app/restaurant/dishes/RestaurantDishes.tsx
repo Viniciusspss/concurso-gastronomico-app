@@ -35,7 +35,7 @@ export function RestaurantDishes() {
 
   const handleCloseDialog = () => {
     setIsDetailsOpen(false);
-    setSelectedDish(null);
+    dispatch(setSelectedDish(null));
   };
 
   return (
