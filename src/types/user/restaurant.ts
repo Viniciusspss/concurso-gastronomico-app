@@ -1,9 +1,15 @@
-import { DishesType } from "../dishes";
+import { z } from "zod";
+import { dishesSchema } from "../dishes";
 
-export type RestaurantType = {
-  id: string;
-  cnpj: string;
-  name: string;
-  password: string;
-  dishes: DishesType[];
-};
+export const restaurantSchema = z.object({
+  id: z.string(),
+  cnpj: z
+    .string()
+    .length(14, "CNPJ deve ter 14 dígitos")
+    .regex(/^\d+$/, "CNPJ deve conter apenas números"),
+  name: z.string(),
+  password: z.string(),
+  dishes: z.array(dishesSchema),
+});
+
+export type RestaurantType = z.infer<typeof restaurantSchema>;
