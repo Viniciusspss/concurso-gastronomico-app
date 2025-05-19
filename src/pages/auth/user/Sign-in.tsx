@@ -28,6 +28,7 @@ export function SignIn() {
     }
 
     if (errorLogin) {
+      toast.dismiss()
       toast.error(errorLogin)
     }
   }, [user, errorLogin, navigate])
