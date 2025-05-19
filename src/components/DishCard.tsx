@@ -25,6 +25,8 @@ export function DishCard({ dish }: DishCardProps) {
           <StarIcon className="text-amber-400" />
           <StarIcon className="text-amber-400" />
           <StarIcon className="text-amber-400" />
+          <StarIcon className="text-amber-400" />
+          <StarIcon className="text-amber-400" />
         </div>
       </div>
     </div>
