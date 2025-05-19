@@ -1,5 +1,5 @@
 import { DishesType, DishesWithRestaurant } from "@/types/dishes";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadAllDishes, loadRestaurantDishes } from "./dishThunks";
 
 interface DishState {
@@ -17,7 +17,30 @@ const initialState: DishState = {
 const dishSlice = createSlice({
   name: "dish",
   initialState,
-  reducers: {},
+  reducers: {
+    editDish: (
+      state,
+      action: PayloadAction<{
+        dishId: string;
+        title: string;
+        price: number;
+        description: string;
+      }>,
+    ) => {
+      const { dishId, price, description, title } = action.payload;
+      state.restaurantDishes = state.restaurantDishes.map((dish) => {
+        if (dish.id === dishId) {
+          return {
+            ...dish,
+            title,
+            price,
+            description,
+          };
+        }
+        return dish;
+      });
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loadAllDishes.fulfilled, (state, action) => {
       state.dishes = action.payload;
@@ -29,4 +52,5 @@ const dishSlice = createSlice({
   },
 });
 
+export const { editDish } = dishSlice.actions;
 export default dishSlice.reducer;
