@@ -39,14 +39,14 @@ export function SignUp() {
     return () => { dispatch(clearError()) }
   }, [dispatch])
 
-  function onSubmit(data: SignUpFormData) {
-    if (data.password === data.repeatPassword) {
+  function onSubmit({ email, password, firstName, lastName, repeatPassword }: SignUpFormData) {
+    if (password === repeatPassword) {
       dispatch(registerClient(
         {
-          email: data.email,
-          password: data.password,
-          firstName: data.firstName,
-          lastName: data.lastName,
+          email,
+          password,
+          firstName,
+          lastName,
         }
       ));
 
