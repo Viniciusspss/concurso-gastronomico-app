@@ -1,5 +1,5 @@
 import { restaurants } from "@/data/restaurants";
-import { DishesWithRestaurant } from "@/types/dishes";
+import { DishesType, DishesWithRestaurant } from "@/types/dishes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const loadAllDishes = createAsyncThunk(
@@ -13,5 +13,24 @@ export const loadAllDishes = createAsyncThunk(
     });
     localStorage.setItem("dishes", JSON.stringify(allDishes));
     return allDishes;
+  },
+);
+
+export const loadRestaurantDishes = createAsyncThunk(
+  "dish/loadRestaurantDishes",
+  async (restaurantId: string) => {
+    const storageDishes = localStorage.getItem("restaurantDishes");
+
+    if (storageDishes) {
+      const parsedDishes = JSON.parse(storageDishes) as DishesType[];
+      return parsedDishes;
+    }
+    const restaurant = restaurants.find(
+      (restaurant) => restaurantId === restaurant.id,
+    );
+    if (!restaurant) return [];
+
+    localStorage.setItem("restaurantDishes", JSON.stringify(restaurant.dishes));
+    return restaurant.dishes;
   },
 );

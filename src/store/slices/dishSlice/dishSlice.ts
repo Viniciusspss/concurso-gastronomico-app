@@ -1,16 +1,17 @@
-import { DishesWithRestaurant } from "@/types/dishes";
+import { DishesType, DishesWithRestaurant } from "@/types/dishes";
 import { createSlice } from "@reduxjs/toolkit";
-import { loadAllDishes } from "./dishThunks";
+import { loadAllDishes, loadRestaurantDishes } from "./dishThunks";
 
 interface DishState {
   dishes: DishesWithRestaurant[];
+  restaurantDishes: DishesType[];
+  selectedDish: DishesType | null;
 }
-const storageDishes = localStorage.getItem("dishes");
 
 const initialState: DishState = {
-  dishes: storageDishes
-    ? (JSON.parse(storageDishes) as DishesWithRestaurant[])
-    : [],
+  dishes: [],
+  restaurantDishes: [],
+  selectedDish: null,
 };
 
 const dishSlice = createSlice({
@@ -20,6 +21,10 @@ const dishSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loadAllDishes.fulfilled, (state, action) => {
       state.dishes = action.payload;
+    });
+
+    builder.addCase(loadRestaurantDishes.fulfilled, (state, action) => {
+      state.restaurantDishes = action.payload;
     });
   },
 });
