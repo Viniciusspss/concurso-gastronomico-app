@@ -40,7 +40,16 @@ const dishSlice = createSlice({
         return dish;
       });
     },
+    deleteDish: (state, action: PayloadAction<{ dishId: string }>) => {
+      const updatedDishes = state.restaurantDishes.filter(
+        (dish) => dish.id !== action.payload.dishId,
+      );
+
+      state.restaurantDishes = updatedDishes;
+      localStorage.setItem("restaurantDishes", JSON.stringify(updatedDishes));
+    },
   },
+
   extraReducers: (builder) => {
     builder.addCase(loadAllDishes.fulfilled, (state, action) => {
       state.dishes = action.payload;
@@ -52,5 +61,5 @@ const dishSlice = createSlice({
   },
 });
 
-export const { editDish } = dishSlice.actions;
+export const { editDish, deleteDish } = dishSlice.actions;
 export default dishSlice.reducer;
