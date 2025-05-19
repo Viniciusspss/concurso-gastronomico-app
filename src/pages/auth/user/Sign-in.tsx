@@ -9,6 +9,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useEffect } from "react";
 import { loginClient } from "@/store/slices/authSlice/clientThunks";
 import { clearError } from "@/store/slices/authSlice/authSlice";
+import { toast } from "react-toastify";
 
 type LoginClientFormData = {
   email: string;
@@ -27,7 +28,7 @@ export function SignIn() {
     }
 
     if (errorLogin) {
-      alert(errorLogin)
+      toast.error(errorLogin)
     }
   }, [user, errorLogin, navigate])
 
