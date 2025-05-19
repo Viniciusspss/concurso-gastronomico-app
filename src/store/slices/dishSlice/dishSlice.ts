@@ -18,6 +18,9 @@ const dishSlice = createSlice({
   name: "dish",
   initialState,
   reducers: {
+    setSelectedDish(state, action: PayloadAction<DishesType | null>) {
+      state.selectedDish = action.payload;
+    },
     editDish: (
       state,
       action: PayloadAction<{
