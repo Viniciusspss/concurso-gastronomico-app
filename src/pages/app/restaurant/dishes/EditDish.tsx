@@ -2,10 +2,12 @@ import { DefaultButton } from "@/components/DefaultButton";
 import { DefaultForm } from "@/components/DefaultForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
-import { useDishContext } from "@/context/dishContext/useDishContext";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { editDish } from "@/store/slices/dishSlice/dishSlice";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function EditDish() {
   type EditDishFormData = {
@@ -15,14 +17,15 @@ export function EditDish() {
     description: string;
   };
 
-  const { user } = useAuthContext();
-  const { editDish, selectedDish } = useDishContext();
+  const { user } = useAppSelector(state => state.auth);
+  const { selectedDish } = useAppSelector(state => state.dishes)
+  const dispatch = useDispatch()
   const { register, handleSubmit } = useForm<EditDishFormData>();
 
   function onSubmit(data: EditDishFormData) {
     if (selectedDish) {
-      editDish(selectedDish?.id, data.title, data.price, data.description);
-      alert("Prato Editado com sucesso!");
+      dispatch(editDish({ dishId: selectedDish?.id, title: data.title, price: data.price, description: data.description }))
+      toast.success("Prato Editado com sucesso!");
     }
   }
 

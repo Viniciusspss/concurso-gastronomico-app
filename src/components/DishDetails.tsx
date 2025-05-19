@@ -9,10 +9,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
-import { useDishContext } from "@/context/dishContext/useDishContext";
 import { useState } from "react";
 import { DishDelete } from "./DishDelete";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 type DishDetailsProps = {
   dish?: DishesWithRestaurant;
@@ -25,8 +24,8 @@ export function DishDetails({
   restaurantDish,
   onClose,
 }: DishDetailsProps) {
-  const { user } = useAuthContext();
-  const { selectedDish } = useDishContext();
+  const { user } = useAppSelector(state => state.auth);
+  const { selectedDish } = useAppSelector(state => state.dishes);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   return (

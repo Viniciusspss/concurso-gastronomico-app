@@ -64,5 +64,5 @@ const dishSlice = createSlice({
   },
 });
 
-export const { editDish, deleteDish } = dishSlice.actions;
+export const { editDish, deleteDish, setSelectedDish } = dishSlice.actions;
 export default dishSlice.reducer;

@@ -2,28 +2,27 @@ import { DishCard } from "@/components/DishCard";
 import { DishDetails } from "@/components/DishDetails";
 import { RestaurantHeader } from "@/components/RestaurantHeader";
 import { Dialog } from "@/components/ui/dialog";
-import { useDishContext } from "@/context/dishContext/useDishContext";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { setSelectedDish } from "@/store/slices/dishSlice/dishSlice";
+import { loadRestaurantDishes } from "@/store/slices/dishSlice/dishThunks";
 import { DishesType } from "@/types/dishes";
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 export function RestaurantDishes() {
-  const {
-    loadRestaurantDishes,
-    restaurantDishes,
-    selectedDish,
-    setSelectedDish,
-  } = useDishContext();
+
+  const { restaurantDishes, selectedDish } = useAppSelector(state => state.dishes)
   const { user } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch()
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
     if (user?.id) {
-      loadRestaurantDishes(user.id);
+      dispatch(loadRestaurantDishes(user.id))
     }
-  }, [user?.id, loadRestaurantDishes]);
+  }, [dispatch, user?.id]);
 
   if (user?.id != id) {
     return <Navigate to="/" />;
@@ -31,7 +30,7 @@ export function RestaurantDishes() {
 
   const handleOpenDialog = (dish: DishesType) => {
     setIsDetailsOpen(true);
-    setSelectedDish(dish);
+    dispatch(setSelectedDish(dish))
   };
 
   const handleCloseDialog = () => {

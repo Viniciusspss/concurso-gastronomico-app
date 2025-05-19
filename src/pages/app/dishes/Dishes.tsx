@@ -4,18 +4,21 @@ import { Dialog } from "@/components/ui/dialog";
 import { DishDetails } from "../../../components/DishDetails";
 import { useEffect, useState } from "react";
 import { DishesWithRestaurant } from "@/types/dishes";
-import { useDishContext } from "@/context/dishContext/useDishContext";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { loadAllDishes } from "@/store/slices/dishSlice/dishThunks";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
 export function Dishes() {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const { dishes, loadAllDishes } = useDishContext();
+  const { dishes } = useAppSelector(state => state.dishes);
+  const dispatch = useAppDispatch()
   const [selectedDish, setSelectedDish] = useState<DishesWithRestaurant | null>(
     null,
   );
 
   useEffect(() => {
-    loadAllDishes();
-  }, [loadAllDishes]);
+    dispatch(loadAllDishes())
+  }, [dispatch]);
 
   const handleOpenDialog = (dish: DishesWithRestaurant) => {
     setIsDetailsOpen(true);

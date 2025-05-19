@@ -1,10 +1,13 @@
-import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { ClientType } from "@/types/user/client";
 import { RestaurantType } from "@/types/user/restaurant";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "./useAppSelector";
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/slices/authSlice/authSlice";
 
 export function useDeleteUser() {
-  const { user, logout } = useAuthContext();
+  const { user } = useAppSelector(state => state.auth);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
   function deleteUser(cb?: () => void) {
@@ -24,7 +27,7 @@ export function useDeleteUser() {
       localStorage.setItem("restaurants", JSON.stringify(restaurants));
     }
 
-    logout();
+    dispatch(logout());
     if (cb) cb();
     navigate("/");
   }
