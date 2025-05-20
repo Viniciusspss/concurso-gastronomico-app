@@ -36,7 +36,7 @@ const dishSlice = createSlice({
       }>,
     ) => {
       const { dishId, price, description, title } = action.payload;
-      state.restaurantDishes = state.restaurantDishes.map((dish) => {
+      const updatedDishes = state.restaurantDishes.map((dish) => {
         if (dish.id === dishId) {
           return {
             ...dish,
@@ -47,6 +47,9 @@ const dishSlice = createSlice({
         }
         return dish;
       });
+
+      state.restaurantDishes = updatedDishes;
+      localStorage.setItem("restaurantDishes", JSON.stringify(updatedDishes));
     },
     deleteDish: (state, action: PayloadAction<{ dishId: string }>) => {
       const updatedDishes = state.restaurantDishes.filter(

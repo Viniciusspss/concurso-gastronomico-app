@@ -6,27 +6,34 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { editDish } from "@/store/slices/dishSlice/dishSlice";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export function EditDish() {
   type EditDishFormData = {
-    dishId: string;
     title: string;
     price: number;
     description: string;
   };
 
   const { user } = useAppSelector(state => state.auth);
-  const { selectedDish } = useAppSelector(state => state.dishes)
+  const { restaurantDishes } = useAppSelector(state => state.dishes)
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm<EditDishFormData>();
+  const { dishId } = useParams()
+
+  const dish = restaurantDishes.find(d => d.id === dishId);
 
   function onSubmit(data: EditDishFormData) {
-    if (selectedDish) {
-      dispatch(editDish({ dishId: selectedDish?.id, title: data.title, price: data.price, description: data.description }))
-      toast.success("Prato Editado com sucesso!");
+    if (!dish) {
+      return
     }
+    dispatch(editDish({ dishId: dish.id, title: data.title, price: data.price, description: data.description }))
+    toast.success("Prato Editado com sucesso!");
+  }
+
+  if (!dish) {
+    return <Navigate to={`/restaurant-dishes/${user?.id}`} />;
   }
 
   return (
@@ -37,7 +44,7 @@ export function EditDish() {
           <Label htmlFor="dishName">
             Novo nome:
             <Input
-              defaultValue={selectedDish?.title}
+              defaultValue={dish.title}
               className="bg-amber-50 text-black"
               id="dishName"
               placeholder="Digite o novo nome do prato"
@@ -49,7 +56,7 @@ export function EditDish() {
           <Label htmlFor="dishPrice">
             Novo Preço:
             <Input
-              defaultValue={selectedDish?.price}
+              defaultValue={dish.price}
               className="bg-amber-50 text-black"
               id="dishPrice"
               placeholder="Digite o novo preço do prato"
@@ -61,7 +68,7 @@ export function EditDish() {
           <Label htmlFor="dishDescription">
             Nova Descrição:
             <textarea
-              defaultValue={selectedDish?.description}
+              defaultValue={dish.description}
               className="w-full rounded-2xl bg-amber-50 px-3 py-3 text-black"
               id="dishDescription"
               cols={30}

@@ -95,7 +95,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/restaurant-edit-dish",
+        path: "/restaurant-edit-dish/:dishId",
         element: (
           <PrivateRoute type="restaurant">
             <EditDish />

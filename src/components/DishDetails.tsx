@@ -67,7 +67,7 @@ export function DishDetails({
                 </>
               ) : (
                 <>
-                  <Link to="/restaurant-edit-dish">
+                  <Link to={`/restaurant-edit-dish/${selectedDish?.id}`}>
                     <DefaultButton className="text-xs">EDITAR</DefaultButton>
                   </Link>
                   {selectedDish && (
