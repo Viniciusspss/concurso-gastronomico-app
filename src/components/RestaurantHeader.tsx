@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { DefaultButton } from "./DefaultButton";
-import { useAuthContext } from "@/context/authContext/useAuthContext";
 import { DropDownMenu } from "./DropDownMenu";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export function RestaurantHeader() {
-  const { user } = useAuthContext();
+  const { user } = useAppSelector(state => state.auth);
   return (
     <div className="flex w-full justify-between">
       <div></div>
