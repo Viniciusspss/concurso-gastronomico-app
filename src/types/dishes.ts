@@ -5,7 +5,8 @@ export const dishesSchema = z.object({
   imageURL: z.string().url(),
   title: z.string().min(1),
   description: z.string().min(5),
-  price: z.number().positive(),
+  price: z.preprocess((val) => Number(val), z.number().positive()),
+  restaurantId: z.string(),
 });
 
 export const dishesWithRestaurantSchema = dishesSchema.extend({

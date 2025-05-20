@@ -1,6 +1,58 @@
 import { restaurants } from "@/data/restaurants";
-import { DishesType, DishesWithRestaurant } from "@/types/dishes";
+import { dishesSchema, DishesType, DishesWithRestaurant } from "@/types/dishes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const createDish = createAsyncThunk(
+  "dish/createDish",
+  async (
+    {
+      title,
+      price,
+      description,
+      imageURL,
+      restaurantId,
+    }: {
+      title: string;
+      price: number;
+      description: string;
+      imageURL: string;
+      restaurantId: string;
+    },
+    thunkAPI,
+  ) => {
+    const parseResult = dishesSchema.safeParse({
+      id: crypto.randomUUID(),
+      title,
+      price,
+      description,
+      imageURL,
+      restaurantId,
+    });
+
+    if (!parseResult.success) {
+      console.log(parseResult.error.format());
+      return thunkAPI.rejectWithValue("Dados inválidos!");
+    }
+
+    const newDish = {
+      ...parseResult.data,
+    };
+
+    const restaurantDishes = localStorage.getItem("restaurantDishes");
+    const parsedRestaurantDishes: DishesType[] = restaurantDishes
+      ? JSON.parse(restaurantDishes)
+      : [];
+
+    parsedRestaurantDishes.push(newDish);
+    localStorage.setItem(
+      "restaurantDishes",
+      JSON.stringify(parsedRestaurantDishes),
+    );
+    return parsedRestaurantDishes.filter(
+      (dish) => dish.restaurantId === restaurantId,
+    );
+  },
+);
 
 export const loadAllDishes = createAsyncThunk(
   "dish/loadAllDishes",
@@ -25,12 +77,16 @@ export const loadRestaurantDishes = createAsyncThunk(
       const parsedDishes = JSON.parse(storageDishes) as DishesType[];
       return parsedDishes;
     }
-    const restaurant = restaurants.find(
-      (restaurant) => restaurantId === restaurant.id,
-    );
+
+    const restaurant = restaurants.find((r) => r.id === restaurantId);
     if (!restaurant) return [];
 
-    localStorage.setItem("restaurantDishes", JSON.stringify(restaurant.dishes));
-    return restaurant.dishes;
+    const mapped = restaurant.dishes.map((dish) => ({
+      ...dish,
+      restaurantId,
+    }));
+
+    localStorage.setItem("restaurantDishes", JSON.stringify(mapped));
+    return mapped;
   },
 );

@@ -1,3 +1,4 @@
+import { DefaultButton } from "@/components/DefaultButton";
 import { DishCard } from "@/components/DishCard";
 import { DishDetails } from "@/components/DishDetails";
 import { RestaurantHeader } from "@/components/RestaurantHeader";
@@ -8,7 +9,7 @@ import { setSelectedDish } from "@/store/slices/dishSlice/dishSlice";
 import { loadRestaurantDishes } from "@/store/slices/dishSlice/dishThunks";
 import { DishesType } from "@/types/dishes";
 import { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 export function RestaurantDishes() {
 
@@ -42,9 +43,17 @@ export function RestaurantDishes() {
     <div className="flex w-full flex-col gap-15">
       <RestaurantHeader />
       {restaurantDishes.length === 0 && (
-        <h1 className="mx-auto text-2xl text-amber-50">
-          Não há nenhum prato cadastrado pelo seu restaurante!
-        </h1>
+        <div className="flex flex-col justify-center items-center gap-5">
+          <h1 className="mx-auto text-2xl text-amber-50">
+            Não há nenhum prato cadastrado pelo seu restaurante!
+          </h1>
+          <Link to="/create-dish">
+            <DefaultButton>
+              CADASTRAR PRATO
+            </DefaultButton>
+          </Link>
+
+        </div>
       )}
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

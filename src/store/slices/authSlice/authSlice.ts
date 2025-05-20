@@ -32,6 +32,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       localStorage.removeItem("authUser");
+      localStorage.removeItem("restaurantDishes");
     },
 
     clearError: (state) => {

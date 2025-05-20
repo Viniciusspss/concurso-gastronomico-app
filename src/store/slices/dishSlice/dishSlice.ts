@@ -1,23 +1,28 @@
 import { DishesType, DishesWithRestaurant } from "@/types/dishes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loadAllDishes, loadRestaurantDishes } from "./dishThunks";
+import { createDish, loadAllDishes, loadRestaurantDishes } from "./dishThunks";
 
 interface DishState {
   dishes: DishesWithRestaurant[];
   restaurantDishes: DishesType[];
   selectedDish: DishesType | null;
+  errorCreateDish: string | null;
 }
 
 const initialState: DishState = {
   dishes: [],
   restaurantDishes: [],
   selectedDish: null,
+  errorCreateDish: null,
 };
 
 const dishSlice = createSlice({
   name: "dish",
   initialState,
   reducers: {
+    clearError: (state) => {
+      state.errorCreateDish = null;
+    },
     setSelectedDish(state, action: PayloadAction<DishesType | null>) {
       state.selectedDish = action.payload;
     },
@@ -61,8 +66,16 @@ const dishSlice = createSlice({
     builder.addCase(loadRestaurantDishes.fulfilled, (state, action) => {
       state.restaurantDishes = action.payload;
     });
+
+    builder.addCase(createDish.fulfilled, (state, action) => {
+      state.restaurantDishes = action.payload;
+    });
+    builder.addCase(createDish.rejected, (state, action) => {
+      state.errorCreateDish = action.payload as string;
+    });
   },
 });
 
-export const { editDish, deleteDish, setSelectedDish } = dishSlice.actions;
+export const { editDish, deleteDish, setSelectedDish, clearError } =
+  dishSlice.actions;
 export default dishSlice.reducer;

@@ -15,6 +15,7 @@ import { EvaluateDish } from "@/pages/app/dishes/EvaluateDish";
 import { About } from "@/pages/app/About";
 import { RestaurantDishes } from "@/pages/app/restaurant/dishes/RestaurantDishes";
 import { EditDish } from "@/pages/app/restaurant/dishes/EditDish";
+import { CreateDishForm } from "@/components/CreateDishForm";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +99,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute type="restaurant">
             <EditDish />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/create-dish",
+        element: (
+          <PrivateRoute type="restaurant">
+            <CreateDishForm />
           </PrivateRoute>
         ),
       },
