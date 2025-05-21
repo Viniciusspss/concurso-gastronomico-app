@@ -47,6 +47,8 @@ export function CreateDishForm() {
             }),
         ).then((action) => {
             if (createDish.fulfilled.match(action)) {
+                console.log("teste")
+                toast.success("Prato cadastrado com sucesso!")
                 navigate(`/restaurant-dishes/${user?.id}`);
             }
         })
