@@ -42,10 +42,11 @@ export function SignIn() {
 
   return (
     <div>
-      <Button variant="dark" className="absolute top-8 left-8" asChild>
+      <Button variant="beige" className="absolute top-8 right-8" asChild>
         <Link to="/">Escolher outro tipo de login</Link>
       </Button>
-      <DefaultForm onSubmit={handleSubmit(onSubmit)}>
+      <DefaultForm className="bg-white p-15 rounded-2xl" onSubmit={handleSubmit(onSubmit)}>
+        <h1 className="flex w-full justify-center mb-10 font-bold text-xl">LOGIN</h1>
         <div className="flex flex-col gap-3">
           <div className="flex gap-2">
             <Label htmlFor="cnpj">CNPJ:</Label>
@@ -71,7 +72,7 @@ export function SignIn() {
             </Link>
           </p>
         </div>
-        <Button type="submit" className="rounded-xl" variant="dark">
+        <Button type="submit" className="rounded-xl" variant="beige">
           Conecte-se
         </Button>
       </DefaultForm>
