@@ -30,7 +30,6 @@ export const createDish = createAsyncThunk(
     });
 
     if (!parseResult.success) {
-      console.log(parseResult.error.format());
       return thunkAPI.rejectWithValue("Dados inválidos!");
     }
 
