@@ -7,7 +7,9 @@ export function RestaurantHeader() {
   const { user } = useAppSelector(state => state.auth);
   return (
     <div className="flex w-full justify-between">
-      <div></div>
+      <Link to="/create-dish">
+        <DefaultButton >CADASTRAR PRATO</DefaultButton>
+      </Link>
       <div className="flex gap-4">
         <Link to={`/restaurant-dishes/${user?.id}`}>
           <DefaultButton className="rounded-2xl text-xs">PRATOS</DefaultButton>
