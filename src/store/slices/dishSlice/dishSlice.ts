@@ -5,7 +5,7 @@ import { createDish, loadAllDishes, loadRestaurantDishes } from "./dishThunks";
 interface DishState {
   dishes: DishesWithRestaurant[];
   restaurantDishes: DishesType[];
-  selectedDish: DishesType | null;
+  selectedDish: DishesWithRestaurant | null;
   errorCreateDish: string | null;
 }
 
@@ -23,7 +23,7 @@ const dishSlice = createSlice({
     clearError: (state) => {
       state.errorCreateDish = null;
     },
-    setSelectedDish(state, action: PayloadAction<DishesType | null>) {
+    setSelectedDish(state, action: PayloadAction<DishesWithRestaurant | null>) {
       state.selectedDish = action.payload;
     },
     editDish: (
