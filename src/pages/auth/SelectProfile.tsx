@@ -8,10 +8,10 @@ export function SelectProfile() {
         Escolha como deseja realizar login
       </h1>
       <div className="flex flex-col items-center justify-center gap-4">
-        <Button className="w-60 shadow-lg" asChild>
+        <Button className="w-60 shadow-lg" variant="beige" asChild>
           <Link to="/SignIn/Restaurant">Restaurante</Link>
         </Button>
-        <Button className="w-60 shadow-lg" asChild>
+        <Button className="w-60 shadow-lg" variant="beige" asChild>
           <Link to="/SignIn/User">Cliente</Link>
         </Button>
       </div>
