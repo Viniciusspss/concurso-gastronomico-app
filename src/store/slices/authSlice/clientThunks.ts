@@ -39,7 +39,7 @@ export const registerClient = createAsyncThunk(
       password,
       firstName,
       lastName,
-      id: "1",
+      id: crypto.randomUUID(),
     };
     const allClients = localStorage.getItem("clients");
     const parsedAllClients: ClientType[] = allClients
