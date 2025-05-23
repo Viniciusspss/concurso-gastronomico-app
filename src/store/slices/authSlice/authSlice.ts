@@ -1,6 +1,6 @@
 import { mockClients, mockRestaurants } from "@/data/users";
 import { UserType } from "@/types/user/user";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginClient, registerClient } from "./clientThunks";
 import { LoginRestaurant, RegisterRestaurant } from "./restaurantThunks";
 
@@ -8,6 +8,7 @@ interface AuthState {
   user: UserType | null;
   errorLogin: string | null;
   errorRegister: string | null;
+  token: string | null;
 }
 
 const storageUser = localStorage.getItem("authUser");
@@ -16,6 +17,7 @@ const initialState: AuthState = {
   user: storageUser ? (JSON.parse(storageUser) as UserType) : null,
   errorLogin: null,
   errorRegister: null,
+  token: localStorage.getItem("token"),
 };
 
 if (!localStorage.getItem("clients")) {
@@ -31,13 +33,20 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
+      state.token = null;
       localStorage.removeItem("authUser");
       localStorage.removeItem("restaurantDishes");
+      localStorage.removeItem("token");
     },
 
     clearError: (state) => {
       state.errorLogin = null;
       state.errorRegister = null;
+    },
+
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+      localStorage.setItem("token", action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -94,6 +103,6 @@ const authSlice = createSlice({
     });
   },
 });
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError, setToken } = authSlice.actions;
 
 export default authSlice.reducer;
