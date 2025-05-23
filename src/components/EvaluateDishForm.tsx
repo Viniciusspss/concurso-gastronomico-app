@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DefaultButton } from "./DefaultButton";
 import { Label } from "./ui/label";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -21,6 +21,7 @@ export function EvaluateDishForm() {
   const dispatch = useAppDispatch()
   const { register, handleSubmit, reset } = useForm<EvaluateDishFormData>()
   const [rating, setRating] = useState<number>()
+  const navigate = useNavigate()
 
 
   function handleCreateReview({ comment }: EvaluateDishFormData) {
@@ -41,9 +42,11 @@ export function EvaluateDishForm() {
 
     dispatch(createReview({ dish_id: selectedDish.id, user_id: user.id, comment, rating })).then(action => {
       if (createReview.fulfilled.match(action)) {
-        toast.success("Avaliação criada com sucesso!");
+        toast.success("Prato avaliado com sucesso!");
         reset();
         setRating(undefined);
+        navigate("/dishes")
+
       } else if (createReview.rejected.match(action)) {
         const errorMessage = typeof action.payload === 'string' ? action.payload : 'Erro ao criar avaliação';
         toast.error(errorMessage);
