@@ -3,12 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createReview } from "./reviewThunk";
 
 interface reviewState {
-  review: reviewType[] | null;
+  reviews: reviewType[] | null;
   errorReview: string | null;
 }
 
 const initialState: reviewState = {
-  review: [],
+  reviews: [],
   errorReview: null,
 };
 
@@ -20,14 +20,14 @@ const reviewSlice = createSlice({
       state.errorReview = null;
     },
     clearReviews: (state) => {
-      state.review = [];
+      state.reviews = [];
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       createReview.fulfilled,
       (state, action: PayloadAction<reviewType[]>) => {
-        state.review = action.payload;
+        state.reviews = action.payload;
         state.errorReview = null;
       },
     );

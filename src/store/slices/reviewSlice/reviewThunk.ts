@@ -23,6 +23,18 @@ export const createReview = createAsyncThunk(
       return thunkAPI.rejectWithValue("Avaliação incompleta!");
     }
 
+    const reviews = localStorage.getItem("reviews");
+    const parsedReviews: reviewType[] = reviews ? JSON.parse(reviews) : [];
+
+    const isVoted = parsedReviews.some((review) => {
+      return user_id === review.user_id && dish_id === review.dish_id;
+    });
+
+    if (isVoted) {
+      return thunkAPI.rejectWithValue(
+        "Só é permitido votar uma vez por prato!",
+      );
+    }
     const newReview = {
       ...parseResult.data,
     };
