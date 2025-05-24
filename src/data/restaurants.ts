@@ -1,25 +1,22 @@
 import { DishesType } from "@/types/dishes";
 import { RestaurantType } from "@/types/user/restaurant";
 
-export const restaurants: RestaurantType[] = [
+export const mockRestaurants: RestaurantType[] = [
   {
     id: crypto.randomUUID(),
-    cnpj: "000",
+    cnpj: "20.182.807/0004-42",
     name: "BDC",
     password: "123",
     dishes: [],
   },
   {
     id: "2",
-    cnpj: "001",
+    cnpj: "20.182.807/0004-43",
     name: "Bar da Curva",
     password: "123",
     dishes: [],
   },
 ];
-
-const restaurantId = restaurants[0].id;
-const restaurantId2 = restaurants[1].id;
 
 const dish: DishesType = {
   id: crypto.randomUUID(),
@@ -27,7 +24,6 @@ const dish: DishesType = {
   title: "Arroz",
   description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   price: 35,
-  restaurantId: restaurantId,
 };
 
 const dish2: DishesType = {
@@ -36,8 +32,7 @@ const dish2: DishesType = {
   title: "Cuscuz",
   description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   price: 35,
-  restaurantId: restaurantId2,
 };
 
-restaurants[0].dishes.push(dish);
-restaurants[1].dishes.push(dish2);
+mockRestaurants[0].dishes.push(dish);
+mockRestaurants[1].dishes.push(dish2);
