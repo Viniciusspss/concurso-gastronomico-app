@@ -7,18 +7,3 @@ export const mockClients = [
     lastName: "Silva",
   },
 ];
-
-export const mockRestaurants = [
-  {
-    id: crypto.randomUUID(),
-    cnpj: "000",
-    password: "123",
-    name: "BDC",
-  },
-  {
-    id: crypto.randomUUID(),
-    cnpj: "001",
-    password: "123",
-    name: "Bar da Curva",
-  },
-];
