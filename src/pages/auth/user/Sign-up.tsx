@@ -39,14 +39,14 @@ export function SignUp() {
     return () => { dispatch(clearError()) }
   }, [dispatch])
 
-  function onSubmit({ email, password, firstName, lastName, repeatPassword }: SignUpFormData) {
+  function onSubmit({ email, password, first_name, last_name, repeatPassword }: SignUpFormData) {
     if (password === repeatPassword) {
       dispatch(registerClient(
         {
           email,
           password,
-          firstName,
-          lastName,
+          first_name,
+          last_name,
         }
       ));
 
@@ -61,7 +61,7 @@ export function SignUp() {
           <Input
             id="firstName"
             placeholder="Digite seu primeiro nome"
-            {...register("firstName", {
+            {...register("first_name", {
               required: "Primeiro nome é obrigatório",
             })}
           />
@@ -71,7 +71,7 @@ export function SignUp() {
           <Input
             id="lastName"
             placeholder="Digite seu último nome"
-            {...register("lastName", { required: "Ultimo nome é obrigatório" })}
+            {...register("last_name", { required: "Ultimo nome é obrigatório" })}
           />
         </div>
         <div className="flex flex-col gap-2">
