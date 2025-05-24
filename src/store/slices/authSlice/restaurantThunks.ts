@@ -7,34 +7,44 @@ import axios from "axios";
 export const LoginRestaurant = createAsyncThunk(
   "auth/loginRestaurant",
   async ({ cnpj, password }: { cnpj: string; password: string }, thunkAPI) => {
-    const response = await api.post("restaurants/auth/login", {
-      cnpj,
-      password,
-    });
+    try {
+      const response = await api.post("restaurants/auth/login", {
+        cnpj,
+        password,
+      });
 
-    const {
-      id,
-      name,
-      cnpj: restaurantCnpj,
-      tokens,
-      dishes,
-      password: restaurantPassword,
-    } = response.data;
+      const {
+        id,
+        name,
+        cnpj: restaurantCnpj,
+        tokens,
+        dishes,
+        password: restaurantPassword,
+      } = response.data;
 
-    const restaurant = {
-      id,
-      name,
-      cnpj: restaurantCnpj,
-      password: restaurantPassword,
-      dishes,
-    };
+      const restaurant = {
+        id,
+        name,
+        cnpj: restaurantCnpj,
+        password: restaurantPassword,
+        dishes,
+      };
 
-    const token = tokens.acessToken;
+      const token = tokens.acessToken;
 
-    localStorage.setItem("authUser", JSON.stringify(restaurant));
-    thunkAPI.dispatch(setToken(token));
+      localStorage.setItem("authUser", JSON.stringify(restaurant));
+      thunkAPI.dispatch(setToken(token));
 
-    return restaurant;
+      return restaurant;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          "Erro desconhecido ao tentar realizar login";
+        return thunkAPI.rejectWithValue(message);
+      }
+    }
   },
 );
 
