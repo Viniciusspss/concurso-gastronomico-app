@@ -1,4 +1,5 @@
-import { mockClients, mockRestaurants } from "@/data/users";
+import { mockRestaurants } from "@/data/restaurants";
+import { mockClients } from "@/data/users";
 import { UserType } from "@/types/user/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginClient, registerClient } from "./clientThunks";
