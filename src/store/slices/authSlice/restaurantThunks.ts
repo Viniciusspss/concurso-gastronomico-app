@@ -1,23 +1,40 @@
-import { restaurantFormSchema, RestaurantType } from "@/types/user/restaurant";
+import api from "@/api/axios";
+import { restaurantFormSchema } from "@/types/user/restaurant";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setToken } from "./authSlice";
+import axios from "axios";
 
 export const LoginRestaurant = createAsyncThunk(
   "auth/loginRestaurant",
   async ({ cnpj, password }: { cnpj: string; password: string }, thunkAPI) => {
-    const restaurants = localStorage.getItem("restaurants");
-    const restaurantsParsed: RestaurantType[] = restaurants
-      ? JSON.parse(restaurants)
-      : [];
+    const response = await api.post("restaurants/auth/login", {
+      cnpj,
+      password,
+    });
 
-    const restaurant = restaurantsParsed.find(
-      (c) => c.cnpj === cnpj && c.password === password,
-    );
-    if (restaurant) {
-      localStorage.setItem("authUser", JSON.stringify(restaurant));
-      return restaurant;
-    } else {
-      return thunkAPI.rejectWithValue("cnpj ou senha inválidos!");
-    }
+    const {
+      id,
+      name,
+      cnpj: restaurantCnpj,
+      tokens,
+      dishes,
+      password: restaurantPassword,
+    } = response.data;
+
+    const restaurant = {
+      id,
+      name,
+      cnpj: restaurantCnpj,
+      password: restaurantPassword,
+      dishes,
+    };
+
+    const token = tokens.acessToken;
+
+    localStorage.setItem("authUser", JSON.stringify(restaurant));
+    thunkAPI.dispatch(setToken(token));
+
+    return restaurant;
   },
 );
 
@@ -37,23 +54,43 @@ export const RegisterRestaurant = createAsyncThunk(
       return thunkAPI.rejectWithValue("Dados inválidos no cadastro!");
     }
 
-    const allRestaurants = localStorage.getItem("restaurants");
-    const parsedAllRestaurants: RestaurantType[] = allRestaurants
-      ? JSON.parse(allRestaurants)
-      : [];
+    try {
+      const response = await api.post("/restaurants", { ...parseResult.data });
 
-    if (parsedAllRestaurants.some((restaurant) => restaurant.cnpj === cnpj)) {
-      return thunkAPI.rejectWithValue("cnpj já cadastrado!");
-    } else {
+      const {
+        id,
+        name: restaurantName,
+        cnpj: restaurantCnpj,
+        tokens,
+        dishes,
+        password: restaurantPassword,
+      } = response.data;
+
       const restaurant = {
-        ...parseResult.data,
-        id: crypto.randomUUID(),
-        dishes: [],
+        id,
+        name: restaurantName,
+        cnpj: restaurantCnpj,
+        password: restaurantPassword,
+        dishes,
       };
-      parsedAllRestaurants.push(restaurant);
-      localStorage.setItem("restaurants", JSON.stringify(parsedAllRestaurants));
+
+      const token = tokens.acessToken;
+
       localStorage.setItem("authUser", JSON.stringify(restaurant));
+      thunkAPI.dispatch(setToken(token));
       return restaurant;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          "Erro desconhecido ao registrar restaurante";
+        return thunkAPI.rejectWithValue(message);
+      }
+
+      return thunkAPI.rejectWithValue(
+        "Erro desconhecido ao registrar restaurante",
+      );
     }
   },
 );
