@@ -34,7 +34,7 @@ export function SignUp() {
     if (user) {
       toast.dismiss();
       toast.success("Usuário registrado com sucesso!");
-      setTimeout(() => navigate(`/restaurant-dishes/${user.id}`), 3000);
+      // setTimeout(() => navigate(`/restaurant-dishes/${user.id}`), 3000);
 
     }
     ;
@@ -94,7 +94,7 @@ export function SignUp() {
 
             placeholder="Digite sua senha novamente"
             {...register("repeatPassword", {
-              required: "cnpj é obrigatório",
+              required: "repetir senha é obrigatório",
               validate: (value) =>
                 value === watch("password") || "As senhas não coincidem",
             })}
