@@ -52,7 +52,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginClient.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.user = action.payload || null;
       state.errorLogin = null;
     });
 
@@ -65,7 +65,7 @@ const authSlice = createSlice({
     });
 
     builder.addCase(registerClient.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.user = action.payload || null;
       state.errorRegister = null;
     });
 
@@ -78,7 +78,7 @@ const authSlice = createSlice({
     });
 
     builder.addCase(LoginRestaurant.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.user = action.payload || null;
       state.errorLogin = null;
     });
 
