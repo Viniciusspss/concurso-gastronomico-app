@@ -55,6 +55,7 @@ export const RegisterRestaurant = createAsyncThunk(
     thunkAPI,
   ) => {
     const parseResult = restaurantFormSchema.safeParse({
+      id: crypto.randomUUID(),
       cnpj,
       name,
       password,
