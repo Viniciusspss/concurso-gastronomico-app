@@ -1,7 +1,11 @@
 import api from "@/api/axios";
-import { clientSchema, ClientType } from "@/types/user/client";
+import {
+  clientSchema,
+  ClientType,
+  loginClientSchema,
+} from "@/types/user/client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setToken } from "./authSlice";
+import { setTokens } from "./authSlice";
 import axios from "axios";
 
 export const loginClient = createAsyncThunk(
@@ -10,7 +14,7 @@ export const loginClient = createAsyncThunk(
     { email, password }: { email: string; password: string },
     thunkAPI,
   ) => {
-    const parseResult = clientSchema.safeParse({
+    const parseResult = loginClientSchema.safeParse({
       email,
       password,
     });
@@ -41,8 +45,9 @@ export const loginClient = createAsyncThunk(
         last_name,
       };
 
-      const token = tokens.acessToken;
-      thunkAPI.dispatch(setToken(token));
+      const acessToken = tokens.acessToken;
+      const refreshToken = tokens.refreshToken;
+      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
 
       return client;
     } catch (error) {
@@ -93,8 +98,9 @@ export const registerClient = createAsyncThunk(
       const { id, first_name, last_name, email, password, tokens } =
         response.data;
 
-      const token = tokens.acessToken;
-      thunkAPI.dispatch(setToken(token));
+      const acessToken = tokens.acessToken;
+      const refreshToken = tokens.refreshToken;
+      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
 
       const client: ClientType = {
         id,
@@ -103,7 +109,6 @@ export const registerClient = createAsyncThunk(
         last_name,
         password,
       };
-
       return client;
     } catch (error) {
       if (axios.isAxiosError(error)) {
