@@ -24,7 +24,7 @@ export function SignIn() {
 
   useEffect(() => {
     if (user) {
-      // navigate(`/restaurant-dishes/${user.id}`)
+      navigate(`/restaurant-dishes/${user.id}`)
     }
 
     if (errorLogin) {
