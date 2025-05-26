@@ -12,10 +12,10 @@ import { toast } from "react-toastify";
 import { clearError } from "@/store/slices/dishSlice/dishSlice";
 
 type createDishFormData = {
-    imageURL: string,
-    price: number,
-    description: string,
-    title: string
+    image_url: string,
+    price: string,
+    details: string,
+    name: string
 }
 
 export function CreateDishForm() {
@@ -32,18 +32,19 @@ export function CreateDishForm() {
             toast.error(errorCreateDish)
             dispatch(clearError())
         }
-    }, [errorCreateDish, navigate, user?.id, dispatch])
+    }, [errorCreateDish, user?.id, dispatch])
 
 
-    const handleCreateDish = ({ description, imageURL, title, price }: createDishFormData) => {
+
+
+    const handleCreateDish = ({ details, image_url, name, price }: createDishFormData) => {
         if (!user?.id) return;
         dispatch(
             createDish({
-                title,
-                price,
-                description,
-                imageURL,
-                restaurantId: user.id,
+                name,
+                price: parseFloat(price).toFixed(2),
+                details,
+                image_url,
             }),
         ).then((action) => {
             if (createDish.fulfilled.match(action)) {
@@ -63,9 +64,9 @@ export function CreateDishForm() {
                     </Label>
                     <Input
                         className="bg-amber-50"
-                        id="title"
+                        id="name"
                         placeholder="Insira o título do prato"
-                        {...register("title")}
+                        {...register("name")}
                     ></Input>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -84,20 +85,20 @@ export function CreateDishForm() {
                     ></Input>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <Label className="text-amber-50" htmlFor="description">
+                    <Label className="text-amber-50" htmlFor="details">
                         Descrição:
                     </Label>
-                    <textarea className="bg-amber-50 text-black" id="description"  {...register("description")} />
+                    <textarea className="bg-amber-50 text-black" id="details"  {...register("details")} />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <Label className="text-amber-50" htmlFor="imageURL">
+                    <Label className="text-amber-50" htmlFor="image_url">
                         Imagem do prato:
                     </Label>
                     <Input
                         className="bg-amber-50"
-                        id="imageURL"
+                        id="image_url"
                         placeholder="Insira o link da imagem do prato"
-                        {...register("imageURL")}
+                        {...register("image_url")}
                     ></Input>
                 </div>
 
