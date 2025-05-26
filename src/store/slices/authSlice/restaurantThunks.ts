@@ -1,7 +1,6 @@
 import api from "@/api/axios";
-import { restaurantFormSchema } from "@/types/user/restaurant";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setToken } from "./authSlice";
+import { setTokens } from "./authSlice";
 import axios from "axios";
 
 export const LoginRestaurant = createAsyncThunk(
@@ -20,6 +19,7 @@ export const LoginRestaurant = createAsyncThunk(
         tokens,
         dishes,
         password: restaurantPassword,
+        image_url,
       } = response.data;
 
       const restaurant = {
@@ -28,12 +28,14 @@ export const LoginRestaurant = createAsyncThunk(
         cnpj: restaurantCnpj,
         password: restaurantPassword,
         dishes,
+        image_url,
       };
 
-      const token = tokens.acessToken;
+      const acessToken = tokens.acessToken;
+      const refreshToken = tokens.refreshToken;
 
       localStorage.setItem("authUser", JSON.stringify(restaurant));
-      thunkAPI.dispatch(setToken(token));
+      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
 
       return restaurant;
     } catch (error) {
@@ -50,45 +52,27 @@ export const LoginRestaurant = createAsyncThunk(
 
 export const RegisterRestaurant = createAsyncThunk(
   "auth/registerRestaurant",
-  async (
-    { cnpj, name, password }: { cnpj: string; name: string; password: string },
-    thunkAPI,
-  ) => {
-    const parseResult = restaurantFormSchema.safeParse({
-      id: crypto.randomUUID(),
-      cnpj,
-      name,
-      password,
-    });
-
-    if (!parseResult.success) {
-      return thunkAPI.rejectWithValue("Dados inválidos no cadastro!");
-    }
-
+  async (formData: FormData, thunkAPI) => {
     try {
-      const response = await api.post("/restaurants", { ...parseResult.data });
+      const response = await api.post("/restaurants", formData);
 
-      const {
-        id,
-        name: restaurantName,
-        cnpj: restaurantCnpj,
-        tokens,
-        dishes,
-        password: restaurantPassword,
-      } = response.data;
+      const { id, name, cnpj, tokens, dishes, image_url, password } =
+        response.data;
 
       const restaurant = {
         id,
-        name: restaurantName,
-        cnpj: restaurantCnpj,
-        password: restaurantPassword,
+        name,
+        cnpj,
+        password,
+        image_url,
         dishes,
       };
 
-      const token = tokens.acessToken;
+      const acessToken = tokens.acessToken;
+      const refreshToken = tokens.refreshToken;
 
       localStorage.setItem("authUser", JSON.stringify(restaurant));
-      thunkAPI.dispatch(setToken(token));
+      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
       return restaurant;
     } catch (error) {
       if (axios.isAxiosError(error)) {
