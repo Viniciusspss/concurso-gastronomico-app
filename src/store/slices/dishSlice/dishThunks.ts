@@ -1,43 +1,20 @@
 import api from "@/api/axios";
 import { RootState } from "@/store/store";
-import { dishesSchema, getAllDishesResponse } from "@/types/dishes";
+import { getAllDishesResponse } from "@/types/dishes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const createDish = createAsyncThunk(
   "dish/createDish",
-  async (
-    {
-      name,
-      price,
-      details,
-      image_url,
-    }: {
-      name: string;
-      price: string;
-      details: string;
-      image_url: string;
-    },
-    thunkAPI,
-  ) => {
-    const parseResult = dishesSchema.safeParse({
-      id: crypto.randomUUID(),
-      name,
-      price,
-      details,
-      image_url,
-    });
-
-    if (!parseResult.success) {
-      return thunkAPI.rejectWithValue("Dados inválidos!");
-    }
+  async (data: FormData, thunkAPI) => {
+    const response = thunkAPI.getState() as RootState;
+    const token = response.auth.acessToken;
 
     try {
-      await api.post("/dishes", {
-        id: crypto.randomUUID(),
-        name,
-        price,
-        details,
+      await api.post("/dishes/me", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return true;
@@ -81,8 +58,16 @@ export const loadRestaurantDishes = createAsyncThunk(
     if (!user) {
       return thunkAPI.rejectWithValue("Usuáro não encontrado");
     }
+
+    const response = thunkAPI.getState() as RootState;
+    const token = response.auth.acessToken;
+
     try {
-      const response = await api.get("/dishes");
+      const response = await api.get("/dishes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data: getAllDishesResponse[] = response.data;
 
       const restaurantDishes: getAllDishesResponse[] = data.filter(
