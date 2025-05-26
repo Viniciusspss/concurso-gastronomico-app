@@ -1,5 +1,3 @@
-import { mockRestaurants } from "@/data/restaurants";
-import { mockClients } from "@/data/users";
 import { UserType } from "@/types/user/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginClient, registerClient } from "./clientThunks";
@@ -9,7 +7,8 @@ interface AuthState {
   user: UserType | null;
   errorLogin: string | null;
   errorRegister: string | null;
-  token: string | null;
+  acessToken: string | null;
+  refreshToken: string | null;
 }
 
 const storageUser = localStorage.getItem("authUser");
@@ -18,15 +17,9 @@ const initialState: AuthState = {
   user: storageUser ? (JSON.parse(storageUser) as UserType) : null,
   errorLogin: null,
   errorRegister: null,
-  token: localStorage.getItem("token"),
+  acessToken: localStorage.getItem("acessToken"),
+  refreshToken: localStorage.getItem("refreshToken"),
 };
-
-if (!localStorage.getItem("clients")) {
-  localStorage.setItem("clients", JSON.stringify(mockClients));
-}
-if (!localStorage.getItem("restaurants")) {
-  localStorage.setItem("restaurants", JSON.stringify(mockRestaurants));
-}
 
 const authSlice = createSlice({
   name: "auth",
@@ -34,10 +27,12 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      state.token = null;
+      state.acessToken = null;
+      state.refreshToken = null;
       localStorage.removeItem("authUser");
       localStorage.removeItem("restaurantDishes");
-      localStorage.removeItem("token");
+      localStorage.removeItem("acessToken");
+      localStorage.removeItem("refreshToken");
     },
 
     clearError: (state) => {
@@ -46,8 +41,18 @@ const authSlice = createSlice({
     },
 
     setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
-      localStorage.setItem("token", action.payload);
+      state.acessToken = action.payload;
+      localStorage.setItem("acessToken", action.payload);
+    },
+
+    setTokens: (
+      state,
+      action: PayloadAction<{ acessToken: string; refreshToken: string }>,
+    ) => {
+      state.acessToken = action.payload.acessToken;
+      state.refreshToken = action.payload.refreshToken;
+      localStorage.setItem("acessToken", action.payload.acessToken);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
     },
   },
   extraReducers: (builder) => {
@@ -104,6 +109,6 @@ const authSlice = createSlice({
     });
   },
 });
-export const { logout, clearError, setToken } = authSlice.actions;
+export const { logout, clearError, setToken, setTokens } = authSlice.actions;
 
 export default authSlice.reducer;
