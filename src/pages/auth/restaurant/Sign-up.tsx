@@ -6,26 +6,21 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { clearError } from "@/store/slices/authSlice/authSlice";
 import { RegisterRestaurant } from "@/store/slices/authSlice/restaurantThunks";
-import { restaurantSchema } from "@/types/user/restaurant";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { signUpFormDataSchema } from "@/types/user/restaurant";
 
-export const signUpFormDataSchema = restaurantSchema.omit({ id: true, dishes: true }).extend(
-  {
-    repeatPassword: z.string()
-  }
-)
 
 export type SignUpFormData = z.infer<typeof signUpFormDataSchema>
 
 export function SignUp() {
   const { user, errorRegister } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<SignUpFormData>({
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormDataSchema)
   });
   const navigate = useNavigate();
@@ -34,8 +29,7 @@ export function SignUp() {
     if (user) {
       toast.dismiss();
       toast.success("Usuário registrado com sucesso!");
-      // setTimeout(() => navigate(`/restaurant-dishes/${user.id}`), 3000);
-
+      setTimeout(() => navigate(`/restaurant-dishes/${user.id}`), 3000);
     }
     ;
     if (errorRegister) {
@@ -49,12 +43,19 @@ export function SignUp() {
     };
   }, [dispatch]);
 
-  function onSubmit({ cnpj, name, password, repeatPassword }: SignUpFormData) {
-    if (password === repeatPassword) {
-      dispatch(RegisterRestaurant({ cnpj, name, password }));
-    } else {
-      toast.error("As senhas não coincidem!")
+  function onSubmit({ cnpj, name, password, repeatPassword, image_url }: SignUpFormData) {
+    if (password !== repeatPassword) {
+      toast.error("As senhas não coincidem!");
+      return;
     }
+    const formData = new FormData();
+    formData.append("cnpj", cnpj);
+    formData.append("name", name);
+    formData.append("password", password);
+    formData.append("image", image_url);
+
+    dispatch(RegisterRestaurant(formData));
+
   }
 
   return (
@@ -98,6 +99,21 @@ export function SignUp() {
               validate: (value) =>
                 value === watch("password") || "As senhas não coincidem",
             })}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="image_url">Imagem do restaurante:</Label>
+          <Input
+            id="image_url"
+            type="file"
+            name="image"
+            onChange={e => {
+              const file = e.target.files?.[0]
+              if (file) {
+                setValue("image_url", file, { shouldValidate: true })
+              }
+            }}
+
           />
         </div>
         <p className="text-xs">
