@@ -1,91 +1,103 @@
-import { restaurants } from "@/data/restaurants";
-import { dishesSchema, DishesType, DishesWithRestaurant } from "@/types/dishes";
+import api from "@/api/axios";
+import { RootState } from "@/store/store";
+import { dishesSchema, getAllDishesResponse } from "@/types/dishes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const createDish = createAsyncThunk(
   "dish/createDish",
   async (
     {
-      title,
+      name,
       price,
-      description,
-      imageURL,
-      restaurantId,
+      details,
+      image_url,
     }: {
-      title: string;
-      price: number;
-      description: string;
-      imageURL: string;
-      restaurantId: string;
+      name: string;
+      price: string;
+      details: string;
+      image_url: string;
     },
     thunkAPI,
   ) => {
     const parseResult = dishesSchema.safeParse({
       id: crypto.randomUUID(),
-      title,
+      name,
       price,
-      description,
-      imageURL,
-      restaurantId,
+      details,
+      image_url,
     });
 
     if (!parseResult.success) {
       return thunkAPI.rejectWithValue("Dados inválidos!");
     }
 
-    const newDish = {
-      ...parseResult.data,
-    };
+    try {
+      await api.post("/dishes", {
+        id: crypto.randomUUID(),
+        name,
+        price,
+        details,
+      });
 
-    const restaurantDishes = localStorage.getItem("restaurantDishes");
-    const parsedRestaurantDishes: DishesType[] = restaurantDishes
-      ? JSON.parse(restaurantDishes)
-      : [];
-
-    parsedRestaurantDishes.push(newDish);
-    localStorage.setItem(
-      "restaurantDishes",
-      JSON.stringify(parsedRestaurantDishes),
-    );
-    return parsedRestaurantDishes.filter(
-      (dish) => dish.restaurantId === restaurantId,
-    );
+      return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          "Erro desconhecido ao tentar criar novo prato!";
+        return thunkAPI.rejectWithValue(message);
+      }
+    }
   },
 );
 
 export const loadAllDishes = createAsyncThunk(
   "dish/loadAllDishes",
-  async (): Promise<DishesWithRestaurant[]> => {
-    const allDishes = restaurants.flatMap((restaurant) => {
-      return restaurant.dishes.map((dish) => ({
-        ...dish,
-        restaurant: { name: restaurant.name },
-      }));
-    });
-    localStorage.setItem("dishes", JSON.stringify(allDishes));
-    return allDishes;
+  async (_, thunkAPI) => {
+    const response = thunkAPI.getState() as RootState;
+    const token = response.auth.acessToken;
+    try {
+      const response = await api.get("/dishes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const allDishes = response.data;
+      return allDishes;
+    } catch {
+      return thunkAPI.rejectWithValue("Não foi possivel carregar os pratos!");
+    }
   },
 );
 
 export const loadRestaurantDishes = createAsyncThunk(
   "dish/loadRestaurantDishes",
-  async (restaurantId: string) => {
-    const storageDishes = localStorage.getItem("restaurantDishes");
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const user = state.auth.user;
 
-    if (storageDishes) {
-      const parsedDishes = JSON.parse(storageDishes) as DishesType[];
-      return parsedDishes;
+    if (!user) {
+      return thunkAPI.rejectWithValue("Usuáro não encontrado");
     }
+    try {
+      const response = await api.get("/dishes");
+      const data: getAllDishesResponse[] = response.data;
 
-    const restaurant = restaurants.find((r) => r.id === restaurantId);
-    if (!restaurant) return [];
+      const restaurantDishes: getAllDishesResponse[] = data.filter(
+        (dish) => dish.restaurant.select.id === user.id,
+      );
 
-    const mapped = restaurant.dishes.map((dish) => ({
-      ...dish,
-      restaurantId,
-    }));
-
-    localStorage.setItem("restaurantDishes", JSON.stringify(mapped));
-    return mapped;
+      return restaurantDishes;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          "Erro desconhecido ao tentar carregar pratos!";
+        return thunkAPI.rejectWithValue(message);
+      }
+    }
   },
 );
