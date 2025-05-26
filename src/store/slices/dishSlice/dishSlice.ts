@@ -1,12 +1,14 @@
-import { DishesType, DishesWithRestaurant } from "@/types/dishes";
+import { getAllDishesResponse } from "@/types/dishes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createDish, loadAllDishes, loadRestaurantDishes } from "./dishThunks";
 
 interface DishState {
-  dishes: DishesWithRestaurant[];
-  restaurantDishes: DishesType[];
-  selectedDish: DishesWithRestaurant | null;
+  dishes: getAllDishesResponse[];
+  restaurantDishes: getAllDishesResponse[];
+  selectedDish: getAllDishesResponse | null;
   errorCreateDish: string | null;
+  isCreated: boolean;
+  loadError: string | null;
 }
 
 const initialState: DishState = {
@@ -14,6 +16,8 @@ const initialState: DishState = {
   restaurantDishes: [],
   selectedDish: null,
   errorCreateDish: null,
+  isCreated: false,
+  loadError: null,
 };
 
 const dishSlice = createSlice({
@@ -23,26 +27,26 @@ const dishSlice = createSlice({
     clearError: (state) => {
       state.errorCreateDish = null;
     },
-    setSelectedDish(state, action: PayloadAction<DishesWithRestaurant | null>) {
+    setSelectedDish(state, action: PayloadAction<getAllDishesResponse | null>) {
       state.selectedDish = action.payload;
     },
     editDish: (
       state,
       action: PayloadAction<{
         dishId: string;
-        title: string;
+        name: string;
         price: number;
-        description: string;
+        details: string;
       }>,
     ) => {
-      const { dishId, price, description, title } = action.payload;
+      const { dishId, price, details, name } = action.payload;
       const updatedDishes = state.restaurantDishes.map((dish) => {
         if (dish.id === dishId) {
           return {
             ...dish,
-            title,
-            price,
-            description,
+            name,
+            price: JSON.stringify(price),
+            details,
           };
         }
         return dish;
@@ -65,16 +69,21 @@ const dishSlice = createSlice({
     builder.addCase(loadAllDishes.fulfilled, (state, action) => {
       state.dishes = action.payload;
     });
-
-    builder.addCase(loadRestaurantDishes.fulfilled, (state, action) => {
-      state.restaurantDishes = action.payload;
+    builder.addCase(loadAllDishes.rejected, (state, action) => {
+      state.loadError = action.payload as string;
     });
 
-    builder.addCase(createDish.fulfilled, (state, action) => {
-      state.restaurantDishes = action.payload;
+    builder.addCase(loadRestaurantDishes.fulfilled, (state, action) => {
+      state.restaurantDishes = action.payload || [];
+    });
+
+    builder.addCase(createDish.fulfilled, (state) => {
+      state.isCreated = true;
+      state.errorCreateDish = null;
     });
     builder.addCase(createDish.rejected, (state, action) => {
       state.errorCreateDish = action.payload as string;
+      state.isCreated = false;
     });
   },
 });
