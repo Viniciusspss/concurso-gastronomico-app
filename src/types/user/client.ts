@@ -31,4 +31,27 @@ export const clientSchema = z.object({
     }),
 });
 
+export const loginClientSchema = z.object({
+  email: z
+    .string({
+      required_error: "Email é obrigatório!",
+    })
+    .trim()
+    .email({
+      message: "Por favor insira um email válido!",
+    })
+    .min(1, {
+      message: "Por favor insira um email válido!",
+    }),
+  password: z
+    .string({
+      required_error: "Password é obrigatório!",
+    })
+    .trim()
+    .min(6, {
+      message: "Senha precisa ter no mínimo 6 caracteres",
+    }),
+});
+
 export type ClientType = z.infer<typeof clientSchema>;
+export type LoginClientType = z.infer<typeof loginClientSchema>;
