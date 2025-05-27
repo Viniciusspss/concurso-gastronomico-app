@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { setSelectedDish } from "@/store/slices/dishSlice/dishSlice";
 import { loadRestaurantDishes } from "@/store/slices/dishSlice/dishThunks";
-import { DishesType } from "@/types/dishes";
+import { getAllDishesResponse } from "@/types/dishes";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export function RestaurantDishes() {
 
   useEffect(() => {
     if (user?.id) {
-      dispatch(loadRestaurantDishes(user.id))
+      dispatch(loadRestaurantDishes())
     }
   }, [dispatch, user?.id]);
 
@@ -29,9 +29,10 @@ export function RestaurantDishes() {
     return <Navigate to="/" />;
   }
 
-  const handleOpenDialog = (dish: DishesType) => {
+  const handleOpenDialog = (dish: getAllDishesResponse) => {
     setIsDetailsOpen(true);
     dispatch(setSelectedDish(dish))
+
   };
 
   const handleCloseDialog = () => {
