@@ -39,7 +39,7 @@ api.interceptors.response.use(
           { refreshToken },
         );
 
-        const newAccessToken = response.data.accessToken;
+        const newAccessToken = response.data.acessToken;
 
         localStorage.setItem("acessToken", newAccessToken);
 
@@ -50,6 +50,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         localStorage.removeItem("acessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("authUser");
         window.location.href = "/";
         return Promise.reject(refreshError);
       }
