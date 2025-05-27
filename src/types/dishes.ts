@@ -2,7 +2,11 @@ import { z } from "zod";
 
 export const dishesSchema = z.object({
   id: z.string().uuid(),
-  image_url: z.string().url(),
+  image_url: z
+    .instanceof(File, { message: "Imagem é obrigatória" })
+    .refine((file) => file.size > 0, {
+      message: "O arquivo não pode estar vazio",
+    }),
   name: z.string().min(1),
   details: z.string().min(5),
   price: z.string().refine((val) => /^\d+(\.\d{2})$/.test(val), {
@@ -50,18 +54,12 @@ export const getAllDishesResponseSchema = dishesSchema.extend({
   }),
 });
 
-export const createDishesSchema = z.object({
-  image_url: z
-    .instanceof(File, { message: "Imagem é obrigatória" })
-    .refine((file) => file.size > 0, {
-      message: "O arquivo não pode estar vazio",
-    }),
-  price: z.string(),
-  details: z.string().min(1),
-  name: z.string().min(1),
+export const createDishesSchema = dishesSchema.omit({
+  id: true,
 });
 
 export type DishesType = z.infer<typeof dishesSchema>;
 export type DishesWithRestaurant = z.infer<typeof dishesWithRestaurantSchema>;
 export type getAllDishesResponse = z.infer<typeof getAllDishesResponseSchema>;
 export type createDishFormData = z.infer<typeof createDishesSchema>;
+export type editDishFormData = z.infer<typeof createDishesSchema>;
