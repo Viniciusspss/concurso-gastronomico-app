@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { dishesWithRestaurantSchema } from "../dishes";
+import { dishesSchema } from "../dishes";
 
 export const restaurantSchema = z.object({
   id: z.string().uuid(),
   cnpj: z.string(),
   name: z.string(),
   password: z.string(),
-  dishes: z.array(dishesWithRestaurantSchema),
+  dishes: z.array(dishesSchema),
   image_url: z
     .instanceof(File, { message: "Imagem é obrigatória" })
     .refine((file) => file.size > 0, {
