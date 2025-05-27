@@ -1,4 +1,4 @@
-import { DishesType, DishesWithRestaurant } from "@/types/dishes";
+import { DishesType, getAllDishesResponse } from "@/types/dishes";
 import imageDish from "@/assets/pratoImage.jpg";
 import { DefaultButton } from "@/components/DefaultButton";
 import {
@@ -14,7 +14,7 @@ import { DishDelete } from "./DishDelete";
 import { useAppSelector } from "@/hooks/useAppSelector";
 
 type DishDetailsProps = {
-  dish?: DishesWithRestaurant;
+  dish?: getAllDishesResponse;
   restaurantDish?: DishesType;
   onClose: () => void;
 };
@@ -39,10 +39,10 @@ export function DishDetails({
             <div className="flex flex-col gap-3">
               <DialogHeader>
                 <DialogTitle className="font-bold text-amber-500">
-                  {dish ? dish.title : restaurantDish?.title}
+                  {dish ? dish.name : restaurantDish?.name}
                 </DialogTitle>
                 <DialogDescription className="text-amber-50">
-                  {dish ? dish.description : restaurantDish?.description}
+                  {dish ? dish.details : restaurantDish?.details}
                 </DialogDescription>
                 <DialogDescription className="text-amber-50">
                   <span className="text-amber-500">Restaurante: </span>
