@@ -1,6 +1,11 @@
 import { getAllDishesResponse } from "@/types/dishes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createDish, loadAllDishes, loadRestaurantDishes } from "./dishThunks";
+import {
+  createDish,
+  editDish,
+  loadAllDishes,
+  loadRestaurantDishes,
+} from "./dishThunks";
 
 interface DishState {
   dishes: getAllDishesResponse[];
@@ -9,6 +14,8 @@ interface DishState {
   errorCreateDish: string | null;
   isCreated: boolean;
   loadError: string | null;
+  isEditedDish: boolean;
+  editedError: string | null;
 }
 
 const initialState: DishState = {
@@ -18,6 +25,8 @@ const initialState: DishState = {
   errorCreateDish: null,
   isCreated: false,
   loadError: null,
+  isEditedDish: false,
+  editedError: null,
 };
 
 const dishSlice = createSlice({
@@ -26,34 +35,11 @@ const dishSlice = createSlice({
   reducers: {
     clearError: (state) => {
       state.errorCreateDish = null;
+      state.loadError = null;
+      state.editedError = null;
     },
     setSelectedDish(state, action: PayloadAction<getAllDishesResponse | null>) {
       state.selectedDish = action.payload;
-    },
-    editDish: (
-      state,
-      action: PayloadAction<{
-        dishId: string;
-        name: string;
-        price: number;
-        details: string;
-      }>,
-    ) => {
-      const { dishId, price, details, name } = action.payload;
-      const updatedDishes = state.restaurantDishes.map((dish) => {
-        if (dish.id === dishId) {
-          return {
-            ...dish,
-            name,
-            price: JSON.stringify(price),
-            details,
-          };
-        }
-        return dish;
-      });
-
-      state.restaurantDishes = updatedDishes;
-      localStorage.setItem("restaurantDishes", JSON.stringify(updatedDishes));
     },
     deleteDish: (state, action: PayloadAction<{ dishId: string }>) => {
       const updatedDishes = state.restaurantDishes.filter(
@@ -85,9 +71,16 @@ const dishSlice = createSlice({
       state.errorCreateDish = action.payload as string;
       state.isCreated = false;
     });
+    builder.addCase(editDish.fulfilled, (state) => {
+      state.isEditedDish = true;
+      state.editedError = null;
+    });
+    builder.addCase(editDish.rejected, (state, action) => {
+      state.isEditedDish = false;
+      state.editedError = action.payload as string;
+    });
   },
 });
 
-export const { editDish, deleteDish, setSelectedDish, clearError } =
-  dishSlice.actions;
+export const { deleteDish, setSelectedDish, clearError } = dishSlice.actions;
 export default dishSlice.reducer;

@@ -86,3 +86,22 @@ export const loadRestaurantDishes = createAsyncThunk(
     }
   },
 );
+
+export const editDish = createAsyncThunk(
+  "dish/editDish",
+  async (data: FormData, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const dishId = state.dishes.selectedDish?.id;
+    const token = state.auth.acessToken;
+    try {
+      await api.patch(`/dishes/me/${dishId}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return true;
+    } catch {
+      return thunkAPI.rejectWithValue("Não foi possivel editar o prato!");
+    }
+  },
+);
