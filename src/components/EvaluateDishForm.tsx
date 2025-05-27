@@ -5,10 +5,11 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import StarRating from "./StarRating";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { createReview } from "@/store/slices/reviewSlice/reviewThunk";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { DefaultForm } from "./DefaultForm";
 import { useForm } from "react-hook-form";
+import { clearAll } from "@/store/slices/reviewSlice/reviewSlice";
 
 type EvaluateDishFormData = {
   comment: string
@@ -16,13 +17,29 @@ type EvaluateDishFormData = {
 
 export function EvaluateDishForm() {
   const { selectedDish } = useAppSelector(state => state.dishes)
-
   const { user } = useAppSelector(state => state.auth)
+  const { errorReview, isCreatedReview } = useAppSelector(state => state.reviews)
   const dispatch = useAppDispatch()
   const { register, handleSubmit, reset } = useForm<EvaluateDishFormData>()
   const [rating, setRating] = useState<number>()
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (isCreatedReview) {
+      toast.success("Prato avaliado com sucesso!");
+      reset();
+      setRating(undefined);
+      navigate("/dishes")
+
+    }
+    if (errorReview) {
+      toast.error(errorReview);
+    }
+  }, [errorReview, navigate, reset, isCreatedReview])
+
+  useEffect(() => {
+    dispatch(clearAll())
+  }, [dispatch])
 
   function handleCreateReview({ comment }: EvaluateDishFormData) {
     if (!selectedDish) {
@@ -40,19 +57,11 @@ export function EvaluateDishForm() {
       return;
     }
 
-    dispatch(createReview({ dish_id: selectedDish.id, user_id: user.id, comment, rating })).then(action => {
-      if (createReview.fulfilled.match(action)) {
-        toast.success("Prato avaliado com sucesso!");
-        reset();
-        setRating(undefined);
-        navigate("/dishes")
-
-      } else if (createReview.rejected.match(action)) {
-        const errorMessage = typeof action.payload === 'string' ? action.payload : 'Erro ao criar avaliação';
-        toast.error(errorMessage);
-      }
+    dispatch(createReview({ comment, rating })).then((result) => {
+      console.log("📦 Resultado do dispatch:", result);
     });
-  }
+
+  };
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 text-amber-50">
@@ -60,7 +69,7 @@ export function EvaluateDishForm() {
       <div className="flex w-full flex-col gap-4">
         <div className="flex gap-3">
           <h2>Prato:</h2>
-          <p>{selectedDish?.title}</p>
+          <p>{selectedDish?.name}</p>
         </div>
 
       </div>

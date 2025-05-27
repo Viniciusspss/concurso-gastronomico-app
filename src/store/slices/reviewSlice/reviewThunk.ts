@@ -1,52 +1,49 @@
-import { reviewSchema, reviewType } from "@/types/review";
+import api from "@/api/axios";
+import { RootState } from "@/store/store";
+import { reviewType, validationReviewSchema } from "@/types/review";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const createReview = createAsyncThunk(
   "review/createReview",
   async (
-    {
-      comment,
-      rating,
-      user_id,
-      dish_id,
-    }: { comment: string; rating: number; user_id: string; dish_id: string },
+    { comment, rating }: { comment: string; rating: number },
     thunkAPI,
   ) => {
-    const parseResult = reviewSchema.safeParse({
+    const parseResult = validationReviewSchema.safeParse({
       comment,
       rating,
-      user_id,
-      dish_id,
     });
 
     if (!parseResult.success) {
       return thunkAPI.rejectWithValue("Avaliação incompleta!");
     }
 
-    const reviews = localStorage.getItem("reviews");
-    const parsedReviews: reviewType[] = reviews ? JSON.parse(reviews) : [];
+    const state = thunkAPI.getState() as RootState;
+    const dishId = state.dishes.selectedDish?.id;
+    const token = state.auth.acessToken;
 
-    const isVoted = parsedReviews.some((review) => {
-      return user_id === review.user_id && dish_id === review.dish_id;
-    });
-
-    if (isVoted) {
-      return thunkAPI.rejectWithValue(
-        "Só é permitido votar uma vez por prato!",
+    try {
+      const responseReview = await api.post(
+        `/reviews/me/dishes/${dishId}`,
+        parseResult.data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
+      const result: reviewType = responseReview.data;
+      return result;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          "Erro desconhecido ao tentar realizar avaliação!";
+        return thunkAPI.rejectWithValue(message);
+      }
+      return thunkAPI.rejectWithValue("Erro desconhecido");
     }
-    const newReview = {
-      ...parseResult.data,
-    };
-
-    const storageReviews = localStorage.getItem("reviews");
-    const parsedStorageReviews: reviewType[] = storageReviews
-      ? JSON.parse(storageReviews)
-      : [];
-
-    parsedStorageReviews.push(newReview);
-    localStorage.setItem("reviews", JSON.stringify(parsedStorageReviews));
-
-    return parsedStorageReviews;
   },
 );

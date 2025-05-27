@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { reviewSchema } from "./review";
 
 export const dishesSchema = z.object({
   id: z.string().uuid(),
@@ -12,6 +13,7 @@ export const dishesSchema = z.object({
   price: z.string().refine((val) => /^\d+(\.\d{2})$/.test(val), {
     message: "Preço deve estar no formato 0.00",
   }),
+  reviews: z.array(reviewSchema),
 });
 
 export const dishesWithRestaurantSchema = dishesSchema.extend({
@@ -58,8 +60,10 @@ export const createDishesSchema = dishesSchema.omit({
   id: true,
 });
 
+export const editDishesSchema = createDishesSchema.partial();
+
 export type DishesType = z.infer<typeof dishesSchema>;
 export type DishesWithRestaurant = z.infer<typeof dishesWithRestaurantSchema>;
 export type getAllDishesResponse = z.infer<typeof getAllDishesResponseSchema>;
 export type createDishFormData = z.infer<typeof createDishesSchema>;
-export type editDishFormData = z.infer<typeof createDishesSchema>;
+export type editDishFormData = z.infer<typeof editDishesSchema>;

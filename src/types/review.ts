@@ -1,6 +1,13 @@
 import { z } from "zod";
 
 export const reviewSchema = z.object({
+  id: z
+    .string({
+      required_error: "O ID do usuário é obrigatório.",
+    })
+    .uuid({
+      message: "O ID do usuário deve ser um UUID válido.",
+    }),
   user_id: z
     .string({
       required_error: "O ID do usuário é obrigatório.",
@@ -38,4 +45,11 @@ export const reviewSchema = z.object({
     }),
 });
 
+export const validationReviewSchema = reviewSchema.omit({
+  id: true,
+  dish_id: true,
+  user_id: true,
+});
+
+export type validationType = z.infer<typeof validationReviewSchema>;
 export type reviewType = z.infer<typeof reviewSchema>;
