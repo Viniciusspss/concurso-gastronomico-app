@@ -71,7 +71,7 @@ export const loadRestaurantDishes = createAsyncThunk(
       const data: getAllDishesResponse[] = response.data;
 
       const restaurantDishes: getAllDishesResponse[] = data.filter(
-        (dish) => dish.restaurant.select.id === user.id,
+        (dish) => dish.restaurant.id === user.id,
       );
 
       return restaurantDishes;
