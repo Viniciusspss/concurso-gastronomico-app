@@ -2,34 +2,45 @@ import { DefaultButton } from "@/components/DefaultButton";
 import { DefaultForm } from "@/components/DefaultForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { editDish } from "@/store/slices/dishSlice/dishSlice";
+import { editDish, loadRestaurantDishes } from "@/store/slices/dishSlice/dishThunks";
+import { editDishFormData } from "@/types/dishes";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export function EditDish() {
-  type EditDishFormData = {
-    title: string;
-    price: number;
-    details: string;
-  };
 
   const { user } = useAppSelector(state => state.auth);
-  const { restaurantDishes } = useAppSelector(state => state.dishes)
-  const dispatch = useDispatch()
-  const { register, handleSubmit } = useForm<EditDishFormData>();
+  const { restaurantDishes, editedError } = useAppSelector(state => state.dishes)
+  const dispatch = useAppDispatch()
+  const { register, handleSubmit, setValue } = useForm<editDishFormData>();
   const { dishId } = useParams()
-
+  const navigate = useNavigate();
   const dish = restaurantDishes.find(d => d.id === dishId);
 
-  function onSubmit(data: EditDishFormData) {
+  const data = new FormData();
+  function onSubmit({ details, image_url, name, price }: editDishFormData) {
     if (!dish) {
       return
     }
-    dispatch(editDish({ dishId: dish.id, name: data.title, price: data.price, details: data.details }))
-    toast.success("Prato Editado com sucesso!");
+
+    const toStringPrice = parseFloat(price).toFixed(2);
+    data.append("name", name);
+    data.append("price", toStringPrice);
+    data.append("image", image_url);
+    data.append("details", details);
+
+    dispatch(editDish(data)).then((action) => {
+      if (editDish.fulfilled.match(action)) {
+        toast.success("Prato editado com sucesso!");
+        navigate(`/restaurant-dishes/${user?.id}`);
+        dispatch(loadRestaurantDishes())
+      } else {
+        toast.error(editedError)
+      }
+    });
   }
 
   if (!dish) {
@@ -48,7 +59,7 @@ export function EditDish() {
               className="bg-amber-50 text-black"
               id="dishName"
               placeholder="Digite o novo nome do prato"
-              {...register("title")}
+              {...register("name")}
             />
           </Label>
         </div>
@@ -77,6 +88,22 @@ export function EditDish() {
               {...register("details")}
             />
           </Label>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label className="text-amber-50" htmlFor="image_url">
+            Imagem do prato:
+          </Label>
+          <Input
+            className="bg-amber-50"
+            id="image_url"
+            type="file"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setValue("image_url", file, { shouldValidate: true });
+              }
+            }}
+          ></Input>
         </div>
         <div className="flex items-center justify-center gap-4">
           <DefaultButton className="px-17 text-xs">EDITAR</DefaultButton>
