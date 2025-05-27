@@ -13,7 +13,7 @@ export function EditDish() {
   type EditDishFormData = {
     title: string;
     price: number;
-    description: string;
+    details: string;
   };
 
   const { user } = useAppSelector(state => state.auth);
@@ -28,7 +28,7 @@ export function EditDish() {
     if (!dish) {
       return
     }
-    dispatch(editDish({ dishId: dish.id, title: data.title, price: data.price, description: data.description }))
+    dispatch(editDish({ dishId: dish.id, name: data.title, price: data.price, details: data.details }))
     toast.success("Prato Editado com sucesso!");
   }
 
@@ -44,7 +44,7 @@ export function EditDish() {
           <Label htmlFor="dishName">
             Novo nome:
             <Input
-              defaultValue={dish.title}
+              defaultValue={dish.name}
               className="bg-amber-50 text-black"
               id="dishName"
               placeholder="Digite o novo nome do prato"
@@ -65,16 +65,16 @@ export function EditDish() {
           </Label>
         </div>
         <div className="flex flex-col gap-3">
-          <Label htmlFor="dishDescription">
+          <Label htmlFor="dishDetails">
             Nova Descrição:
             <textarea
-              defaultValue={dish.description}
+              defaultValue={dish.details}
               className="w-full rounded-2xl bg-amber-50 px-3 py-3 text-black"
-              id="dishDescription"
+              id="dishDetails"
               cols={30}
               rows={5}
               placeholder="Digite a nova descrição do prato"
-              {...register("description")}
+              {...register("details")}
             />
           </Label>
         </div>
