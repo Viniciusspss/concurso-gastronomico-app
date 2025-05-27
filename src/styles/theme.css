@@ -1,0 +1,23 @@
+@layer base{
+    :root{
+        --text-primary: #4D4D4D;
+        --text-muted: #919191;
+        --text-foreground: #202020;
+        --text-disable: #4d4d4db4;
+
+        --color-primary: #E5A810;
+        --color-secondary: #FFEE32;
+        --color-background: #EDEDED;
+        --color-muted-foreground: #B6B5C8;
+        --color-foreground: #DBE0EA;
+        --color-disable: #e5a910a6;
+    }
+
+    body {
+
+    }
+}
+
+@layer components{
+
+}
