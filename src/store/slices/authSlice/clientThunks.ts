@@ -47,6 +47,7 @@ export const loginClient = createAsyncThunk(
 
       const acessToken = tokens.acessToken;
       const refreshToken = tokens.refreshToken;
+      localStorage.setItem("authUser", JSON.stringify(client));
       thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
 
       return client;
