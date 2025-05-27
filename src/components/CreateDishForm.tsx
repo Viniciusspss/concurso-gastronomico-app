@@ -5,7 +5,7 @@ import { Label } from "./ui/label";
 import { DefaultButton } from "./DefaultButton";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { createDish } from "@/store/slices/dishSlice/dishThunks";
+import { createDish, loadRestaurantDishes } from "@/store/slices/dishSlice/dishThunks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -47,6 +47,7 @@ export function CreateDishForm() {
                 navigate(`/restaurant-dishes/${user?.id}`);
             }
         });
+        dispatch(loadRestaurantDishes())
     };
 
     return (
