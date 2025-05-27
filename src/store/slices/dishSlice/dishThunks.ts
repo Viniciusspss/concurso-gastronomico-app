@@ -105,3 +105,22 @@ export const editDish = createAsyncThunk(
     }
   },
 );
+
+export const deleteDish = createAsyncThunk(
+  "dish/deleteDish",
+  async (_, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState() as RootState;
+      const dishId = state.dishes.selectedDish?.id;
+      const token = state.auth.acessToken;
+
+      await api.delete(`/dishes/me/${dishId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch {
+      return thunkAPI.rejectWithValue("Não foi possivel excluir o prato!");
+    }
+  },
+);

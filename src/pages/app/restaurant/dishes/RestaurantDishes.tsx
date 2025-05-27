@@ -23,7 +23,8 @@ export function RestaurantDishes() {
     if (user?.id) {
       dispatch(loadRestaurantDishes())
     }
-  }, [dispatch, user?.id]);
+
+  }, [dispatch, user?.id, restaurantDishes]);
 
   if (user?.id != id) {
     return <Navigate to="/" />;
