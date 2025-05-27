@@ -1,6 +1,6 @@
 import { UserType } from "@/types/user/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loginClient, registerClient } from "./clientThunks";
+import { editClient, loginClient, registerClient } from "./clientThunks";
 import { LoginRestaurant, RegisterRestaurant } from "./restaurantThunks";
 
 interface AuthState {
@@ -9,6 +9,8 @@ interface AuthState {
   errorRegister: string | null;
   acessToken: string | null;
   refreshToken: string | null;
+  isEditedClient: boolean;
+  errorEdited: string | null;
 }
 
 const storageUser = localStorage.getItem("authUser");
@@ -19,6 +21,8 @@ const initialState: AuthState = {
   errorRegister: null,
   acessToken: localStorage.getItem("acessToken"),
   refreshToken: localStorage.getItem("refreshToken"),
+  isEditedClient: false,
+  errorEdited: null,
 };
 
 const authSlice = createSlice({
@@ -38,6 +42,7 @@ const authSlice = createSlice({
     clearError: (state) => {
       state.errorLogin = null;
       state.errorRegister = null;
+      state.errorEdited = null;
     },
 
     setToken: (state, action: PayloadAction<string>) => {
@@ -93,6 +98,14 @@ const authSlice = createSlice({
 
     builder.addCase(LoginRestaurant.pending, (state) => {
       state.errorLogin = null;
+    });
+
+    builder.addCase(editClient.fulfilled, (state) => {
+      state.errorEdited = null;
+    });
+
+    builder.addCase(editClient.rejected, (state, action) => {
+      state.errorEdited = action.payload as string;
     });
 
     builder.addCase(RegisterRestaurant.fulfilled, (state, action) => {

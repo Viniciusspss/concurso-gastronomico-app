@@ -53,5 +53,12 @@ export const loginClientSchema = z.object({
     }),
 });
 
+export const editClientSchema = clientSchema
+  .omit({
+    id: true,
+  })
+  .partial();
+
 export type ClientType = z.infer<typeof clientSchema>;
 export type LoginClientType = z.infer<typeof loginClientSchema>;
+export type EditClientType = z.infer<typeof editClientSchema>;

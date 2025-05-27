@@ -7,6 +7,7 @@ import {
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setTokens } from "./authSlice";
 import axios from "axios";
+import { RootState } from "@/store/store";
 
 export const loginClient = createAsyncThunk(
   "auth/loginClient",
@@ -119,6 +120,41 @@ export const registerClient = createAsyncThunk(
           "Erro desconhecido ao tentar realizar cadastro!";
         return thunkAPI.rejectWithValue(message);
       }
+    }
+  },
+);
+
+export const editClient = createAsyncThunk(
+  "auth/editClient",
+  async (
+    {
+      first_name,
+      last_name,
+      email,
+      password,
+    }: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      password: string;
+    },
+    thunkAPI,
+  ) => {
+    const state = thunkAPI.getState() as RootState;
+    const token = state.auth.acessToken;
+    try {
+      await api.patch(
+        `/users/me/`,
+        { first_name, last_name, email, password },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return true;
+    } catch {
+      return thunkAPI.rejectWithValue("Não foi possivel editar o usuário!");
     }
   },
 );
