@@ -22,9 +22,6 @@ const reviewSlice = createSlice({
       state.errorReview = null;
       state.isCreatedReview = false;
     },
-    clearReviews: (state) => {
-      state.reviews = [];
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(createReview.fulfilled, (state, action) => {
