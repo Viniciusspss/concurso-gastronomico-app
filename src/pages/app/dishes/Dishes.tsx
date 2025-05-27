@@ -3,7 +3,7 @@ import { DishCard } from "../../../components/DishCard";
 import { Dialog } from "@/components/ui/dialog";
 import { DishDetails } from "../../../components/DishDetails";
 import { useEffect, useState } from "react";
-import { DishesWithRestaurant } from "@/types/dishes";
+import { getAllDishesResponse } from "@/types/dishes";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { loadAllDishes } from "@/store/slices/dishSlice/dishThunks";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -18,7 +18,7 @@ export function Dishes() {
     dispatch(loadAllDishes())
   }, [dispatch]);
 
-  const handleOpenDialog = (dish: DishesWithRestaurant) => {
+  const handleOpenDialog = (dish: getAllDishesResponse) => {
     setIsDetailsOpen(true);
     dispatch(setSelectedDish(dish));
   };
