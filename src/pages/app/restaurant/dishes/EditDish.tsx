@@ -19,18 +19,28 @@ export function EditDish() {
   const { dishId } = useParams()
   const navigate = useNavigate();
   const dish = restaurantDishes.find(d => d.id === dishId);
-
   const data = new FormData();
+
   function onSubmit({ details, image_url, name, price }: editDishFormData) {
     if (!dish) {
       return
     }
+    if (name) {
+      data.append("name", name);
+    }
 
-    const toStringPrice = parseFloat(price).toFixed(2);
-    data.append("name", name);
-    data.append("price", toStringPrice);
-    data.append("image", image_url);
-    data.append("details", details);
+    if (price) {
+      const toStringPrice = parseFloat(price).toFixed(2);
+      data.append("price", toStringPrice);
+    }
+
+    if (image_url) {
+      data.append("image", image_url);
+    }
+
+    if (details) {
+      data.append("details", details);
+    }
 
     dispatch(editDish(data)).then((action) => {
       if (editDish.fulfilled.match(action)) {
