@@ -1,9 +1,9 @@
-import { DishesType } from "@/types/dishes";
+import { getAllDishesResponse } from "@/types/dishes";
 import pratoImage from "@/assets/pratoImage.jpg";
 import { StarIcon } from "lucide-react";
 
 type DishCardProps = {
-  dish: DishesType;
+  dish: getAllDishesResponse;
 };
 
 export function DishCard({ dish }: DishCardProps) {
@@ -17,9 +17,9 @@ export function DishCard({ dish }: DishCardProps) {
         />
       </div>
       <div className="flex flex-col items-start gap-2 px-3 py-3">
-        <h1 className="font-bold text-amber-500">{dish.title}</h1>
+        <h1 className="font-bold text-amber-500">{dish.name}</h1>
         <p className="text-left text-sm break-words text-amber-100">
-          {dish.description}
+          {dish.details}
         </p>
         <div className="flex gap-2">
           <StarIcon className="text-amber-400" />
