@@ -41,7 +41,7 @@ export function SignIn() {
   }
 
   return (
-    <div className="bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
+    <div className="bg-[var(--color-background)] w-full justify-center items-center flex flex-col rounded-2xl ">
       <Link to="/">
         <Button variant="secondary" size="lg" className="w-60 absolute right-10 top-10">
           Escolher outra forma de login

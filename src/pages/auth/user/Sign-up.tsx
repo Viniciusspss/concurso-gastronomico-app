@@ -54,67 +54,81 @@ export function SignUp() {
   }
 
   return (
-    <DefaultForm onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="firstName">Primeiro Nome:</Label>
-          <Input
-            id="firstName"
-            placeholder="Digite seu primeiro nome"
-            {...register("first_name", {
-              required: "Primeiro nome é obrigatório",
-            })}
-          />
+    <div className="rounded-2xl bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
+      <div className="flex flex-col">
+        <h1 className="flex w-full justify-center font-bold text-xl text-[var(--text-primary)]">CRIAR CONTA</h1>
+        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">Sou cliente</h2>
+      </div>
+      <DefaultForm className=" p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
+            <Label className="flex flex-col items-start w-80  text-[var(--text-muted)]" htmlFor="firstName">Nome
+              <Input
+                className="bg-[var(--color-background)] border-[var(--text-muted)]"
+                id="firstName"
+                {...register("first_name", {
+                  required: "Primeiro nome é obrigatório",
+                })}
+              />
+            </Label>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="lastName">Sobrenome
+              <Input
+                id="lastName"
+                className="bg-[var(--color-background)] border-[var(--text-muted)]"
+                {...register("last_name", { required: "Ultimo nome é obrigatório" })}
+              />
+            </Label>
+
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="email">Email
+              <Input
+                id="email"
+                className="bg-[var(--color-background)] border-[var(--text-muted)]"
+                type="email"
+                {...register("email", { required: "Email é obrigatório" })}
+              />
+            </Label>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="password">Senha
+              <Input
+                type="password"
+                id="password"
+                className="bg-[var(--color-background)] border-[var(--text-muted)]"
+                {...register("password", { required: "Senha é obrigatório" })}
+              />
+            </Label>
+
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="repeatPassword">Repetir senha
+              <Input
+                type="password"
+                className="bg-[var(--color-background)] border-[var(--text-muted)]"
+                id="repeatPassword"
+                {...register("repeatPassword", {
+                  required: "Repetir a senha é obrigatório",
+                  validate: (value) =>
+                    value === watch("password") || "As senhas não coincidem",
+                })}
+              />
+            </Label>
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="lastName">Último Nome:</Label>
-          <Input
-            id="lastName"
-            placeholder="Digite seu último nome"
-            {...register("last_name", { required: "Ultimo nome é obrigatório" })}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="email">Email:</Label>
-          <Input
-            id="email"
-            placeholder="Digite seu email"
-            type="email"
-            {...register("email", { required: "Email é obrigatório" })}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="password">Senha:</Label>
-          <Input
-            type="password"
-            id="password"
-            placeholder="Digite sua senha"
-            {...register("password", { required: "Senha é obrigatório" })}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="repeatPassword">Repetir senha:</Label>
-          <Input
-            type="password"
-            id="repeatPassword"
-            placeholder="Digite sua senha novamente"
-            {...register("repeatPassword", {
-              required: "Repetir a senha é obrigatório",
-              validate: (value) =>
-                value === watch("password") || "As senhas não coincidem",
-            })}
-          />
-        </div>
+        <Button className="rounded-xl w-80" variant="default" >
+          Cadastre-se
+        </Button>
         <p className="text-xs">
           Já tenho uma conta.{" "}
           <Link to="/SignIn/User" className="font-bold text-red-500">
             Fazer Login
           </Link>
         </p>
-      </div>
-      <Button className="rounded-xl" variant="dark">
-        Cadastre-se
-      </Button>
-    </DefaultForm>
+      </DefaultForm>
+    </div>
+
   );
 }
