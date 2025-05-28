@@ -20,12 +20,13 @@ import { CreateDishForm } from "@/components/CreateDishForm";
 export const router = createBrowserRouter([
   {
     path: "/",
+    element: <SelectProfile />,
+  },
+  {
+    path: "/",
     element: <AuthLayout />,
     children: [
-      {
-        path: "/",
-        element: <SelectProfile />,
-      },
+
       {
         path: "SignIn",
         children: [
