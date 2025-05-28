@@ -19,10 +19,10 @@ export function SelectProfile() {
         </h1>
         <div className="flex  items-center justify-center gap-4">
           <Button size="lg" variant="default" asChild>
-            <Link to="/SignIn/Restaurant">Entrar como cliente</Link>
+            <Link to="/SignIn/User">Entrar como cliente</Link>
           </Button>
           <Button size="lg" variant="muted" asChild>
-            <Link to="/SignIn/User">Entrar como restaurante</Link>
+            <Link to="/SignIn/Restaurant">Entrar como restaurante</Link>
           </Button>
         </div>
       </div>
