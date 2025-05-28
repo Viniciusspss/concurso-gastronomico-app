@@ -54,17 +54,19 @@ export function SignIn() {
       <DefaultForm className="p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3">
           <div className="flex gap-2">
-            <Label htmlFor="cnpj" className="flex flex-col items-start w-80 text-[var(--text-muted)]">CNPJ
+            <Label htmlFor="cnpj" >CNPJ
               <Input
                 id="cnpj"
+
                 {...register("cnpj", { required: "cnpj é obrigatório" })}
               />
             </Label>
           </div>
           <div className="flex gap-1">
-            <Label htmlFor="password" className="flex flex-col items-start w-80 text-[var(--text-muted)]">Senha
+            <Label htmlFor="password" >Senha
               <Input
                 id="password"
+
                 type="password"
                 {...register("password", { required: "senha é obrigatório" })}
               />

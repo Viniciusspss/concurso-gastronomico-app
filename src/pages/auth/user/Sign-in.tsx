@@ -56,21 +56,21 @@ export function SignIn() {
 
         <div className="flex flex-col gap-3">
           <div className="flex">
-            <Label htmlFor="email" className="flex flex-col items-start w-80 text-[var(--text-muted)]">Email
+            <Label htmlFor="email" >Email
               <Input
                 id="email"
                 type="email"
-                className="bg-[var(--color-background)] border-[var(--text-muted)] "
+
                 {...register("email", { required: "Email é obrigatório" })}
               />
             </Label>
           </div>
           <div className="flex">
-            <Label htmlFor="password" className="flex flex-col items-start w-80 text-[var(--text-muted)]">Senha
+            <Label htmlFor="password" >Senha
               <Input
                 id="password"
                 type="password"
-                className="bg-[var(--color-background)] border-[var(--text-muted)]"
+
                 {...register("password", { required: "Senha é obrigatório" })}
               />
             </Label>

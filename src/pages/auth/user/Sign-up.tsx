@@ -62,9 +62,8 @@ export function SignUp() {
       <DefaultForm className=" p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-2">
-            <Label className="flex flex-col items-start w-80  text-[var(--text-muted)]" htmlFor="firstName">Nome
+            <Label htmlFor="firstName">Nome
               <Input
-                className="bg-[var(--color-background)] border-[var(--text-muted)]"
                 id="firstName"
                 {...register("first_name", {
                   required: "Primeiro nome é obrigatório",
@@ -73,41 +72,37 @@ export function SignUp() {
             </Label>
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="lastName">Sobrenome
+            <Label htmlFor="lastName">Sobrenome
               <Input
                 id="lastName"
-                className="bg-[var(--color-background)] border-[var(--text-muted)]"
                 {...register("last_name", { required: "Ultimo nome é obrigatório" })}
               />
             </Label>
 
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="email">Email
+            <Label htmlFor="email">Email
               <Input
                 id="email"
-                className="bg-[var(--color-background)] border-[var(--text-muted)]"
                 type="email"
                 {...register("email", { required: "Email é obrigatório" })}
               />
             </Label>
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="password">Senha
+            <Label htmlFor="password">Senha
               <Input
                 type="password"
                 id="password"
-                className="bg-[var(--color-background)] border-[var(--text-muted)]"
                 {...register("password", { required: "Senha é obrigatório" })}
               />
             </Label>
 
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="flex flex-col items-start w-80 text-[var(--text-muted)]" htmlFor="repeatPassword">Repetir senha
+            <Label htmlFor="repeatPassword">Repetir senha
               <Input
                 type="password"
-                className="bg-[var(--color-background)] border-[var(--text-muted)]"
                 id="repeatPassword"
                 {...register("repeatPassword", {
                   required: "Repetir a senha é obrigatório",
