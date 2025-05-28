@@ -14,7 +14,7 @@ const buttonVariants = cva(
         muted:
           "bg-[var(--color-muted-foreground)] text-[var(--text-primary)] shadow-xs hover:bg-[#9c9bad] ",
         secondary:
-          "bg-[var(--color-background)] text-[var(--color-primary)] shadow-xs hover:bg-[var(--color-primary)] hover:text-[var(--background)]",
+          "bg-[var(--color-background)] text-[var(--color-primary)] border border-[var(--color-primary)] shadow-xs hover:bg-[var(--color-primary)] hover:text-[var(--background)]",
         disable:
           "bg-[var(--color-disable)] text-[var(--text-disable)] shadow-xs"
       },

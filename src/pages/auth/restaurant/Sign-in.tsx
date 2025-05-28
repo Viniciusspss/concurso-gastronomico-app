@@ -41,40 +41,43 @@ export function SignIn() {
   }
 
   return (
-    <div>
-      <Button variant="beige" className="absolute top-8 right-8" asChild>
-        <Link to="/">Escolher outro tipo de login</Link>
+    <div className="bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
+      <Button variant="secondary" size="lg" className="w-60 absolute right-10 top-10">
+        Escolher outra forma de login
       </Button>
-      <DefaultForm className="bg-white p-15 rounded-2xl" onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="flex w-full justify-center mb-10 font-bold text-xl">LOGIN</h1>
+      <div className="flex flex-col">
+        <h1 className="flex w-full justify-center font-bold text-xl text-[var(--text-primary)]">ENTRAR</h1>
+        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">Preencha as informações para prosseguir</h2>
+      </div>
+      <DefaultForm className="p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3">
           <div className="flex gap-2">
-            <Label htmlFor="cnpj">CNPJ:</Label>
-            <Input
-              id="cnpj"
-              placeholder="Digite seu CNPJ"
-              {...register("cnpj", { required: "cnpj é obrigatório" })}
-            />
+            <Label htmlFor="cnpj" className="flex flex-col items-start w-80 text-[var(--text-muted)]">CNPJ
+              <Input
+                id="cnpj"
+                {...register("cnpj", { required: "cnpj é obrigatório" })}
+              />
+            </Label>
           </div>
           <div className="flex gap-1">
-            <Label htmlFor="password">Senha:</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Digite sua senha"
-              {...register("password", { required: "senha é obrigatório" })}
-            />
+            <Label htmlFor="password" className="flex flex-col items-start w-80 text-[var(--text-muted)]">Senha
+              <Input
+                id="password"
+                type="password"
+                {...register("password", { required: "senha é obrigatório" })}
+              />
+            </Label>
           </div>
-          <p className="text-xs">
-            Ainda não tenho uma conta.{" "}
-            <Link to="/SignUp/Restaurant" className="font-bold text-red-500">
-              Criar conta
-            </Link>
-          </p>
         </div>
-        <Button type="submit" className="rounded-xl" variant="beige">
+        <Button type="submit" className="rounded-xl w-80" variant="default" >
           Conecte-se
         </Button>
+        <p className="text-xs">
+          Ainda não tenho uma conta.{" "}
+          <Link to="/SignUp/Restaurant" className="font-bold text-red-500">
+            Criar conta
+          </Link>
+        </p>
       </DefaultForm>
     </div>
   );
