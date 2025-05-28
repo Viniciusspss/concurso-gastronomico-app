@@ -42,9 +42,11 @@ export function SignIn() {
 
   return (
     <div className="bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
-      <Button variant="secondary" size="lg" className="w-60 absolute right-10 top-10">
-        Escolher outra forma de login
-      </Button>
+      <Link to="/">
+        <Button variant="secondary" size="lg" className="w-60 absolute right-10 top-10">
+          Escolher outra forma de login
+        </Button>
+      </Link>
       <div className="flex flex-col">
         <h1 className="flex w-full justify-center font-bold text-xl text-[var(--text-primary)]">ENTRAR</h1>
         <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">Preencha as informações para prosseguir</h2>
