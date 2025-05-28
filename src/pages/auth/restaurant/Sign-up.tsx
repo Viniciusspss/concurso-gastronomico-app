@@ -59,73 +59,76 @@ export function SignUp() {
   }
 
   return (
-    <DefaultForm onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="cnpj">CNPJ:</Label>
-          <Input
-            id="cnpj"
-            placeholder="Digite seu CNPJ"
-            {...register("cnpj", { required: "cnpj é obrigatório" })}
-          />
-          {errors.cnpj && <span>{errors.cnpj?.message}</span>}
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="name">Nome:</Label>
-          <Input
-            id="name"
-            placeholder="Digite seu nome"
-            {...register("name", { required: "nome é obrigatório" })}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="password">Senha:</Label>
-          <Input
-            type="password"
-            id="password"
-            placeholder="Digite sua senha"
-            {...register("password", { required: "senha é obrigatório" })}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="repeatPassword">Repetir senha:</Label>
-          <Input
-            id="repeatPassword"
-            type="password"
+    <div className="rounded-2xl bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
+      <div className="flex flex-col">
+        <h1 className="flex w-full justify-center font-bold text-xl text-[var(--text-primary)]">CRIAR CONTA</h1>
+        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">Sou restaurante</h2>
+      </div>
+      <DefaultForm className=" p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="cnpj">CNPJ</Label>
+            <Input
+              id="cnpj"
+              {...register("cnpj", { required: "cnpj é obrigatório" })}
+            />
+            {errors.cnpj && <span>{errors.cnpj?.message}</span>}
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="name">Nome</Label>
+            <Input
+              id="name"
+              {...register("name", { required: "nome é obrigatório" })}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password">Senha</Label>
+            <Input
+              type="password"
+              id="password"
+              {...register("password", { required: "senha é obrigatório" })}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="repeatPassword">Repetir senha</Label>
+            <Input
+              id="repeatPassword"
+              type="password"
 
-            placeholder="Digite sua senha novamente"
-            {...register("repeatPassword", {
-              required: "repetir senha é obrigatório",
-              validate: (value) =>
-                value === watch("password") || "As senhas não coincidem",
-            })}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="image_url">Imagem do restaurante:</Label>
-          <Input
-            id="image_url"
-            type="file"
-            name="image"
-            onChange={e => {
-              const file = e.target.files?.[0]
-              if (file) {
-                setValue("image_url", file, { shouldValidate: true })
-              }
-            }}
+              {...register("repeatPassword", {
+                required: "repetir senha é obrigatório",
+                validate: (value) =>
+                  value === watch("password") || "As senhas não coincidem",
+              })}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="image_url">Imagem do restaurante</Label>
+            <Input
+              id="image_url"
+              type="file"
+              name="image"
+              onChange={e => {
+                const file = e.target.files?.[0]
+                if (file) {
+                  setValue("image_url", file, { shouldValidate: true })
+                }
+              }}
 
-          />
+            />
+          </div>
         </div>
+        <Button className="rounded-xl w-80" variant="default">
+          Cadastre-se
+        </Button>
         <p className="text-xs">
           Já tenho uma conta.{" "}
           <Link to="/SignIn/restaurant" className="font-bold text-red-500">
             Fazer Login
           </Link>
         </p>
-      </div>
-      <Button className="rounded-xl" variant="dark">
-        Cadastre-se
-      </Button>
-    </DefaultForm>
+      </DefaultForm>
+    </div>
+
   );
 }
