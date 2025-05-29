@@ -16,11 +16,12 @@ const buttonVariants = cva(
         secondary:
           "bg-[var(--color-background)] text-[var(--color-primary)] border border-[var(--color-primary)] shadow-xs hover:bg-[var(--color-primary)] hover:text-[var(--background)]",
         disable:
-          "bg-[var(--color-disable)] text-[var(--text-disable)] shadow-xs"
+          "bg-[var(--color-disable)] text-[var(--text-disable)] shadow-xs",
+        warn: "bg-[var(--color-warn-background)] text-[var(--color-warn)] shadow-xs hover:bg-[var(--color-warn)] hover:text-[var(--color-warn-background)]",
       },
       size: {
         default: "h-10 w-30 gap-2 px-6 py-4 rounded-[12px]",
-        sm: "h-10 gap-2 px-6 py-4 rounded-[12px]",
+        sm: "h-10 gap-2 px-3 py-2 rounded-4xl",
         lg: "h-10 w-50 gap-2 px-6 py-4 rounded-[12px]",
         icon: "size-9",
       },
