@@ -10,7 +10,7 @@ export function DishCard({ dish }: DishCardProps) {
 
 
   return (
-    <div className=" h-115 bg-[var(--color-background)] flex flex-col hover:cursor-pointer border-2 border-[var(--color-primary)] rounded-2xl">
+    <div className=" h-115  bg-[var(--color-background)] flex flex-col hover:cursor-pointer border-2 border-[var(--color-primary)] rounded-2xl">
       <div className="min-h-55 w-full ">
         <img
           src={`http://localhost:8080/api/uploads/${dish.image_url}`}
@@ -43,7 +43,7 @@ export function DishCard({ dish }: DishCardProps) {
           {dish.details}
         </p>
         <div className="flex justify-center items-center w-full">
-          <Button variant="default" className="w-87">Avaliar prato</Button>
+          <Button variant="default" className="w-[97%] hover:cursor-pointer">Avaliar prato</Button>
         </div>
 
       </div>
