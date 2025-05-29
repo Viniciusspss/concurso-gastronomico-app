@@ -11,6 +11,8 @@
         --color-muted-foreground: #B6B5C8;
         --color-foreground: #DBE0EA;
         --color-disable: #e5a910a6;
+        --color-warn: red;
+        --color-warn-background : #F9DEDC;
     }
 
     body {
