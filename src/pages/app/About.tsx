@@ -5,11 +5,11 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 export function About() {
   const { user } = useAppSelector(state => state.auth)
   return (
-    <div className="flex flex-col gap-15">
+    <div className="flex items-center flex-col gap-15 bg-gradient-to-b from-[var(--color-background)] to-[var(--text-foreground)] h-screen">
       {user && "email" in user ? <DefaultHeader /> : <RestaurantHeader />}
-      <div className="flex flex-col gap-7">
-        <h1 className="text-3xl text-amber-400">SOBRE NÓS</h1>
-        <p className="text-amber-50">
+      <div className="flex w-[50%] flex-col gap-7 items-center">
+        <h1 className="text-3xl text-[var(--text-primary)]">SOBRE NÓS</h1>
+        <p className="text-[var(--text-foreground)]">
           O Cozinha Arretada é um projeto acadêmico desenvolvido com o objetivo
           de valorizar a gastronomia regional e dar visibilidade aos
           restaurantes locais, especialmente em cidades pequenas. Através desta
@@ -18,7 +18,7 @@ export function About() {
           alimentar da região e fortalecendo a conexão entre quem cozinha e quem
           aprecia uma boa comida.
         </p>
-        <p className="text-amber-50">
+        <p className="text-[var(--text-foreground)]">
           Mais do que uma simples vitrine, o site funciona como um espaço de
           descoberta e interação: usuários podem se cadastrar, avaliar pratos,
           conhecer novos sabores e acompanhar um ranking dos restaurantes mais
@@ -26,7 +26,7 @@ export function About() {
           recebem feedbacks valiosos e têm a chance de competir em um concurso
           gastronômico que celebra o que há de melhor na culinária local.
         </p>
-        <p className="text-amber-50">
+        <p className="text-[var(--text-foreground)]">
           Este projeto nasceu dentro de um contexto acadêmico, como parte de uma
           proposta universitária voltada ao desenvolvimento de soluções digitais
           com impacto social e cultural. Por isso, o Cozinha Arretada carrega
