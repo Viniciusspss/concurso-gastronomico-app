@@ -25,4 +25,11 @@ export const signUpFormDataSchema = restaurantSchema
     repeatPassword: z.string(),
   });
 
+export const getAllRestaurantsSchema = restaurantSchema.omit({
+  cnpj: true,
+  password: true,
+  dishes: true,
+});
+
 export type RestaurantType = z.infer<typeof restaurantSchema>;
+export type getAllRestaurantsType = z.infer<typeof getAllRestaurantsSchema>;
