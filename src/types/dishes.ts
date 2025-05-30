@@ -16,11 +16,13 @@ export const dishesSchema = z.object({
   reviews: z.array(reviewSchema),
 });
 
-export const dishesWithRestaurantSchema = dishesSchema.extend({
-  restaurant: z.object({
-    name: z.string().min(1),
-  }),
-});
+export const getRestaurantDishesResponseSchema = dishesSchema
+  .omit({
+    reviews: true,
+  })
+  .extend({
+    restaurant_id: z.string().uuid(),
+  });
 
 export const getAllDishesResponseSchema = dishesSchema.extend({
   restaurant: z.object({
@@ -28,32 +30,34 @@ export const getAllDishesResponseSchema = dishesSchema.extend({
     name: z.string().min(1),
     image_url: z.string().min(1),
   }),
-  reviews: z.object({
-    id: z.string().uuid(),
-    rating: z
-      .number({
-        required_error: "A nota é obrigatória.",
-        invalid_type_error: "A nota deve ser um número.",
-      })
-      .min(1, {
-        message: "A nota mínima é 1.",
-      })
-      .max(5, {
-        message: "A nota máxima é 5.",
-      }),
-    comment: z
-      .string({
-        required_error: "O comentário é obrigatório.",
-      })
-      .min(1, {
-        message: "O comentário não pode estar vazio.",
-      }),
-    user: z.object({
+  reviews: z.array(
+    z.object({
       id: z.string().uuid(),
-      first_name: z.string(),
-      last_name: z.string(),
+      rating: z
+        .number({
+          required_error: "A nota é obrigatória.",
+          invalid_type_error: "A nota deve ser um número.",
+        })
+        .min(1, {
+          message: "A nota mínima é 1.",
+        })
+        .max(5, {
+          message: "A nota máxima é 5.",
+        }),
+      comment: z
+        .string({
+          required_error: "O comentário é obrigatório.",
+        })
+        .min(1, {
+          message: "O comentário não pode estar vazio.",
+        }),
+      user: z.object({
+        id: z.string().uuid(),
+        first_name: z.string(),
+        last_name: z.string(),
+      }),
     }),
-  }),
+  ),
 });
 
 export const createDishesSchema = dishesSchema.omit({
@@ -62,8 +66,9 @@ export const createDishesSchema = dishesSchema.omit({
 
 export const editDishesSchema = createDishesSchema.partial();
 
-export type DishesType = z.infer<typeof dishesSchema>;
-export type DishesWithRestaurant = z.infer<typeof dishesWithRestaurantSchema>;
 export type getAllDishesResponse = z.infer<typeof getAllDishesResponseSchema>;
 export type createDishFormData = z.infer<typeof createDishesSchema>;
 export type editDishFormData = z.infer<typeof editDishesSchema>;
+export type getRestaurantDishesResponse = z.infer<
+  typeof getRestaurantDishesResponseSchema
+>;
