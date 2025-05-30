@@ -15,7 +15,6 @@ export function Dishes() {
   }, [dispatch]);
 
 
-
   return (
     <div className="flex w-full flex-col">
       <DefaultHeader />
