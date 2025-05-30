@@ -1,22 +1,17 @@
 import { DefaultButton } from "@/components/DefaultButton";
 import { DishCard } from "@/components/DishCard";
-import { DishDetails } from "@/components/DishDetails";
 import { RestaurantHeader } from "@/components/RestaurantHeader";
-import { Dialog } from "@/components/ui/dialog";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { setSelectedDish } from "@/store/slices/dishSlice/dishSlice";
 import { loadRestaurantDishes } from "@/store/slices/dishSlice/dishThunks";
-import { getAllDishesResponse } from "@/types/dishes";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 
 export function RestaurantDishes() {
 
-  const { restaurantDishes, selectedDish } = useAppSelector(state => state.dishes)
+  const { restaurantDishes } = useAppSelector(state => state.dishes)
   const { user } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch()
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -29,17 +24,6 @@ export function RestaurantDishes() {
   if (user?.id != id) {
     return <Navigate to="/" />;
   }
-
-  const handleOpenDialog = (dish: getAllDishesResponse) => {
-    setIsDetailsOpen(true);
-    dispatch(setSelectedDish(dish))
-
-  };
-
-  const handleCloseDialog = () => {
-    setIsDetailsOpen(false);
-    dispatch(setSelectedDish(null));
-  };
 
   return (
     <div className="flex w-full flex-col gap-15">
@@ -62,20 +46,10 @@ export function RestaurantDishes() {
         {restaurantDishes &&
           restaurantDishes.map((dish, index) => {
             return (
-              <button key={index} onClick={() => handleOpenDialog(dish)}>
-                <DishCard dish={dish} />
-              </button>
+              <DishCard dish={dish} key={index} />
             );
           })}
       </div>
-      <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
-        {selectedDish && (
-          <DishDetails
-            restaurantDish={selectedDish}
-            onClose={() => handleCloseDialog()}
-          />
-        )}
-      </Dialog>
     </div>
   );
 }
