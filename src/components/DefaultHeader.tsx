@@ -19,7 +19,7 @@ export function DefaultHeader() {
         <Link to="/dishes" className={`hover:text-[var(--color-primary)] hover:cursor-pointer transition ${location.pathname === "/dishes" ? "text-[var(--color-primary)] border-b-4 border-[var(--color-primary)]" : ""}`}>
           PRATOS
         </Link>
-        <Link className={`hover:text-[var(--color-primary)] hover:cursor-pointer transition ${location.pathname === "/restaurants" ? "text-[var(--color-primary)] border border-b-4 border-[var(--color-primary)]" : ""}`} to="">
+        <Link className={`hover:text-[var(--color-primary)] hover:cursor-pointer transition ${location.pathname === "/restaurants" ? "text-[var(--color-primary)]  border-b-4 border-[var(--color-primary)]" : ""}`} to="/restaurants">
           RESTAURANTES
         </Link>
         <Link className={`hover:text-[var(--color-primary)] hover:cursor-pointer transition ${location.pathname === "/about" ? "text-[var(--color-primary)] border-b-4 border-[var(--color-primary)]" : ""}`} to="/about">
