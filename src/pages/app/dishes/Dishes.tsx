@@ -1,33 +1,20 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
 import { DishCard } from "../../../components/DishCard";
-import { Dialog } from "@/components/ui/dialog";
-import { DishDetails } from "../../../components/DishDetails";
-import { useEffect, useState } from "react";
-import { getAllDishesResponse } from "@/types/dishes";
+import { useEffect } from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { loadAllDishes } from "@/store/slices/dishSlice/dishThunks";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { setSelectedDish } from '@/store/slices/dishSlice/dishSlice';
 import bgImage from "@/assets/backgroundDishesImage.png"
 
 export function Dishes() {
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const { dishes, selectedDish } = useAppSelector(state => state.dishes);
+  const { dishes } = useAppSelector(state => state.dishes);
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(loadAllDishes())
   }, [dispatch]);
 
-  const handleOpenDialog = (dish: getAllDishesResponse) => {
-    setIsDetailsOpen(true);
-    dispatch(setSelectedDish(dish));
-  };
 
-  const handleCloseDialog = () => {
-    setIsDetailsOpen(false);
-    dispatch(setSelectedDish(null));
-  };
 
   return (
     <div className="flex w-full flex-col">
@@ -39,21 +26,12 @@ export function Dishes() {
           {dishes &&
             dishes.map((dish, index) => {
               return (
-                <button key={index} onClick={() => handleOpenDialog(dish)} className="hover:cursor-pointer ">
-                  <DishCard dish={dish} />
-                </button>
+                <DishCard dish={dish} key={index} />
               );
             })}
         </div>
       </div>
-      <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
-        {selectedDish && (
-          <DishDetails
-            dish={selectedDish}
-            onClose={() => handleCloseDialog()}
-          />
-        )}
-      </Dialog>
+
     </div>
   );
 }
