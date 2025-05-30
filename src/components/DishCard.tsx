@@ -11,7 +11,7 @@ export function DishCard({ dish }: DishCardProps) {
 
   return (
     <div className=" h-115  bg-[var(--color-background)] flex flex-col hover:cursor-pointer border-2 border-[var(--color-primary)] rounded-2xl">
-      <div className="min-h-55 w-full ">
+      <div className="h-55 w-full ">
         <img
           src={`http://localhost:8080/api/uploads/${dish.image_url}`}
           alt="Foto do prato"
