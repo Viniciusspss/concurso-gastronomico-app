@@ -1,7 +1,12 @@
 import { UserType } from "@/types/user/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { editClient, loginClient, registerClient } from "./clientThunks";
-import { LoginRestaurant, RegisterRestaurant } from "./restaurantThunks";
+import {
+  getAllRestaurants,
+  LoginRestaurant,
+  RegisterRestaurant,
+} from "./restaurantThunks";
+import { getAllRestaurantsType } from "@/types/user/restaurant";
 
 interface AuthState {
   user: UserType | null;
@@ -11,11 +16,15 @@ interface AuthState {
   refreshToken: string | null;
   isEditedClient: boolean;
   errorEdited: string | null;
+  allRestaurants: getAllRestaurantsType[] | null;
+  errorLoadRestaurants: string | null;
 }
 
 const storageUser = localStorage.getItem("authUser");
 
 const initialState: AuthState = {
+  allRestaurants: null,
+  errorLoadRestaurants: null,
   user: storageUser ? (JSON.parse(storageUser) as UserType) : null,
   errorLogin: null,
   errorRegister: null,
@@ -119,6 +128,13 @@ const authSlice = createSlice({
 
     builder.addCase(RegisterRestaurant.rejected, (state, action) => {
       state.errorRegister = action.payload as string;
+    });
+    builder.addCase(getAllRestaurants.fulfilled, (state, action) => {
+      state.allRestaurants = action.payload;
+    });
+
+    builder.addCase(getAllRestaurants.rejected, (state, action) => {
+      state.errorLoadRestaurants = action.payload as string;
     });
   },
 });

@@ -2,6 +2,8 @@ import api from "@/api/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setTokens } from "./authSlice";
 import axios from "axios";
+import { RootState } from "@/store/store";
+import { getAllRestaurantsType } from "@/types/user/restaurant";
 
 export const LoginRestaurant = createAsyncThunk(
   "auth/loginRestaurant",
@@ -86,6 +88,26 @@ export const RegisterRestaurant = createAsyncThunk(
       return thunkAPI.rejectWithValue(
         "Erro desconhecido ao registrar restaurante",
       );
+    }
+  },
+);
+
+export const getAllRestaurants = createAsyncThunk(
+  "auth/getAllRestaurants",
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const token = state.auth.acessToken;
+    try {
+      const response = await api.get("/restaurants", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data: getAllRestaurantsType[] = response.data;
+      return data;
+    } catch {
+      return thunkAPI.rejectWithValue("Erro ao carregar restaurantes");
     }
   },
 );
