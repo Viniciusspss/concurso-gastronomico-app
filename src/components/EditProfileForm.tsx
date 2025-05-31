@@ -1,82 +1,105 @@
 import { Link } from "react-router-dom";
-import { DefaultButton } from "./DefaultButton";
 import { DefaultForm } from "./DefaultForm";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useState } from "react";
 import { Dialog } from "./ui/dialog";
 import { DeleteProfile } from "./DeleteProfile";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { Button } from "./ui/button";
+import { DefaultHeader } from "./DefaultHeader";
 
 export function EditProfileForm() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const { user } = useAppSelector((state) => state.auth);
   function handleOpenDialog() {
     setIsDeleteOpen(true);
   }
   return (
-    <div className="flex w-full max-w-lg flex-col items-center justify-center gap-10 px-4">
-      <h1 className="text-2xl text-amber-50">EDITAR PERFIL</h1>
-      <DefaultForm>
-        <div className="flex flex-col gap-2">
-          <Label className="text-amber-50" htmlFor="firstName">
-            Primeiro Nome:
-          </Label>
-          <Input
-            className="bg-amber-50"
-            id="firstName"
-            placeholder="Primeiro nome do usuário"
-          ></Input>
+    <div className="flex h-screen w-full flex-col items-center">
+      <DefaultHeader />
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="flex flex-col rounded-2xl border-1 p-6">
+          <h1 className="mb-4 text-2xl tracking-tight text-[var(--text-primary)]">
+            Editar Perfil
+          </h1>
+          <div className="flex justify-between">
+            <div>
+              <div className="text-[var(--text-foreground)]">
+                {user && "email" in user && <h1>{user.first_name}</h1>}
+              </div>
+              <div className="text-sm text-[var(--text-foreground)]">
+                {user && "email" in user && <h1>{user.email}</h1>}
+              </div>
+            </div>
+            <Button
+              onClick={() => handleOpenDialog()}
+              type="button"
+              variant="warn"
+            >
+              Excluir conta
+            </Button>
+            <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+              <DeleteProfile onClose={() => setIsDeleteOpen(false)} />
+            </Dialog>
+          </div>
+
+          <DefaultForm>
+            <div className="mt-4 flex gap-6">
+              <Label
+                className="gap-1 text-[var(--text-muted)]"
+                htmlFor="firstName"
+              >
+                Nome
+                <Input
+                  className="bg-[var(--color-background)]"
+                  id="firstName"
+                  placeholder="Nome do usuário"
+                ></Input>
+              </Label>
+              <Label
+                className="gap-1 text-[var(--text-muted)]"
+                htmlFor="lastName"
+              >
+                Sobrenome
+                <Input
+                  className="bg-[var(--color-background)]"
+                  id="lastName"
+                  placeholder="Sobrenome do usuário"
+                ></Input>
+              </Label>
+            </div>
+            <div className="flex gap-4">
+              <Label className="gap-1 text-[var(--text-muted)]" htmlFor="email">
+                Email
+                <Input
+                  className=""
+                  id="email"
+                  placeholder="Email do usuário"
+                ></Input>
+              </Label>
+
+              <Label
+                className="gap-1 text-[var(--text-muted)]"
+                htmlFor="password"
+              >
+                Senha
+                <Input
+                  className="bg-[var(--color-background)]"
+                  id="password"
+                  placeholder="Nova senha do usuário"
+                ></Input>
+              </Label>
+            </div>
+            <div className="flex justify-end gap-4">
+              <Link to="/Dishes">
+                <Button variant="muted">Cancelar</Button>
+              </Link>
+              <Button>Salvar</Button>
+            </div>
+          </DefaultForm>
         </div>
-        <div className="flex flex-col gap-2">
-          <Label className="text-amber-50" htmlFor="lastName">
-            Último Nome:
-          </Label>
-          <Input
-            className="bg-amber-50"
-            id="lastName"
-            placeholder="Último nome do usuário"
-          ></Input>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label className="text-amber-50" htmlFor="email">
-            Email:
-          </Label>
-          <Input
-            className="bg-amber-50"
-            id="email"
-            placeholder="Email do usuário"
-          ></Input>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label className="text-amber-50" htmlFor="password">
-            Senha:
-          </Label>
-          <Input
-            className="bg-amber-50"
-            id="password"
-            placeholder="Nova senha do usuário"
-          ></Input>
-        </div>
-        <div className="flex justify-between">
-          <DefaultButton className="min-w-[100px] px-4 text-xs">
-            EDITAR
-          </DefaultButton>
-          <DefaultButton
-            onClick={() => handleOpenDialog()}
-            className="min-w-[100px] px-4 text-xs"
-            type="button"
-          >
-            EXCLUIR
-          </DefaultButton>
-          <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-            <DeleteProfile onClose={() => setIsDeleteOpen(false)} />
-          </Dialog>
-          <Link to="/Dishes">
-            <DefaultButton className="min-w-[100px] px-4 text-xs">
-              FECHAR
-            </DefaultButton>
-          </Link>
-        </div>
-      </DefaultForm>
+      </div>
     </div>
   );
 }

@@ -18,6 +18,8 @@ const buttonVariants = cva(
         disable:
           "bg-[var(--color-disable)] text-[var(--text-disable)] shadow-xs",
         warn: "bg-[var(--color-warn-background)] text-[var(--color-warn)] shadow-xs hover:bg-[var(--color-warn)] hover:text-[var(--color-warn-background)]",
+        warnSecondary:
+          "bg-[var(--color-warn)] text-[var(--color-warn-background)] shadow-xs hover:bg-[var(--color-warn-secondary)] hover:text-[var(--color-warn-background)]",
       },
       size: {
         default: "h-10 w-30 gap-2 px-6 py-4 rounded-[12px]",
