@@ -1,8 +1,8 @@
-import { DefaultButton } from "./DefaultButton";
 import { DialogContent, DialogTitle } from "./ui/dialog";
 import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
 import { useDeleteUser } from "@/hooks/useDeleteUser";
+import { Button } from "./ui/button";
 
 type DeleteProfileProps = {
   onClose: () => void;
@@ -19,18 +19,22 @@ export function DeleteProfile({ onClose }: DeleteProfileProps) {
   }
 
   return (
-    <DialogContent className="flex border-0 bg-[#272727] px-10 py-10">
+    <DialogContent className="flex w-100 border-0 bg-[var(--color-foreground)] px-10 py-10">
       <div className="flex w-full flex-col items-center justify-center gap-4">
-        <DialogTitle className="text-amber-400">
+        <DialogTitle className="text-[var(--text-primary)]">
           Deseja mesmo excluir seu perfil?
         </DialogTitle>
         <div className="flex gap-4">
-          <DefaultButton className="text-xs" onClick={() => handleDeleteUser()}>
+          <Button
+            variant="warnSecondary"
+            className="text-xs"
+            onClick={() => handleDeleteUser()}
+          >
             EXCLUIR
-          </DefaultButton>
-          <DefaultButton className="text-xs" onClick={() => onClose()}>
-            FECHAR
-          </DefaultButton>
+          </Button>
+          <Button variant="muted" className="text-xs" onClick={() => onClose()}>
+            CANCELAR
+          </Button>
         </div>
         {isLoad && <Loader2Icon className="animate-spin text-amber-400" />}
       </div>
