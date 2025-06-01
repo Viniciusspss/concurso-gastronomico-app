@@ -17,6 +17,7 @@ import { RestaurantDishes } from "@/pages/app/restaurant/dishes/RestaurantDishes
 import { EditDish } from "@/pages/app/restaurant/dishes/EditDish";
 import { CreateDishForm } from "@/components/CreateDishForm";
 import { Restaurants } from "@/pages/app/restaurant/Restaurants";
+import { ViewRestaurantDishes } from "@/pages/app/ViewRestaurantDishes";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +28,6 @@ export const router = createBrowserRouter([
     path: "/",
     element: <AuthLayout />,
     children: [
-
       {
         path: "SignIn",
         children: [
@@ -117,6 +117,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute type="restaurant">
             <CreateDishForm />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/view-restaurant-dishes/:id",
+        element: (
+          <PrivateRoute>
+            <ViewRestaurantDishes />
           </PrivateRoute>
         ),
       },
