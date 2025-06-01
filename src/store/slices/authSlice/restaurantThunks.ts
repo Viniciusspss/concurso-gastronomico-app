@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setTokens } from "./authSlice";
 import axios from "axios";
 import { RootState } from "@/store/store";
-import { getAllRestaurantsType } from "@/types/user/restaurant";
+import { getAllRestaurantsType, RestaurantType } from "@/types/user/restaurant";
 
 export const LoginRestaurant = createAsyncThunk(
   "auth/loginRestaurant",
@@ -108,6 +108,25 @@ export const getAllRestaurants = createAsyncThunk(
       return data;
     } catch {
       return thunkAPI.rejectWithValue("Erro ao carregar restaurantes");
+    }
+  },
+);
+
+export const editRestaurant = createAsyncThunk(
+  "auth/editRestaurant",
+  async (data: FormData, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const token = state.auth.acessToken;
+    try {
+      const response = await api.patch(`/restaurants/me`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const restaurantData: RestaurantType = response.data;
+      return restaurantData;
+    } catch {
+      return thunkAPI.rejectWithValue("Não foi possivel editar o usuário!");
     }
   },
 );

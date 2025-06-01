@@ -31,5 +31,13 @@ export const getAllRestaurantsSchema = restaurantSchema.omit({
   dishes: true,
 });
 
+export const editRestaurantSchema = restaurantSchema
+  .omit({
+    id: true,
+    dishes: true,
+  })
+  .partial();
+
 export type RestaurantType = z.infer<typeof restaurantSchema>;
 export type getAllRestaurantsType = z.infer<typeof getAllRestaurantsSchema>;
+export type EditRestaurantType = z.infer<typeof editRestaurantSchema>;

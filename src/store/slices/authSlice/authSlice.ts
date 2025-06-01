@@ -2,6 +2,7 @@ import { UserType } from "@/types/user/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { editClient, loginClient, registerClient } from "./clientThunks";
 import {
+  editRestaurant,
   getAllRestaurants,
   LoginRestaurant,
   RegisterRestaurant,
@@ -136,6 +137,15 @@ const authSlice = createSlice({
 
     builder.addCase(getAllRestaurants.rejected, (state, action) => {
       state.errorLoadRestaurants = action.payload as string;
+    });
+
+    builder.addCase(editRestaurant.fulfilled, (state, action) => {
+      state.errorEdited = null;
+      state.user = action.payload;
+    });
+
+    builder.addCase(editRestaurant.rejected, (state, action) => {
+      state.errorEdited = action.payload as string;
     });
   },
 });
