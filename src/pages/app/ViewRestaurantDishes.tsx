@@ -10,11 +10,14 @@ import { getAllDishesResponse } from "@/types/dishes";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { DishCard } from "@/components/DishCard";
+import { toast } from "react-toastify";
+import { clearAll } from "@/store/slices/reviewSlice/reviewSlice";
 
 export function ViewRestaurantDishes() {
   const id = useParams<{ id: string }>();
   const state = useAppSelector((state) => state.auth);
   const disheState = useAppSelector((state) => state.dishes);
+  const reviewState = useAppSelector((state) => state.reviews);
   const restaurant = state?.allRestaurants?.find((r) => r.id === id.id);
   const dispatch = useAppDispatch();
 
@@ -24,6 +27,13 @@ export function ViewRestaurantDishes() {
       dispatch(loadAllDishes());
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (reviewState.errorReview) {
+      toast.error(reviewState.errorReview);
+      dispatch(clearAll());
+    }
+  }, [dispatch, reviewState.errorReview]);
 
   const dishes: getAllDishesResponse[] = disheState.dishes;
   const restaurantDishes: getAllDishesResponse[] = dishes.filter((d) => {

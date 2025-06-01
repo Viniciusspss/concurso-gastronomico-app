@@ -36,7 +36,6 @@ export function DishDialog({ onClose }: DishDialogProps) {
 
     dispatch(createReview({ comment, rating }));
     onClose();
-    toast.success("Prato avaliado com sucesso!");
   }
 
   return (

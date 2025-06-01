@@ -2,7 +2,6 @@ import api from "@/api/axios";
 import { RootState } from "@/store/store";
 import { reviewType, validationReviewSchema } from "@/types/review";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export const createReview = createAsyncThunk(
   "review/createReview",
@@ -35,15 +34,8 @@ export const createReview = createAsyncThunk(
       );
       const result: reviewType = responseReview.data;
       return result;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const message =
-          error.response?.data?.message ||
-          error.message ||
-          "Erro desconhecido ao tentar realizar avaliação!";
-        return thunkAPI.rejectWithValue(message);
-      }
-      return thunkAPI.rejectWithValue("Erro desconhecido");
+    } catch {
+      return thunkAPI.rejectWithValue("Você já avaliou esse prato!");
     }
   },
 );
