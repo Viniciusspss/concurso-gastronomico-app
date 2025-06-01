@@ -6,19 +6,19 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { getAllRestaurants } from "@/store/slices/authSlice/restaurantThunks";
 import { loadAllDishes } from "@/store/slices/dishSlice/dishThunks";
-import { getAllDishesResponse } from "@/types/dishes";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { DishCard } from "@/components/DishCard";
 import { toast } from "react-toastify";
 import { clearAll } from "@/store/slices/reviewSlice/reviewSlice";
+import { useRestaurantStats } from "@/hooks/useRestaurantStats";
 
 export function ViewRestaurantDishes() {
   const id = useParams<{ id: string }>();
   const state = useAppSelector((state) => state.auth);
-  const disheState = useAppSelector((state) => state.dishes);
   const reviewState = useAppSelector((state) => state.reviews);
   const restaurant = state?.allRestaurants?.find((r) => r.id === id.id);
+  const { qtdDishes, qtdReviews, restaurantDishes } = useRestaurantStats(id.id);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,17 +34,6 @@ export function ViewRestaurantDishes() {
       dispatch(clearAll());
     }
   }, [dispatch, reviewState.errorReview]);
-
-  const dishes: getAllDishesResponse[] = disheState.dishes;
-  const restaurantDishes: getAllDishesResponse[] = dishes.filter((d) => {
-    return d.restaurant.id === id.id;
-  });
-  const qtdDishes = restaurantDishes.length;
-
-  const qtdReviews = restaurantDishes.reduce(
-    (total, r) => total + r.reviews.length,
-    0,
-  );
 
   const [search, setSearch] = useState("");
   const filtredDishes = restaurantDishes.filter((d) => {
