@@ -7,7 +7,6 @@ import { SignUp as SignUpRestaurant } from "../pages/auth/restaurant/Sign-up";
 import { SelectProfile } from "../pages/auth/SelectProfile";
 import { AppLayout } from "@/pages/_layouts/app";
 import { Dishes } from "@/pages/app/dishes/Dishes";
-import { Profile } from "@/pages/app/profile/Profile";
 import { EditProfile } from "@/pages/app/profile/EditProfile";
 import { NotFound } from "@/pages/NotFound";
 import { PrivateRoute } from "@/components/PrivateRoute";
@@ -18,6 +17,7 @@ import { EditDish } from "@/pages/app/restaurant/dishes/EditDish";
 import { CreateDishForm } from "@/components/CreateDishForm";
 import { Restaurants } from "@/pages/app/restaurant/Restaurants";
 import { ViewRestaurantDishes } from "@/pages/app/ViewRestaurantDishes";
+import { EditRestaurantForm } from "@/components/EditRestaurantForm";
 
 export const router = createBrowserRouter([
   {
@@ -64,14 +64,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/Profile",
-        element: (
-          <PrivateRoute type="client">
-            <Profile />
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: "/EditProfile",
         element: (
@@ -117,6 +110,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute type="restaurant">
             <CreateDishForm />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/edit-restaurant-profile",
+        element: (
+          <PrivateRoute type="restaurant">
+            <EditRestaurantForm />
           </PrivateRoute>
         ),
       },
