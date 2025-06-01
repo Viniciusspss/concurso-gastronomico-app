@@ -2,6 +2,7 @@ import api from "@/api/axios";
 import {
   clientSchema,
   ClientType,
+  EditClientType,
   loginClientSchema,
 } from "@/types/user/client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -126,33 +127,17 @@ export const registerClient = createAsyncThunk(
 
 export const editClient = createAsyncThunk(
   "auth/editClient",
-  async (
-    {
-      first_name,
-      last_name,
-      email,
-      password,
-    }: {
-      first_name: string;
-      last_name: string;
-      email: string;
-      password: string;
-    },
-    thunkAPI,
-  ) => {
+  async (data: EditClientType, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const token = state.auth.acessToken;
     try {
-      await api.patch(
-        `/users/me/`,
-        { first_name, last_name, email, password },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await api.patch(`/users/me/`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
-      return true;
+      });
+      const clientData: ClientType = response.data;
+      return clientData;
     } catch {
       return thunkAPI.rejectWithValue("Não foi possivel editar o usuário!");
     }

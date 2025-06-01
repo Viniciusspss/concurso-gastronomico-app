@@ -109,8 +109,9 @@ const authSlice = createSlice({
       state.errorLogin = null;
     });
 
-    builder.addCase(editClient.fulfilled, (state) => {
+    builder.addCase(editClient.fulfilled, (state, action) => {
       state.errorEdited = null;
+      state.user = action.payload;
     });
 
     builder.addCase(editClient.rejected, (state, action) => {
