@@ -18,7 +18,9 @@ export function ViewRestaurantDishes() {
   const state = useAppSelector((state) => state.auth);
   const reviewState = useAppSelector((state) => state.reviews);
   const restaurant = state?.allRestaurants?.find((r) => r.id === id.id);
-  const { qtdDishes, qtdReviews, restaurantDishes } = useRestaurantStats(id.id);
+  const { qtdDishes, qtdAllReviews, restaurantDishes } = useRestaurantStats(
+    id.id,
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export function ViewRestaurantDishes() {
             {qtdDishes} PRATOS
           </h2>
           <p className="text-sm text-[var(--text-muted)]">
-            {qtdReviews} AVALIAÇÕES NO TOTAL
+            {qtdAllReviews} AVALIAÇÕES NO TOTAL
           </p>
         </div>
       </div>
