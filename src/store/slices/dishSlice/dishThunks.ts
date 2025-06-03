@@ -8,7 +8,7 @@ export const createDish = createAsyncThunk(
   "dish/createDish",
   async (data: FormData, thunkAPI) => {
     const response = thunkAPI.getState() as RootState;
-    const token = response.auth.acessToken;
+    const token = response.auth.accessToken;
 
     try {
       await api.post("/dishes/me", data, {
@@ -34,7 +34,7 @@ export const loadAllDishes = createAsyncThunk(
   "dish/loadAllDishes",
   async (_, thunkAPI) => {
     const response = thunkAPI.getState() as RootState;
-    const token = response.auth.acessToken;
+    const token = response.auth.accessToken;
     try {
       const response = await api.get("/dishes", {
         headers: {
@@ -60,7 +60,7 @@ export const loadRestaurantDishes = createAsyncThunk(
     }
 
     const response = thunkAPI.getState() as RootState;
-    const token = response.auth.acessToken;
+    const token = response.auth.accessToken;
 
     try {
       const response = await api.get("/dishes", {
@@ -92,7 +92,7 @@ export const editDish = createAsyncThunk(
   async (data: FormData, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const dishId = state.dishes.selectedDish?.id;
-    const token = state.auth.acessToken;
+    const token = state.auth.accessToken;
     try {
       await api.patch(`/dishes/me/${dishId}`, data, {
         headers: {
@@ -112,7 +112,7 @@ export const deleteDish = createAsyncThunk(
     try {
       const state = thunkAPI.getState() as RootState;
       const dishId = state.dishes.selectedDish?.id;
-      const token = state.auth.acessToken;
+      const token = state.auth.accessToken;
 
       await api.delete(`/dishes/me/${dishId}`, {
         headers: {
@@ -120,7 +120,9 @@ export const deleteDish = createAsyncThunk(
         },
       });
     } catch {
-      return thunkAPI.rejectWithValue("Não foi possivel excluir o prato!");
+      return thunkAPI.rejectWithValue(
+        "Não é possivel excluir um prato com avaliações!",
+      );
     }
   },
 );

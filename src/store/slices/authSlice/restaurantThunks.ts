@@ -33,11 +33,11 @@ export const LoginRestaurant = createAsyncThunk(
         image_url,
       };
 
-      const acessToken = tokens.acessToken;
+      const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
 
       localStorage.setItem("authUser", JSON.stringify(restaurant));
-      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
+      thunkAPI.dispatch(setTokens({ accessToken, refreshToken }));
 
       return restaurant;
     } catch (error) {
@@ -70,11 +70,11 @@ export const RegisterRestaurant = createAsyncThunk(
         dishes,
       };
 
-      const acessToken = tokens.acessToken;
+      const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
 
       localStorage.setItem("authUser", JSON.stringify(restaurant));
-      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
+      thunkAPI.dispatch(setTokens({ accessToken, refreshToken }));
       return restaurant;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -96,7 +96,7 @@ export const getAllRestaurants = createAsyncThunk(
   "auth/getAllRestaurants",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const token = state.auth.acessToken;
+    const token = state.auth.accessToken;
     try {
       const response = await api.get("/restaurants", {
         headers: {
@@ -116,7 +116,7 @@ export const editRestaurant = createAsyncThunk(
   "auth/editRestaurant",
   async (data: FormData, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const token = state.auth.acessToken;
+    const token = state.auth.accessToken;
     try {
       const response = await api.patch(`/restaurants/me`, data, {
         headers: {

@@ -13,7 +13,7 @@ interface AuthState {
   user: UserType | null;
   errorLogin: string | null;
   errorRegister: string | null;
-  acessToken: string | null;
+  accessToken: string | null;
   refreshToken: string | null;
   isEditedClient: boolean;
   errorEdited: string | null;
@@ -29,7 +29,7 @@ const initialState: AuthState = {
   user: storageUser ? (JSON.parse(storageUser) as UserType) : null,
   errorLogin: null,
   errorRegister: null,
-  acessToken: localStorage.getItem("acessToken"),
+  accessToken: localStorage.getItem("accessToken"),
   refreshToken: localStorage.getItem("refreshToken"),
   isEditedClient: false,
   errorEdited: null,
@@ -41,11 +41,11 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      state.acessToken = null;
+      state.accessToken = null;
       state.refreshToken = null;
       localStorage.removeItem("authUser");
       localStorage.removeItem("restaurantDishes");
-      localStorage.removeItem("acessToken");
+      localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     },
 
@@ -56,17 +56,17 @@ const authSlice = createSlice({
     },
 
     setToken: (state, action: PayloadAction<string>) => {
-      state.acessToken = action.payload;
-      localStorage.setItem("acessToken", action.payload);
+      state.accessToken = action.payload;
+      localStorage.setItem("accessToken", action.payload);
     },
 
     setTokens: (
       state,
-      action: PayloadAction<{ acessToken: string; refreshToken: string }>,
+      action: PayloadAction<{ accessToken: string; refreshToken: string }>,
     ) => {
-      state.acessToken = action.payload.acessToken;
+      state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
-      localStorage.setItem("acessToken", action.payload.acessToken);
+      localStorage.setItem("accessToken", action.payload.accessToken);
       localStorage.setItem("refreshToken", action.payload.refreshToken);
     },
   },

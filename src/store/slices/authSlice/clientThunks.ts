@@ -47,10 +47,10 @@ export const loginClient = createAsyncThunk(
         last_name,
       };
 
-      const acessToken = tokens.acessToken;
+      const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
       localStorage.setItem("authUser", JSON.stringify(client));
-      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
+      thunkAPI.dispatch(setTokens({ accessToken, refreshToken }));
 
       return client;
     } catch (error) {
@@ -101,9 +101,9 @@ export const registerClient = createAsyncThunk(
       const { id, first_name, last_name, email, password, tokens } =
         response.data;
 
-      const acessToken = tokens.acessToken;
+      const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
-      thunkAPI.dispatch(setTokens({ acessToken, refreshToken }));
+      thunkAPI.dispatch(setTokens({ accessToken, refreshToken }));
 
       const client: ClientType = {
         id,
@@ -129,7 +129,7 @@ export const editClient = createAsyncThunk(
   "auth/editClient",
   async (data: EditClientType, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const token = state.auth.acessToken;
+    const token = state.auth.accessToken;
     try {
       const response = await api.patch(`/users/me/`, data, {
         headers: {

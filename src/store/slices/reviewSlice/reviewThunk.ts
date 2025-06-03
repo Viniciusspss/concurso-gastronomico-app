@@ -20,7 +20,7 @@ export const createReview = createAsyncThunk(
 
     const state = thunkAPI.getState() as RootState;
     const dishId = state.dishes.selectedDish?.id;
-    const token = state.auth.acessToken;
+    const token = state.auth.accessToken;
 
     try {
       const responseReview = await api.post(
