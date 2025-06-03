@@ -10,10 +10,10 @@ export function useRestaurantStats(restaurantId?: string) {
   });
 
   const qtdDishes = restaurantDishes.length;
-  const qtdReviews = restaurantDishes.reduce(
+  const qtdAllReviews = restaurantDishes.reduce(
     (total, dish) => total + dish.reviews.length,
     0,
   );
 
-  return { qtdDishes, qtdReviews, restaurantDishes };
+  return { qtdDishes, qtdAllReviews, restaurantDishes };
 }

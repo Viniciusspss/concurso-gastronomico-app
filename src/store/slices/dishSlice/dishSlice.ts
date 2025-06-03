@@ -42,6 +42,7 @@ const dishSlice = createSlice({
       state.errorCreateDish = null;
       state.loadError = null;
       state.editedError = null;
+      state.isDeletedDish = false;
     },
     setSelectedDish(state, action: PayloadAction<getAllDishesResponse | null>) {
       state.selectedDish = action.payload;
