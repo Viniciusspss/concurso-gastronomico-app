@@ -52,13 +52,13 @@ export function EditProfileForm() {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col items-center">
+    <div className="flex h-screen w-full flex-col items-center bg-[var(--color-background)]">
       <DefaultHeader />
       <div className="flex h-full w-full items-center justify-center">
-        <div className="flex flex-col rounded-2xl border-1 p-6">
+        <div className="flex flex-col rounded-2xl border-1 p-6 shadow-2xl">
           <div className="flex justify-between">
             <h1 className="mb-4 text-2xl tracking-tight text-[var(--text-primary)]">
-              Editar Perfil
+              Editar perfil
             </h1>
             <Button
               onClick={() => handleOpenDialog()}
@@ -86,22 +86,14 @@ export function EditProfileForm() {
             <div className="mt-4 flex gap-4">
               <Label className="gap-1 text-[var(--text-muted)]">
                 Nome
-                <Input
-                  className="bg-[var(--color-background)]"
-                  id="firstName"
-                  {...register("first_name")}
-                ></Input>
+                <Input id="firstName" {...register("first_name")}></Input>
               </Label>
               <Label
                 className="gap-1 text-[var(--text-muted)]"
                 htmlFor="lastName"
               >
                 Sobrenome
-                <Input
-                  className="bg-[var(--color-background)]"
-                  id="lastName"
-                  {...register("last_name")}
-                ></Input>
+                <Input id="lastName" {...register("last_name")}></Input>
               </Label>
             </div>
             <div className="flex gap-4">
@@ -115,11 +107,7 @@ export function EditProfileForm() {
                 htmlFor="password"
               >
                 Nova Senha
-                <Input
-                  className="bg-[var(--color-background)]"
-                  id="password"
-                  {...register("password")}
-                ></Input>
+                <Input id="password" {...register("password")}></Input>
               </Label>
             </div>
             <div className="flex justify-end gap-4">

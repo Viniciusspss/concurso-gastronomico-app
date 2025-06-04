@@ -47,10 +47,10 @@ export function EditRestaurantForm() {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col items-center">
+    <div className="flex h-screen w-full flex-col items-center bg-[var(--color-background)]">
       <RestaurantHeader />
       <div className="flex h-full w-full items-center justify-center">
-        <div className="flex flex-col rounded-2xl border-1 p-6">
+        <div className="flex flex-col rounded-2xl border-1 p-6 shadow-2xl">
           <div className="flex justify-between">
             <h1 className="mb-4 text-2xl tracking-tight text-[var(--text-primary)]">
               Editar perfil do restaurante
