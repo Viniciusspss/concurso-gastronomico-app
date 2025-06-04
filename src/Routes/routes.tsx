@@ -29,14 +29,14 @@ export const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        path: "SignIn",
+        path: "sign-in",
         children: [
           { path: "User", element: <SignInUser /> },
           { path: "Restaurant", element: <SignInRestaurant /> },
         ],
       },
       {
-        path: "SignUp",
+        path: "sign-up",
         children: [
           { path: "User", element: <SignUpUser /> },
           { path: "Restaurant", element: <SignUpRestaurant /> },
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "/EditProfile",
+        path: "/edit-profile",
         element: (
           <PrivateRoute type="client">
             <EditProfile />

@@ -40,7 +40,7 @@ export function DefaultHeader() {
         <DropDownMenu />
       </div>
       <div className="flex items-center justify-center gap-2">
-        <Link to="/editProfile">
+        <Link to="/edit-profile">
           <UserRound className="h-8 w-8 rounded-full bg-[var(--color-primary)] p-1 text-[var(--text-primary)] transition hover:cursor-pointer hover:text-[var(--color-background)]" />
         </Link>
         <Button

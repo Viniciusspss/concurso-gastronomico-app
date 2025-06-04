@@ -10,18 +10,23 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { signUpFormDataSchema } from "@/types/user/restaurant";
 
-
-export type SignUpFormData = z.infer<typeof signUpFormDataSchema>
+export type SignUpFormData = z.infer<typeof signUpFormDataSchema>;
 
 export function SignUp() {
   const { user, errorRegister } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpFormDataSchema)
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpFormDataSchema),
   });
   const navigate = useNavigate();
 
@@ -31,7 +36,6 @@ export function SignUp() {
       toast.success("Usuário registrado com sucesso!");
       setTimeout(() => navigate(`/restaurant-dishes/${user.id}`), 3000);
     }
-    ;
     if (errorRegister) {
       toast.error(errorRegister);
     }
@@ -43,7 +47,13 @@ export function SignUp() {
     };
   }, [dispatch]);
 
-  function onSubmit({ cnpj, name, password, repeatPassword, image_url }: SignUpFormData) {
+  function onSubmit({
+    cnpj,
+    name,
+    password,
+    repeatPassword,
+    image_url,
+  }: SignUpFormData) {
     if (password !== repeatPassword) {
       toast.error("As senhas não coincidem!");
       return;
@@ -55,16 +65,22 @@ export function SignUp() {
     formData.append("image", image_url);
 
     dispatch(RegisterRestaurant(formData));
-
   }
 
   return (
-    <div className="rounded-2xl bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
+    <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-background)]">
       <div className="flex flex-col">
-        <h1 className="flex w-full justify-center font-bold text-xl text-[var(--text-primary)]">CRIAR CONTA</h1>
-        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">Sou restaurante</h2>
+        <h1 className="flex w-full justify-center text-xl font-bold text-[var(--text-primary)]">
+          CRIAR CONTA
+        </h1>
+        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">
+          Sou restaurante
+        </h2>
       </div>
-      <DefaultForm className=" p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+      <DefaultForm
+        className="items-center justify-center rounded-2xl p-15"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-2">
             <Label htmlFor="cnpj">CNPJ</Label>
@@ -94,7 +110,6 @@ export function SignUp() {
             <Input
               id="repeatPassword"
               type="password"
-
               {...register("repeatPassword", {
                 required: "repetir senha é obrigatório",
                 validate: (value) =>
@@ -108,27 +123,25 @@ export function SignUp() {
               id="image_url"
               type="file"
               name="image"
-              onChange={e => {
-                const file = e.target.files?.[0]
+              onChange={(e) => {
+                const file = e.target.files?.[0];
                 if (file) {
-                  setValue("image_url", file, { shouldValidate: true })
+                  setValue("image_url", file, { shouldValidate: true });
                 }
               }}
-
             />
           </div>
         </div>
-        <Button className="rounded-xl w-80" variant="default">
+        <Button className="w-80 rounded-xl" variant="default">
           Cadastre-se
         </Button>
         <p className="text-xs">
           Já tenho uma conta.{" "}
-          <Link to="/SignIn/restaurant" className="font-bold text-red-500">
+          <Link to="/sign-in/restaurant" className="font-bold text-red-500">
             Fazer Login
           </Link>
         </p>
       </DefaultForm>
     </div>
-
   );
 }

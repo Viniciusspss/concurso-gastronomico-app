@@ -18,8 +18,8 @@ type SignUpFormData = ClientType & {
 
 export function SignUp() {
   const { register, handleSubmit, watch } = useForm<SignUpFormData>();
-  const { user, errorRegister } = useAppSelector(state => state.auth)
-  const dispatch = useAppDispatch()
+  const { user, errorRegister } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,37 +32,51 @@ export function SignUp() {
       toast.dismiss();
       toast.error(errorRegister);
     }
-  }, [user, errorRegister, navigate])
-
+  }, [user, errorRegister, navigate]);
 
   useEffect(() => {
-    return () => { dispatch(clearError()) }
-  }, [dispatch])
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
-  function onSubmit({ email, password, first_name, last_name, repeatPassword }: SignUpFormData) {
+  function onSubmit({
+    email,
+    password,
+    first_name,
+    last_name,
+    repeatPassword,
+  }: SignUpFormData) {
     if (password === repeatPassword) {
-      dispatch(registerClient(
-        {
+      dispatch(
+        registerClient({
           email,
           password,
           first_name,
           last_name,
-        }
-      ));
-
+        }),
+      );
     }
   }
 
   return (
-    <div className="rounded-2xl bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
+    <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-background)]">
       <div className="flex flex-col">
-        <h1 className="flex w-full justify-center font-bold text-xl text-[var(--text-primary)]">CRIAR CONTA</h1>
-        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">Sou cliente</h2>
+        <h1 className="flex w-full justify-center text-xl font-bold text-[var(--text-primary)]">
+          CRIAR CONTA
+        </h1>
+        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">
+          Sou cliente
+        </h2>
       </div>
-      <DefaultForm className=" p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+      <DefaultForm
+        className="items-center justify-center rounded-2xl p-15"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="firstName">Nome
+            <Label htmlFor="firstName">
+              Nome
               <Input
                 id="firstName"
                 {...register("first_name", {
@@ -72,16 +86,19 @@ export function SignUp() {
             </Label>
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="lastName">Sobrenome
+            <Label htmlFor="lastName">
+              Sobrenome
               <Input
                 id="lastName"
-                {...register("last_name", { required: "Ultimo nome é obrigatório" })}
+                {...register("last_name", {
+                  required: "Ultimo nome é obrigatório",
+                })}
               />
             </Label>
-
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email
+            <Label htmlFor="email">
+              Email
               <Input
                 id="email"
                 type="email"
@@ -90,17 +107,18 @@ export function SignUp() {
             </Label>
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password">Senha
+            <Label htmlFor="password">
+              Senha
               <Input
                 type="password"
                 id="password"
                 {...register("password", { required: "Senha é obrigatório" })}
               />
             </Label>
-
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="repeatPassword">Repetir senha
+            <Label htmlFor="repeatPassword">
+              Repetir senha
               <Input
                 type="password"
                 id="repeatPassword"
@@ -113,17 +131,16 @@ export function SignUp() {
             </Label>
           </div>
         </div>
-        <Button className="rounded-xl w-80" variant="default" >
+        <Button className="w-80 rounded-xl" variant="default">
           Cadastre-se
         </Button>
         <p className="text-xs">
           Já tenho uma conta.{" "}
-          <Link to="/SignIn/User" className="font-bold text-red-500">
+          <Link to="/sign-in/User" className="font-bold text-red-500">
             Fazer Login
           </Link>
         </p>
       </DefaultForm>
     </div>
-
   );
 }
