@@ -1,58 +1,102 @@
-import { DefaultButton } from "@/components/DefaultButton";
 import { DishCard } from "@/components/DishCard";
 import { RestaurantHeader } from "@/components/RestaurantHeader";
+import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { loadRestaurantDishes } from "@/store/slices/dishSlice/dishThunks";
-import { useEffect } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
-import backgroundDishes from "@/assets/backgroundDishes.jpg";
+import { loadAllDishes } from "@/store/slices/dishSlice/dishThunks";
+import { SearchIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import image from "@/assets/backgroundDishesImage.png";
+import { useRestaurantStats } from "@/hooks/useRestaurantStats";
+import { getAllRestaurants } from "@/store/slices/authSlice/restaurantThunks";
+import { setSelectedDish } from "@/store/slices/dishSlice/dishSlice";
 
 export function RestaurantDishes() {
-  const { restaurantDishes } = useAppSelector((state) => state.dishes);
-  const { user } = useAppSelector((state) => state.auth);
+  const id = useParams<{ id: string }>();
+  const state = useAppSelector((state) => state.auth);
+  const restaurant = state?.allRestaurants?.find((r) => r.id === id.id);
+  const { qtdDishes, qtdAllReviews, restaurantDishes } = useRestaurantStats(
+    id.id,
+  );
+
   const dispatch = useAppDispatch();
-  const { id } = useParams();
 
   useEffect(() => {
-    if (user?.id) {
-      dispatch(loadRestaurantDishes());
+    {
+      dispatch(getAllRestaurants());
+      dispatch(loadAllDishes());
     }
-  }, [dispatch, user?.id, restaurantDishes]);
+  }, [dispatch]);
 
-  if (user?.id != id) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    dispatch(setSelectedDish(null));
+  }, [dispatch]);
+
+  const [search, setSearch] = useState("");
+  const filtredDishes = restaurantDishes.filter((d) => {
+    return d.name.toLowerCase().includes(search?.toLowerCase());
+  });
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="h-screen w-full bg-[var(--color-background)]">
       <RestaurantHeader />
-      {restaurantDishes.length === 0 && (
-        <div className="flex flex-col items-center justify-center gap-5">
-          <h1 className="mx-auto text-2xl text-[var(--color-background)]">
-            Não há nenhum prato cadastrado pelo seu restaurante!
-          </h1>
-          <Link to="/create-dish">
-            <DefaultButton>CADASTRAR PRATO</DefaultButton>
-          </Link>
-        </div>
-      )}
-      <div className="relative flex flex-col items-center">
+      <img className="h-50 w-full" src={image} alt="" />
+      <div className="-mt-20 mb-15 flex justify-between px-20">
         <img
-          src={backgroundDishes}
-          alt="Imagem de fundo"
-          className="absolute z-[-1] h-full w-full object-cover"
+          className="h-40 w-40 rounded-full"
+          src={`http://localhost:8080/api${restaurant?.image_url}`}
         />
-        <h1 className="mt-10 mb-10 rounded-3xl border-4 border-[var(--color-background)] bg-[var(--color-primary)] p-6 text-4xl font-bold text-[var(--color-background)]">
-          MEUS PRATOS
-        </h1>
-        <div className="grid gap-6 px-10 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {restaurantDishes &&
-            restaurantDishes.map((dish, index) => {
-              return <DishCard dish={dish} key={index} />;
-            })}
+        <div className="flex flex-col items-end justify-center">
+          <h1 className="mb-5 text-4xl font-bold text-[var(--color-primary)]">
+            {restaurant?.name}
+          </h1>
+          <h2 className="text-xl font-bold text-[var(--text-primary)]">
+            {qtdDishes} PRATOS
+          </h2>
+          {qtdAllReviews === 1 ? (
+            <p className="text-sm text-[var(--text-muted)]">
+              {qtdAllReviews} AVALIAÇÃO NO TOTAL
+            </p>
+          ) : (
+            <p className="text-sm text-[var(--text-muted)]">
+              {qtdAllReviews} AVALIAÇÕES NO TOTAL
+            </p>
+          )}
         </div>
       </div>
+      <div className="flex w-full flex-col px-15">
+        <div className="flex w-full justify-between">
+          <h2 className="border-b-2 border-[var(--color-primary)] text-2xl text-[var(--text-primary)]">
+            Pratos do restaurante
+          </h2>
+          <div className="relative flex">
+            <Input
+              placeholder="Buscar prato"
+              className="bg-[var(--color-background)]"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <SearchIcon className="absolute right-3 mt-2 mb-2 size-4" />
+          </div>
+        </div>
+      </div>
+
+      {restaurantDishes.length === 0 ? (
+        <h1 className="flex w-full justify-center text-2xl text-[var(--text-foreground)]">
+          Não há nenhum prato cadastrado pelo seu restaurante!
+        </h1>
+      ) : filtredDishes.length === 0 ? (
+        <h1 className="flex w-full justify-center text-2xl text-[var(--text-foreground)]">
+          Nenhum prato encontrado com esse nome!
+        </h1>
+      ) : (
+        <div className="grid gap-6 bg-[var(--color-background)] px-15 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {filtredDishes.map((dish, index) => {
+            return <DishCard dish={dish} key={index} />;
+          })}
+        </div>
+      )}
     </div>
   );
 }
