@@ -67,7 +67,7 @@ export function EditRestaurantForm() {
               <DeleteProfile onClose={() => setIsDeleteOpen(false)} />
             </Dialog>
           </div>
-          <div className="flex justify-between gap-2">
+          <div className="flex items-center gap-4">
             <div className="text-[var(--text-foreground)]">
               {user && "cnpj" in user && (
                 <img
@@ -77,7 +77,14 @@ export function EditRestaurantForm() {
               )}
             </div>
             <div className="text-sm text-[var(--text-foreground)]">
-              {user && "cnpj" in user && <h1>{user.name}</h1>}
+              {user && "cnpj" in user && (
+                <div>
+                  <h1 className="text-xl text-[var(--text-primary)]">
+                    {user.name}
+                  </h1>
+                  <h1 className="text-[var(--text-muted)]">{user.cnpj}</h1>
+                </div>
+              )}
             </div>
           </div>
 

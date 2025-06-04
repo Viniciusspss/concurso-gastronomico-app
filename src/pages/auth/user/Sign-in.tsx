@@ -19,58 +19,70 @@ type LoginClientFormData = {
 export function SignIn() {
   const { register, handleSubmit } = useForm<LoginClientFormData>();
   const navigate = useNavigate();
-  const { user, errorLogin } = useAppSelector(state => state.auth)
-  const dispatch = useAppDispatch()
+  const { user, errorLogin } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (user) {
-      navigate("/Dishes")
+      navigate("/Dishes");
     }
 
     if (errorLogin) {
-      toast.dismiss()
-      toast.error(errorLogin)
+      toast.dismiss();
+      toast.error(errorLogin);
     }
-  }, [user, errorLogin, navigate])
+  }, [user, errorLogin, navigate]);
 
   useEffect(() => {
-    return () => { dispatch(clearError()) }
-  }, [dispatch])
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
   function onSubmit(data: LoginClientFormData) {
-    dispatch(loginClient({ email: data.email, password: data.password }))
+    dispatch(loginClient({ email: data.email, password: data.password }));
   }
 
   return (
-    <div className=" rounded-2xl  bg-[var(--color-background)] w-full justify-center items-center flex flex-col">
+    <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-background)]">
       <Link to="/">
-        <Button variant="secondary" size="lg" className="w-60 absolute right-10 top-10">
+        <Button
+          variant="secondary"
+          size="lg"
+          className="absolute top-10 right-10 w-60"
+        >
           Escolher outra forma de login
         </Button>
       </Link>
       <div className="flex flex-col">
-        <h1 className="flex w-full justify-center font-bold text-xl text-[var(--text-primary)]">ENTRAR</h1>
-        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">Preencha as informações para prosseguir</h2>
+        <h1 className="flex w-full justify-center text-xl font-bold text-[var(--text-primary)]">
+          ENTRAR
+        </h1>
+        <h2 className="flex w-full justify-center text-sm text-[var(--color-primary)]">
+          Preencha as informações para prosseguir
+        </h2>
       </div>
-      <DefaultForm className=" p-15 rounded-2xl justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
-
+      <DefaultForm
+        className="items-center justify-center rounded-2xl p-15"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-3">
           <div className="flex">
-            <Label htmlFor="email" >Email
+            <Label htmlFor="email">
+              Email
               <Input
                 id="email"
                 type="email"
-
                 {...register("email", { required: "Email é obrigatório" })}
               />
             </Label>
           </div>
           <div className="flex">
-            <Label htmlFor="password" >Senha
+            <Label htmlFor="password">
+              Senha
               <Input
                 id="password"
                 type="password"
-
                 {...register("password", { required: "Senha é obrigatório" })}
               />
             </Label>
@@ -81,12 +93,11 @@ export function SignIn() {
         </Button>
         <p className="text-xs">
           Ainda não tenho uma conta.{" "}
-          <Link to="/SignUp/User" className="font-bold text-red-500">
+          <Link to="/sign-up/User" className="font-bold text-red-500">
             Criar conta
           </Link>
         </p>
       </DefaultForm>
     </div>
-
   );
 }
