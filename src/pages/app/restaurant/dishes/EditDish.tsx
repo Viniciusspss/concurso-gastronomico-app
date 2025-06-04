@@ -12,26 +12,28 @@ import {
   loadRestaurantDishes,
 } from "@/store/slices/dishSlice/dishThunks";
 import { editDishFormData } from "@/types/dishes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export function EditDish() {
   const { user } = useAppSelector((state) => state.auth);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const { restaurantDishes, editedError } = useAppSelector(
-    (state) => state.dishes,
-  );
+  const { editedError, selectedDish } = useAppSelector((state) => state.dishes);
   const dispatch = useAppDispatch();
   const { register, handleSubmit, setValue } = useForm<editDishFormData>();
-  const { dishId } = useParams();
   const navigate = useNavigate();
-  const dish = restaurantDishes.find((d) => d.id === dishId);
   const data = new FormData();
 
+  useEffect(() => {
+    if (user && "cnpj" in user) {
+      dispatch(loadRestaurantDishes());
+    }
+  }, [dispatch, user]);
+
   function onSubmit({ details, image_url, name, price }: editDishFormData) {
-    if (!dish) {
+    if (!selectedDish) {
       return;
     }
     if (name) {
@@ -65,7 +67,7 @@ export function EditDish() {
     });
   }
 
-  if (!dish) {
+  if (!selectedDish) {
     return <Navigate to={`/restaurant-dishes/${user?.id}`} />;
   }
 
@@ -78,16 +80,18 @@ export function EditDish() {
       <div className="rounded-4xl border-1 border-[var(--text-muted)] bg-[var(--color-background)] p-10 shadow-2xl">
         <div className="mb-7 flex gap-4">
           <img
-            src={`http://localhost:8080/api/uploads/${dish.image_url}`}
+            src={`http://localhost:8080/api/uploads/${selectedDish.image_url}`}
             alt="Imagem do prato"
             className="h-25 w-25 rounded-full object-cover"
           />
           <div className="flex w-full justify-between">
             <div>
               <h2 className="text-2xl text-[var(--text-primary)]">
-                {dish.name}
+                {selectedDish.name}
               </h2>
-              <p className="text-sm text-[var(--text-muted)]">R${dish.price}</p>
+              <p className="text-sm text-[var(--text-muted)]">
+                R${selectedDish.price}
+              </p>
             </div>
             <Button
               variant="warnSecondary"
@@ -107,7 +111,7 @@ export function EditDish() {
                 Novo nome
                 <Input
                   className="bg-white"
-                  defaultValue={dish.name}
+                  defaultValue={selectedDish.name}
                   id="dishName"
                   {...register("name")}
                 />
@@ -117,7 +121,7 @@ export function EditDish() {
               <Label htmlFor="dishPrice">
                 Novo Preço
                 <Input
-                  defaultValue={dish.price}
+                  defaultValue={selectedDish.price}
                   className="bg-white"
                   id="dishPrice"
                   {...register("price")}
@@ -130,7 +134,7 @@ export function EditDish() {
               <Label htmlFor="dishDetails">
                 Nova Descrição
                 <textarea
-                  defaultValue={dish.details}
+                  defaultValue={selectedDish.details}
                   className="w-full rounded-2xl border-1 border-[var(--text-muted)] bg-white p-4"
                   id="dishDetails"
                   cols={30}
