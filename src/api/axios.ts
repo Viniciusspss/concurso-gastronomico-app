@@ -10,7 +10,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("acessToken");
+    const token = localStorage.getItem("accessToken");
     if (token) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
@@ -34,21 +34,43 @@ api.interceptors.response.use(
 
       try {
         const refreshToken = localStorage.getItem("refreshToken");
-        const response = await axios.post(
-          "http://localhost:8080/api/user/auth/refresh-token",
-          { refreshToken },
-        );
+        const userRole = localStorage.getItem("userRole")
 
-        const newAccessToken = response.data.acessToken;
+        if (userRole === "client") {
+          const response = await axios.post(
+            "http://localhost:8080/api/users/auth/refresh-token",
+            { refreshToken },
+          );
 
-        localStorage.setItem("acessToken", newAccessToken);
+          const newAccessToken = response.data.accessToken;
 
-        originalRequest.headers = originalRequest.headers || {};
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          localStorage.setItem("accessToken", newAccessToken);
 
-        return api(originalRequest);
+          originalRequest.headers = originalRequest.headers || {};
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+          return api(originalRequest);
+        } else if (userRole === "restaurant") {
+          const response = await axios.post(
+            "http://localhost:8080/api/restaurants/auth/refresh-token",
+            { refreshToken },
+          );
+
+          const newAccessToken = response.data.accessToken;
+
+          localStorage.setItem("accessToken", newAccessToken);
+
+          originalRequest.headers = originalRequest.headers || {};
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+          return api(originalRequest);
+        } else {
+          console.warn("Role desconhecida ou ausente no localStorage");
+        }
+
+
       } catch (refreshError) {
-        localStorage.removeItem("acessToken");
+        localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("authUser");
         window.location.href = "/";
