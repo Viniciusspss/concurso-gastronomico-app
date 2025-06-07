@@ -45,6 +45,31 @@ export const reviewSchema = z.object({
     }),
 });
 
+export type reviewCardType = {
+  review: {
+    id: string;
+    user: {
+      id: string;
+      first_name: string;
+      last_name: string;
+    };
+    rating: number;
+    comment: string;
+  }
+}
+
+export type responseReviewsDish = {
+  averageRating: number
+  reviews: {
+    comment: string;
+    dish_id: string;
+    id: string;
+    rating: number;
+    user_id: string;
+
+  }
+}
+
 export const validationReviewSchema = reviewSchema.omit({
   id: true,
   dish_id: true,
