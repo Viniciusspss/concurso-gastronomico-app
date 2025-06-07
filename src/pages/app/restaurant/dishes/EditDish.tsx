@@ -121,7 +121,7 @@ export function EditDish() {
             </div>
             <div className="flex flex-col gap-3">
               <Label htmlFor="dishPrice">
-                Novo Preço
+                Novo preço
                 <Input
                   defaultValue={selectedDish.price}
                   className="bg-white"
@@ -134,7 +134,7 @@ export function EditDish() {
           <div className="flex gap-4">
             <div className="flex flex-col gap-3">
               <Label htmlFor="dishDetails">
-                Nova Descrição
+                Nova descrição
                 <textarea
                   defaultValue={selectedDish.details}
                   className="w-full rounded-2xl border-1 border-[var(--text-muted)] bg-white p-4"
