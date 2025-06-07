@@ -6,6 +6,7 @@ import {
   editDish,
   loadAllDishes,
   loadRestaurantDishes,
+  reviewAverageRating,
 } from "./dishThunks";
 
 interface DishState {
@@ -19,6 +20,7 @@ interface DishState {
   editedError: string | null;
   isDeletedDish: boolean;
   deletedError: string | null;
+  averageRating: number | null
 }
 
 const initialState: DishState = {
@@ -32,6 +34,7 @@ const initialState: DishState = {
   editedError: null,
   isDeletedDish: false,
   deletedError: null,
+  averageRating: null
 };
 
 const dishSlice = createSlice({
@@ -84,6 +87,9 @@ const dishSlice = createSlice({
     builder.addCase(deleteDish.rejected, (state, action) => {
       state.isDeletedDish = false;
       state.deletedError = action.payload as string;
+    });
+    builder.addCase(reviewAverageRating.fulfilled, (state, action) => {
+      state.averageRating = action.payload;
     });
   },
 });

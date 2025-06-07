@@ -1,6 +1,7 @@
 import api from "@/api/axios";
 import { RootState } from "@/store/store";
 import { getAllDishesResponse } from "@/types/dishes";
+import { responseReviewsDish } from "@/types/review";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -41,7 +42,7 @@ export const loadAllDishes = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      const allDishes = response.data;
+      const allDishes: getAllDishesResponse[] = response.data;
       return allDishes;
     } catch {
       return thunkAPI.rejectWithValue("Não foi possivel carregar os pratos!");
@@ -126,3 +127,26 @@ export const deleteDish = createAsyncThunk(
     }
   },
 );
+
+export const reviewAverageRating = createAsyncThunk(
+  "dish/dishReviews",
+  async (dishId: string, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState() as RootState;
+      const token = state.auth.accessToken;
+
+      const response = await api.get(`/dishes/reviews?dishId=${dishId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data: responseReviewsDish = response.data
+
+      return data.averageRating
+    } catch {
+      return thunkAPI.rejectWithValue(
+        "Não foi possivel buscar avaliações do prato!",
+      );
+    }
+  }
+)
