@@ -1,5 +1,5 @@
-@layer base{
-    :root{
+@layer base {
+    :root {
         --text-primary: #4D4D4D;
         --text-muted: #919191;
         --text-foreground: #202020;
@@ -13,14 +13,9 @@
         --color-disable: #e5a910a6;
         --color-warn: red;
         --color-warn-secondary: rgb(162, 19, 19);
-        --color-warn-background : #F9DEDC;
+        --color-warn-background: #F9DEDC;
     }
 
-    body {
-
-    }
 }
 
-@layer components{
-
-}
+@layer components {}
