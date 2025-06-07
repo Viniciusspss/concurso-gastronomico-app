@@ -11,6 +11,7 @@ import image from "@/assets/backgroundDishesImage.png";
 import { useRestaurantStats } from "@/hooks/useRestaurantStats";
 import { getAllRestaurants } from "@/store/slices/authSlice/restaurantThunks";
 import { setSelectedDish } from "@/store/slices/dishSlice/dishSlice";
+import { Helmet } from "react-helmet-async";
 
 export function RestaurantDishes() {
   const id = useParams<{ id: string }>();
@@ -40,6 +41,7 @@ export function RestaurantDishes() {
 
   return (
     <div className="h-screen w-full bg-[var(--color-background)]">
+      <Helmet title={`${restaurant?.name} | Concurso gastronômico`} />
       <RestaurantHeader />
       <img className="h-50 w-full" src={image} alt="" />
       <div className="-mt-20 mb-15 flex justify-between px-20">

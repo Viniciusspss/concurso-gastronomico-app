@@ -12,6 +12,7 @@ import { DishCard } from "@/components/DishCard";
 import { toast } from "react-toastify";
 import { clearAll } from "@/store/slices/reviewSlice/reviewSlice";
 import { useRestaurantStats } from "@/hooks/useRestaurantStats";
+import { Helmet } from "react-helmet-async";
 
 export function ViewRestaurantDishes() {
   const id = useParams<{ id: string }>();
@@ -44,6 +45,7 @@ export function ViewRestaurantDishes() {
 
   return (
     <div className="h-screen w-full bg-[var(--color-background)]">
+      <Helmet title={`${restaurant?.name} | Concurso gastronômico`} />
       <DefaultHeader />
       <img className="h-50 w-full" src={image} alt="" />
       <div className="-mt-20 mb-15 flex justify-between px-20">

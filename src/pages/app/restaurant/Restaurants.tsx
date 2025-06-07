@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getAllRestaurants } from "@/store/slices/authSlice/restaurantThunks";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 export function Restaurants() {
   const restaurants = useAppSelector((state) => state.auth.allRestaurants);
@@ -14,6 +15,7 @@ export function Restaurants() {
   }, [dispatch]);
   return (
     <div className="flex min-h-screen w-full flex-col">
+      <Helmet title="Restaurantes | Concurso gastronômico" />
       <DefaultHeader />
       <div className="relative w-full bg-gradient-to-br from-[var-(--color-background)] to-[var(--text-foreground)]">
         <div className="p-8">

@@ -13,6 +13,7 @@ import {
 } from "@/store/slices/dishSlice/dishThunks";
 import { editDishFormData } from "@/types/dishes";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -73,6 +74,7 @@ export function EditDish() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
+      <Helmet title="Editar Prato | Concurso gastronômico" />
       <RestaurantHeader />
       <h1 className="my-10 text-4xl text-[var(--text-primary)]">
         EDITAR PRATO

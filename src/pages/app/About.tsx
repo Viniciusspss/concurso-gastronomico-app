@@ -1,11 +1,13 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
 import { RestaurantHeader } from "@/components/RestaurantHeader";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { Helmet } from "react-helmet-async";
 
 export function About() {
   const { user } = useAppSelector((state) => state.auth);
   return (
     <div className="flex h-screen flex-col items-center gap-15 bg-[var(--color-background)]">
+      <Helmet title="Sobre nós | Concurso gastronômico" />
       {user && "email" in user ? <DefaultHeader /> : <RestaurantHeader />}
       <h1 className="text-3xl font-bold text-[var(--color-primary)]">
         SOBRE NÓS
