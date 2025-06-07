@@ -18,6 +18,7 @@ import { CreateDishForm } from "@/components/CreateDishForm";
 import { Restaurants } from "@/pages/app/restaurant/Restaurants";
 import { ViewRestaurantDishes } from "@/pages/app/ViewRestaurantDishes";
 import { EditRestaurantForm } from "@/components/EditRestaurantForm";
+import { Reviews } from "@/pages/app/Reviews";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +82,15 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/dish-reviews/:id",
+        element: (
+          <PrivateRoute >
+            <Reviews />
+          </PrivateRoute>
+        ),
+      },
+
       {
         path: "/about",
         element: (
