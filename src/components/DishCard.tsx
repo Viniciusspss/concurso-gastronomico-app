@@ -20,7 +20,6 @@ export function DishCard({ dish }: DishCardProps) {
   const dispatch = useAppDispatch();
   const { selectedDish } = useAppSelector((state) => state.dishes);
   const navigate = useNavigate();
-
   function handleOpen() {
     setDialogOpen(true);
     dispatch(setSelectedDish(dish));

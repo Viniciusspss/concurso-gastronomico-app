@@ -47,6 +47,7 @@ const authSlice = createSlice({
       localStorage.removeItem("restaurantDishes");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("userRole");
     },
 
     clearError: (state) => {

@@ -37,6 +37,7 @@ export const LoginRestaurant = createAsyncThunk(
       const refreshToken = tokens.refreshToken;
 
       localStorage.setItem("authUser", JSON.stringify(restaurant));
+      localStorage.setItem("userRole", "restaurant")
       thunkAPI.dispatch(setTokens({ accessToken, refreshToken }));
 
       return restaurant;
@@ -74,6 +75,7 @@ export const RegisterRestaurant = createAsyncThunk(
       const refreshToken = tokens.refreshToken;
 
       localStorage.setItem("authUser", JSON.stringify(restaurant));
+      localStorage.setItem("userRole", "restaurant")
       thunkAPI.dispatch(setTokens({ accessToken, refreshToken }));
       return restaurant;
     } catch (error) {

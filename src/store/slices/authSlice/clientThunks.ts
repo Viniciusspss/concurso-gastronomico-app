@@ -50,6 +50,7 @@ export const loginClient = createAsyncThunk(
       const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
       localStorage.setItem("authUser", JSON.stringify(client));
+      localStorage.setItem("userRole", "client")
       thunkAPI.dispatch(setTokens({ accessToken, refreshToken }));
 
       return client;
@@ -112,6 +113,8 @@ export const registerClient = createAsyncThunk(
         last_name,
         password,
       };
+
+      localStorage.setItem("userRole", "client")
       return client;
     } catch (error) {
       if (axios.isAxiosError(error)) {
