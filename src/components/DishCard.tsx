@@ -25,6 +25,11 @@ export function DishCard({ dish }: DishCardProps) {
     dispatch(setSelectedDish(dish));
   }
 
+  function handleSelectDish() {
+    dispatch(setSelectedDish(dish))
+    navigate(`/dish-reviews/${dish.id}`)
+  }
+
   function handleEditDish() {
     dispatch(setSelectedDish(dish));
     navigate(`/restaurant-edit-dish/${selectedDish?.id}`);
@@ -80,23 +85,33 @@ export function DishCard({ dish }: DishCardProps) {
         </p>
         <div className="flex w-full items-center justify-center">
           {user && "email" in user && (
-            <Button
-              onClick={handleOpen}
-              variant="default"
-              className="w-[97%] hover:cursor-pointer"
-            >
-              Avaliar prato
-            </Button>
+            <div className="flex justify-between w-full">
+              <Button
+                onClick={handleOpen}
+                variant="default"
+                className="w-[48%] hover:cursor-pointer"
+              >
+                Avaliar prato
+              </Button>
+              <Button onClick={handleSelectDish} className="w-[48%] hover:cursor-pointer" variant="secondary">
+                Ver avaliações
+              </Button>
+            </div>
           )}
 
           {user && "cnpj" in user && (
-            <Button
-              onClick={handleEditDish}
-              variant="default"
-              className="w-[97%] hover:cursor-pointer"
-            >
-              Editar prato
-            </Button>
+            <div className="flex justify-between w-full">
+              <Button
+                onClick={handleEditDish}
+                variant="default"
+                className="w-[48%] hover:cursor-pointer"
+              >
+                Editar prato
+              </Button>
+              <Button onClick={handleSelectDish} className="w-[48%] hover:cursor-pointer" variant="secondary">
+                Ver avaliações
+              </Button>
+            </div>
           )}
         </div>
       </div>
