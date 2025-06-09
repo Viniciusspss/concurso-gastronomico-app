@@ -41,12 +41,12 @@ export function DishCard({ dish }: DishCardProps) {
   }
 
   return (
-    <div className="flex h-115 flex-col rounded-2xl border-2 border-[var(--color-primary)] bg-[var(--color-background)] hover:cursor-pointer">
+    <div className="flex h-110 flex-col shadow-2xl hover:cursor-pointer">
       <div className="h-55 w-full">
         <img
           src={`http://localhost:8080/api/uploads/${dish.image_url}`}
           alt="Foto do prato"
-          className="h-full w-full rounded-t-2xl object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
       <div className="flex flex-1 flex-col items-start justify-between gap-2 px-3 py-3">
@@ -93,7 +93,7 @@ export function DishCard({ dish }: DishCardProps) {
               >
                 Avaliar prato
               </Button>
-              <Button onClick={handleSelectDish} className="w-[48%] hover:cursor-pointer" variant="secondary">
+              <Button onClick={handleSelectDish} className="w-[48%] hover:cursor-pointer" variant="white">
                 Ver avaliações
               </Button>
             </div>
@@ -108,7 +108,7 @@ export function DishCard({ dish }: DishCardProps) {
               >
                 Editar prato
               </Button>
-              <Button onClick={handleSelectDish} className="w-[48%] hover:cursor-pointer" variant="secondary">
+              <Button onClick={handleSelectDish} className="w-[48%] hover:cursor-pointer " variant="white">
                 Ver avaliações
               </Button>
             </div>
