@@ -20,6 +20,8 @@ const buttonVariants = cva(
         warn: "bg-[var(--color-warn-background)] text-[var(--color-warn)] shadow-xs hover:bg-[var(--color-warn)] hover:text-[var(--color-warn-background)]",
         warnSecondary:
           "bg-[var(--color-warn)] text-[var(--color-warn-background)] shadow-xs hover:bg-[var(--color-warn-secondary)] hover:text-[var(--color-warn-background)]",
+        white:
+          "bg-white text-[var(--color-primary)] border border-[var(--color-primary)] shadow-xs hover:bg-[var(--color-primary)] hover:text-[var(--background)]"
       },
       size: {
         default: "h-10 w-30 gap-2 px-6 py-4 rounded-[12px]",
