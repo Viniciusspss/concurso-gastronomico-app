@@ -1,5 +1,4 @@
 import { getAllDishesResponse } from "@/types/dishes";
-import { StarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { DishDialog } from "./DishDialog";
@@ -8,6 +7,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { setSelectedDish } from "@/store/slices/dishSlice/dishSlice";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useNavigate } from "react-router-dom";
+import StarRating from "./StarRating";
 
 type DishCardProps = {
   dish: getAllDishesResponse;
@@ -16,10 +16,16 @@ type DishCardProps = {
 export function DishCard({ dish }: DishCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { user } = useAppSelector((state) => state.auth);
+
   const qtdReviews = dish.reviews.length;
   const dispatch = useAppDispatch();
   const { selectedDish } = useAppSelector((state) => state.dishes);
   const navigate = useNavigate();
+
+  const ratings = dish.reviews.map(r => r.rating);
+  const average = ratings.length ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : 0;
+
+
   function handleOpen() {
     setDialogOpen(true);
     dispatch(setSelectedDish(dish));
@@ -62,21 +68,24 @@ export function DishCard({ dish }: DishCardProps) {
           <div className="flex flex-col items-end">
             <div>
               {qtdReviews === 1 ? (
-                <p className="text-[11px] text-[var(--text-primary)]">
-                  (1 avaliação)
-                </p>
+                <div>
+                  <p>{average}</p>
+                  <p className="text-[11px] text-[var(--text-primary)]">
+                    (1 avaliação)
+                  </p>
+                </div>
               ) : (
-                <p className="text-[11px] text-[var(--text-primary)]">
-                  ({qtdReviews} avaliações)
-                </p>
+                <div className="flex items-center text-[13px] gap-1">
+                  <p>{average}</p>
+                  <p className="text-[11px] text-[var(--text-primary)]">
+                    ({qtdReviews} avaliações)
+                  </p>
+
+                </div>
               )}
             </div>
             <div className="flex gap-1">
-              <StarIcon className="w-5 text-[var(--color-primary)]" />
-              <StarIcon className="w-5 text-[var(--color-primary)]" />
-              <StarIcon className="w-5 text-[var(--color-primary)]" />
-              <StarIcon className="w-5 text-[var(--color-primary)]" />
-              <StarIcon className="w-5 text-[var(--color-primary)]" />
+              <StarRating readOnly totalStars={5} value={Number(average)} />
             </div>
           </div>
         </div>
