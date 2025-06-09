@@ -1,5 +1,4 @@
 import { DefaultHeader } from "@/components/DefaultHeader";
-import image from "@/assets/backgroundDishesImage.png";
 
 import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
@@ -43,41 +42,52 @@ export function Reviews() {
     }
 
     return (
-        <div className="h-screen w-full bg-[var(--color-background)]">
+        <div className="min-h-screen w-full bg-[var(--color-background)]">
 
             <Helmet title={`${dish?.name} | Concurso gastronômico`} />
             {userRole === "client" ? (
                 <DefaultHeader />
             ) : <RestaurantHeader />}
-            <img className="h-50 w-full" src={image} alt="" />
-            <div className="-mt-20 mb-5 flex justify-between px-20">
-                <img
-                    className="h-40 w-40 rounded-full object-cover"
-                    src={`http://localhost:8080/api/uploads/${dish?.image_url}`}
-                />
-                <div className="flex flex-col items-end justify-center">
-                    <h1 className="mb-6 text-4xl font-bold text-[var(--color-primary)]">
+            <div className="mt-10 mb-20 flex gap-4 flex-col justify-between px-20">
+                <div className="px-6 ">
+                    <h1 className=" text-4xl font-bold text-[var(--text-primary)]">
                         {dish?.name}
                     </h1>
+                    <h2 className=" text-xl  text-[var(--color-primary)]">
+                        {dish.restaurant.name}
+                    </h2>
                 </div>
-            </div>
-            <div className="flex w-full justify-end px-6">
-                <RatingCard reviews={dish.reviews} />
+                <div className="flex justify-between ">
+                    <img
+                        className="h-100 w-3/6 object-cover "
+                        src={`http://localhost:8080/api/uploads/${dish?.image_url}`}
+                    />
+                    <div className="flex flex-col  justify-between h-80 bg-[var(--color-background)]">
+                        <RatingCard reviews={dish.reviews} />
+                        {dish?.reviews.length === 0 && (
+                            <h1 className="flex w-full  justify-center text-2xl text-[var(--text-muted)]">
+                                Este prato ainda não foi avaliado por ninguém.
+                            </h1>
+                        )}
+                    </div>
+                </div>
+
             </div>
 
-            {dish?.reviews.length === 0 ? (
-                <h1 className="flex w-full justify-center text-2xl text-[var(--text-foreground)]">
-                    Este prato ainda não foi avaliado por ninguém.
-                </h1>
-            ) : (
-                <div className="grid gap-6 bg-[var(--color-background)] px-15 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {dish?.reviews.map((review, index) => {
-                        return (
-                            <ReviewCard review={review} key={index} />
-                        )
-                    })}
+            {dish?.reviews.length > 0 && (
+                <div className="w-full py-20 bg-[var(--color-background)]">
+                    <h1 className="text-4xl mb-10 text-[var(--text-primary)] font-bold text-center">AVALIAÇÕES</h1>
+
+                    <div className="flex gap-8 flex-col items-center ">
+                        {dish?.reviews.map((review, index) => {
+                            return (
+                                <ReviewCard review={review} key={index} />
+                            )
+                        })}
+                    </div>
                 </div>
             )}
+
         </div>
     );
 }
