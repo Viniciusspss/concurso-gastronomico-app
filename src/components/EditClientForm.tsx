@@ -107,7 +107,7 @@ export function EditProfileForm() {
                 htmlFor="password"
               >
                 Nova Senha
-                <Input id="password" {...register("password")}></Input>
+                <Input id="password" type="password" {...register("password")}></Input>
               </Label>
             </div>
             <div className="flex justify-end gap-4">
