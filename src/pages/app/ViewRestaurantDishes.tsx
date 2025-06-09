@@ -83,11 +83,11 @@ export function ViewRestaurantDishes() {
       </div>
 
       {restaurantDishes.length === 0 ? (
-        <h1 className="flex w-full justify-center text-2xl text-[var(--text-foreground)]">
+        <h1 className="p-8 flex w-full justify-center text-2xl text-[var(--text-muted)]">
           Este restaurante ainda não possui pratos cadastrados.
         </h1>
       ) : filtredDishes.length === 0 ? (
-        <h1 className="flex w-full justify-center text-2xl text-[var(--text-foreground)]">
+        <h1 className="p-8 flex w-full justify-center text-2xl text-[var(--text-muted)]">
           Nenhum prato encontrado com esse nome!
         </h1>
       ) : (
