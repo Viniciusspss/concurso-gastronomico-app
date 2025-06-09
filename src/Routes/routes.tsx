@@ -10,7 +10,6 @@ import { Dishes } from "@/pages/app/dishes/Dishes";
 import { EditProfile } from "@/pages/app/profile/EditProfile";
 import { NotFound } from "@/pages/NotFound";
 import { PrivateRoute } from "@/components/PrivateRoute";
-import { EvaluateDish } from "@/pages/app/dishes/EvaluateDish";
 import { About } from "@/pages/app/About";
 import { RestaurantDishes } from "@/pages/app/restaurant/dishes/RestaurantDishes";
 import { EditDish } from "@/pages/app/restaurant/dishes/EditDish";
@@ -71,14 +70,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute type="client">
             <EditProfile />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/evaluate-dish",
-        element: (
-          <PrivateRoute type="client">
-            <EvaluateDish />
           </PrivateRoute>
         ),
       },
