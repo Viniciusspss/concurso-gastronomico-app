@@ -5,7 +5,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 }
 
 const api = axios.create({
-  baseURL: "https://concurso-gastronomico-api.onrender.com/api",
+  baseURL: "http://localhost:8080/api",
 });
 
 api.interceptors.request.use(
@@ -38,7 +38,7 @@ api.interceptors.response.use(
 
         if (userRole === "client") {
           const response = await axios.post(
-            "https://concurso-gastronomico-api.onrender.com/api/users/auth/refresh-token",
+            "http://localhost:8080/api/users/auth/refresh-token",
             { refreshToken },
           );
 
@@ -52,7 +52,7 @@ api.interceptors.response.use(
           return api(originalRequest);
         } else if (userRole === "restaurant") {
           const response = await axios.post(
-            "https://concurso-gastronomico-api.onrender.com/api/restaurants/auth/refresh-token",
+            "http://localhost:8080/api/restaurants/auth/refresh-token",
             { refreshToken },
           );
 
