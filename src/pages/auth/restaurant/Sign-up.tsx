@@ -34,10 +34,13 @@ export function SignUp() {
     if (user) {
       toast.dismiss();
       toast.success("Usuário registrado com sucesso!");
-      setTimeout(() => navigate(`/restaurant-dishes/${user.id}`), 3000);
+      setTimeout(() => {
+        navigate(`/restaurant-dishes/${user.id}`)
+        toast.dismiss()
+      }, 2000);
     }
     if (errorRegister) {
-      toast.error(errorRegister);
+      toast.error("CNPJ inválido");
     }
   }, [user, errorRegister, navigate]);
 
@@ -86,36 +89,47 @@ export function SignUp() {
             <Label htmlFor="cnpj">CNPJ</Label>
             <Input
               id="cnpj"
+              className={` ${errors.cnpj ? "border-red-500 focus:border-red-500 " : ""
+                }`}
               {...register("cnpj", { required: "cnpj é obrigatório" })}
             />
-            {errors.cnpj && <span>{errors.cnpj?.message}</span>}
+            {errors.cnpj && <span className=" text-red-500 text-sm">{errors.cnpj?.message}</span>}
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="name">Nome</Label>
             <Input
               id="name"
+              className={`${errors.name ? "border-red-500 focus:border-red-500 " : ""
+                }`}
               {...register("name", { required: "nome é obrigatório" })}
             />
+            {errors.name && <span className="text-red-500 text-sm">{errors.name?.message}</span>}
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="password">Senha</Label>
             <Input
               type="password"
               id="password"
+              className={`${errors.password ? "border-red-500 focus:border-red-500 " : ""
+                }`}
               {...register("password", { required: "senha é obrigatório" })}
             />
+            {errors.password && <span className="text-red-500 text-sm">{errors.password?.message}</span>}
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="repeatPassword">Repetir senha</Label>
             <Input
               id="repeatPassword"
               type="password"
+              className={`${errors.repeatPassword ? "border-red-500 focus:border-red-500 " : ""
+                }`}
               {...register("repeatPassword", {
                 required: "repetir senha é obrigatório",
                 validate: (value) =>
                   value === watch("password") || "As senhas não coincidem",
               })}
             />
+            {errors.repeatPassword && <span className="text-red-500 text-sm">{errors.repeatPassword?.message}</span>}
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="image_url">Imagem do restaurante</Label>
@@ -130,6 +144,7 @@ export function SignUp() {
                 }
               }}
             />
+            {errors.image_url && <span className="text-red-500 text-sm">{errors.image_url?.message}</span>}
           </div>
         </div>
         <Button className="w-80 rounded-xl" variant="default">

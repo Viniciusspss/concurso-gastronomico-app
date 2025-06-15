@@ -3,9 +3,9 @@ import { dishesSchema } from "../dishes";
 
 export const restaurantSchema = z.object({
   id: z.string().uuid(),
-  cnpj: z.string(),
-  name: z.string(),
-  password: z.string(),
+  cnpj: z.string().min(1, "CNPJ é obrigatório"),
+  name: z.string().min(1, "nome é obrigatório"),
+  password: z.string().min(6, "senha precisa ter no mínimo 6 caracteres"),
   dishes: z.array(dishesSchema),
   image_url: z
     .instanceof(File, { message: "Imagem é obrigatória" })

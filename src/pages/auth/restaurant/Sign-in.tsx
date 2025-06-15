@@ -17,18 +17,24 @@ type LoginRestaurantFormData = {
 };
 
 export function SignIn() {
-  const { register, handleSubmit } = useForm<LoginRestaurantFormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginRestaurantFormData>();
   const dispatch = useAppDispatch();
   const { user, errorLogin } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
+      toast.dismiss()
       navigate(`/restaurant-dishes/${user.id}`);
+      toast.success("Restaurante autenticado com sucesso!")
+      setTimeout(() => {
+        toast.dismiss()
+      }, 3000)
     }
 
     if (errorLogin) {
-      toast.error(errorLogin);
+      toast.dismiss()
+      toast.error("CNPJ ou senha inválidos!");
     }
   }, [user, errorLogin, navigate]);
 
@@ -71,8 +77,11 @@ export function SignIn() {
               CNPJ
               <Input
                 id="cnpj"
+                className={`${errors.cnpj ? "border-red-500 focus:border-red-500 " : ""
+                  }`}
                 {...register("cnpj", { required: "cnpj é obrigatório" })}
               />
+              {errors.cnpj && <span className="text-red-500 text-sm">{errors.cnpj?.message}</span>}
             </Label>
           </div>
           <div className="flex gap-1">
@@ -81,8 +90,11 @@ export function SignIn() {
               <Input
                 id="password"
                 type="password"
+                className={`${errors.password ? "border-red-500 focus:border-red-500 " : ""
+                  }`}
                 {...register("password", { required: "senha é obrigatório" })}
               />
+              {errors.password && <span className="text-red-500 text-sm">{errors.password?.message}</span>}
             </Label>
           </div>
         </div>

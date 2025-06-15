@@ -24,12 +24,17 @@ export function SignIn() {
 
   useEffect(() => {
     if (user) {
+      toast.dismiss()
       navigate("/Dishes");
+      toast.success("Usuário autenticado com sucesso!")
+      setTimeout(() => {
+        toast.dismiss()
+      }, 3000)
     }
 
     if (errorLogin) {
       toast.dismiss();
-      toast.error(errorLogin);
+      toast.error("Email ou senha inválidos!");
     }
   }, [user, errorLogin, navigate]);
 
