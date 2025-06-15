@@ -43,57 +43,57 @@ export function RestaurantDishes() {
     <div className="h-screen w-full bg-[var(--color-background)]">
       <Helmet title={`${restaurant?.name} | Concurso gastronômico`} />
       <RestaurantHeader />
-      <img className="h-50 w-full" src={image} alt="" />
-      <div className="-mt-20 mb-15 flex justify-between px-20">
+      <img className="h-50 w-full mt-20 sm:mt-0" src={image} alt="" />
+      <div className="-mt-10 sm:-mt-20 mb-15 flex justify-between sm:px-20 px-10">
         <img
-          className="h-40 w-40 rounded-full"
+          className="h-20 w-20 sm:h-40 sm:w-40 rounded-full"
           src={`http://localhost:8080/api${restaurant?.image_url}`}
         />
         <div className="flex flex-col items-end justify-center">
-          <h1 className="mb-5 text-4xl font-bold text-[var(--color-primary)]">
+          <h1 className="mt-3 sm:mb-5 text-xl sm:text-4xl font-bold text-[var(--color-primary)]">
             {restaurant?.name}
           </h1>
-          <h2 className="text-xl font-bold text-[var(--text-primary)]">
+          <h2 className="text-sm sm:text-xl font-bold text-[var(--text-primary)]">
             {qtdDishes} PRATOS
           </h2>
           {qtdAllReviews === 1 ? (
-            <p className="text-sm text-[var(--text-muted)]">
+            <p className="text-[10px] sm:text-sm text-[var(--text-muted)]">
               {qtdAllReviews} AVALIAÇÃO NO TOTAL
             </p>
           ) : (
-            <p className="text-sm text-[var(--text-muted)]">
+            <p className="text-[10px] sm:text-sm text-[var(--text-muted)]">
               {qtdAllReviews} AVALIAÇÕES NO TOTAL
             </p>
           )}
         </div>
       </div>
-      <div className="flex w-full flex-col px-15">
-        <div className="flex w-full justify-between">
-          <h2 className="border-b-2 border-[var(--color-primary)] text-2xl text-[var(--text-primary)]">
+      <div className="flex w-full flex-col px-8 sm:px-15">
+        <div className="flex w-full justify-between items-end">
+          <h2 className="h-5 sm:h-8 border-b-2 border-[var(--color-primary)] text-sm sm:text-2xl text-[var(--text-primary)]">
             Pratos do restaurante
           </h2>
-          <div className="relative flex">
+          <div className="relative items-center flex w-36 sm:w-70">
             <Input
               placeholder="Buscar prato"
-              className="bg-[var(--color-background)]"
+              className="bg-[var(--color-background)] h-6 sm:h-9"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <SearchIcon className="absolute right-3 mt-2 mb-2 size-4" />
+            <SearchIcon className="absolute right-3 mt-2 mb-2 size-4 text-[var(--text-muted)]" />
           </div>
         </div>
       </div>
 
       {restaurantDishes.length === 0 ? (
-        <h1 className="flex w-full justify-center text-2xl text-[var(--text-foreground)]">
+        <h1 className="flex mt-8 w-full justify-center text-sm sm:text-2xl text-[var(--text-foreground)]">
           Não há nenhum prato cadastrado pelo seu restaurante!
         </h1>
       ) : filtredDishes.length === 0 ? (
-        <h1 className="flex w-full justify-center text-2xl text-[var(--text-foreground)]">
+        <h1 className="flex mt-8 w-full justify-center text-sm sm:text-2xl text-[var(--text-foreground)]">
           Nenhum prato encontrado com esse nome!
         </h1>
       ) : (
-        <div className="grid gap-6 bg-[var(--color-background)] px-15 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className=" px-8 py-5 grid gap-6 bg-[var(--color-background)] sm:px-15 sm:py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {filtredDishes.map((dish, index) => {
             return <DishCard dish={dish} key={index} />;
           })}

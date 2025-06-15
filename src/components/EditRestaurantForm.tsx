@@ -51,15 +51,18 @@ export function EditRestaurantForm() {
       <RestaurantHeader />
       <div className="flex h-full w-full items-center justify-center">
         <div className="flex flex-col rounded-2xl border-1 p-6 shadow-2xl">
-          <div className="flex justify-between">
-            <h1 className="mb-4 text-2xl tracking-tight text-[var(--text-primary)]">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="sm:hidden whitespace-nowrap  text-sm  tracking-tight text-[var(--text-primary)]">
+              Editar perfil
+            </h1>
+            <h1 className="hidden sm:flex whitespace-nowrap text-2xl tracking-tight text-[var(--text-primary)]">
               Editar perfil do restaurante
             </h1>
             <Button
               onClick={() => handleOpenDialog()}
               type="button"
               variant="warn"
-              className="w-40"
+              className="w-40 h-10"
             >
               Excluir restaurante
             </Button>
@@ -89,64 +92,69 @@ export function EditRestaurantForm() {
           </div>
 
           <DefaultForm onSubmit={handleSubmit(handleEdit)}>
-            <div className="mt-4 flex gap-4">
-              <Label className="gap-1 text-[var(--text-muted)]">
-                Nome
-                <Input
-                  className="bg-[var(--color-background)]"
-                  id="name"
-                  {...register("name")}
-                ></Input>
-              </Label>
-              <Label className="gap-1 text-[var(--text-muted)]" htmlFor="cnpj">
-                CNPJ
-                <Input
-                  className="bg-[var(--color-background)]"
-                  id="cnpj"
-                  {...register("cnpj")}
-                ></Input>
-              </Label>
-            </div>
-            <div className="flex gap-4">
-              <Label
-                className="gap-1 text-[var(--text-muted)]"
-                htmlFor="image_url"
-              >
-                Imagem
-                <Input
-                  type="file"
-                  id="image_url"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      setValue("image_url", file, { shouldValidate: true });
-                    }
-                  }}
-                ></Input>
-              </Label>
+            <div className="flex flex-col gap-4">
 
-              <Label
-                className="gap-1 text-[var(--text-muted)]"
-                htmlFor="password"
-              >
-                Nova Senha
-                <Input
-                  className="bg-[var(--color-background)]"
-                  type="password"
-                  id="password"
-                  {...register("password")}
-                ></Input>
-              </Label>
+              <div className="flex flex-col sm:flex-row mt-4  gap-4">
+                <Label className="gap-1 text-[var(--text-muted)]">
+                  Nome
+                  <Input
+                    className="bg-[var(--color-background)]"
+                    id="name"
+                    {...register("name")}
+                  ></Input>
+                </Label>
+                <Label className="gap-1 text-[var(--text-muted)]" htmlFor="cnpj">
+                  CNPJ
+                  <Input
+                    className="bg-[var(--color-background)]"
+                    id="cnpj"
+                    {...register("cnpj")}
+                  ></Input>
+                </Label>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Label
+                  className="gap-1 text-[var(--text-muted)]"
+                  htmlFor="image_url"
+                >
+                  Imagem
+                  <Input
+                    type="file"
+                    id="image_url"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setValue("image_url", file, { shouldValidate: true });
+                      }
+                    }}
+                  ></Input>
+                </Label>
+
+                <Label
+                  className="gap-1 text-[var(--text-muted)]"
+                  htmlFor="password"
+                >
+                  Nova Senha
+                  <Input
+                    className="bg-[var(--color-background)]"
+                    type="password"
+                    id="password"
+                    {...register("password")}
+                  ></Input>
+                </Label>
+              </div>
+              <div className="flex justify-center sm:justify-end gap-4">
+                <Link to={`/restaurant-dishes/${user?.id}`}>
+                  <Button variant="muted">Cancelar</Button>
+                </Link>
+                <Button>Salvar</Button>
+              </div>
             </div>
-            <div className="flex justify-end gap-4">
-              <Link to="/Dishes">
-                <Button variant="muted">Cancelar</Button>
-              </Link>
-              <Button>Salvar</Button>
-            </div>
+
           </DefaultForm>
         </div>
       </div>
+
     </div>
   );
 }

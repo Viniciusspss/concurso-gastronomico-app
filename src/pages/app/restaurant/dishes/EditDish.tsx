@@ -73,101 +73,106 @@ export function EditDish() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="flex w-full min-h-screen flex-col bg-[var(--color-background)]">
       <Helmet title="Editar Prato | Concurso gastronômico" />
       <RestaurantHeader />
-      <h1 className="my-10 text-4xl text-[var(--text-primary)]">
-        EDITAR PRATO
-      </h1>
-      <div className="rounded-4xl border-1 border-[var(--text-muted)] bg-[var(--color-background)] p-10 shadow-2xl">
-        <div className="mb-7 flex gap-4">
-          <img
-            src={`http://localhost:8080/api/uploads/${selectedDish.image_url}`}
-            alt="Imagem do prato"
-            className="h-25 w-25 rounded-full object-cover"
-          />
-          <div className="flex w-full justify-between">
-            <div>
-              <h2 className="text-2xl text-[var(--text-primary)]">
-                {selectedDish.name}
-              </h2>
-              <p className="text-sm text-[var(--text-muted)]">
-                R${selectedDish.price}
-              </p>
+      <main className="flex items-center justify-center flex-col h-full mt-25 ">
+
+        <div className="sm:rounded-4xl sm:border-1 sm:border-[var(--text-muted)] bg-[var(--color-background)] sm:p-10 sm:shadow-2xl">
+          <h1 className="mb-10 mx-5 text-2xl sm:text-2xl text-[var(--text-primary)]">
+            EDITAR PRATO
+          </h1>
+          <div className="mb-7 flex gap-4 px-10">
+            <img
+              src={`http://localhost:8080/api/uploads/${selectedDish.image_url}`}
+              alt="Imagem do prato"
+              className="h-18 w-18 sm:h-25 sm:w-25 rounded-full object-cover"
+            />
+            <div className="flex w-full justify-between">
+              <div>
+                <h2 className="text-sm sm:text-2xl text-[var(--text-primary)]">
+                  {selectedDish.name}
+                </h2>
+                <p className="text-sm text-[var(--text-muted)]">
+                  R${selectedDish.price}
+                </p>
+              </div>
+              <Button
+                variant="warn"
+                onClick={() => setIsDeleteOpen(true)}
+              >
+                Excluir prato
+              </Button>
+              <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+                <DeleteDish onClose={() => setIsDeleteOpen(false)} />
+              </Dialog>
             </div>
-            <Button
-              variant="warnSecondary"
-              onClick={() => setIsDeleteOpen(true)}
-            >
-              Excluir prato
-            </Button>
-            <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-              <DeleteDish onClose={() => setIsDeleteOpen(false)} />
-            </Dialog>
           </div>
+          <DefaultForm onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-4 px-10">
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="dishName">
+                    Novo nome
+                    <Input
+                      defaultValue={selectedDish.name}
+                      id="dishName"
+                      {...register("name")}
+                    />
+                  </Label>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="dishPrice">
+                    Novo preço
+                    <Input
+                      defaultValue={selectedDish.price}
+                      id="dishPrice"
+                      {...register("price")}
+                    />
+                  </Label>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="dishDetails">
+                    Nova descrição
+                    <textarea
+                      defaultValue={selectedDish.details}
+                      className="w-full rounded-2xl border-1 border-[var(--text-muted)] p-4"
+                      id="dishDetails"
+                      cols={30}
+                      rows={5}
+                      {...register("details")}
+                    />
+                  </Label>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="image_url">Imagem do prato</Label>
+                  <Input
+                    id="image_url"
+                    type="file"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setValue("image_url", file, { shouldValidate: true });
+                      }
+                    }}
+                  ></Input>
+                </div>
+              </div>
+              <div className="flex items-center justify-center sm:justify-end gap-4">
+                <Button >EDITAR</Button>
+                <Link to={`/restaurant-dishes/${user?.id}`}>
+                  <Button variant="muted">FECHAR</Button>
+                </Link>
+              </div>
+            </div>
+
+          </DefaultForm>
         </div>
-        <DefaultForm onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex gap-4">
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="dishName">
-                Novo nome
-                <Input
-                  className="bg-white"
-                  defaultValue={selectedDish.name}
-                  id="dishName"
-                  {...register("name")}
-                />
-              </Label>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="dishPrice">
-                Novo preço
-                <Input
-                  defaultValue={selectedDish.price}
-                  className="bg-white"
-                  id="dishPrice"
-                  {...register("price")}
-                />
-              </Label>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="dishDetails">
-                Nova descrição
-                <textarea
-                  defaultValue={selectedDish.details}
-                  className="w-full rounded-2xl border-1 border-[var(--text-muted)] bg-white p-4"
-                  id="dishDetails"
-                  cols={30}
-                  rows={5}
-                  {...register("details")}
-                />
-              </Label>
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="image_url">Imagem do prato</Label>
-              <Input
-                id="image_url"
-                className="bg-white"
-                type="file"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    setValue("image_url", file, { shouldValidate: true });
-                  }
-                }}
-              ></Input>
-            </div>
-          </div>
-          <div className="flex items-center justify-end gap-4">
-            <Button>EDITAR</Button>
-            <Link to={`/restaurant-dishes/${user?.id}`}>
-              <Button variant="muted">FECHAR</Button>
-            </Link>
-          </div>
-        </DefaultForm>
-      </div>
+      </main>
+
     </div>
   );
 }

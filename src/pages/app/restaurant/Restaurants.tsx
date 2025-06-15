@@ -24,10 +24,10 @@ export function Restaurants() {
 
 
   return (
-    <div className="flex min-h-screen w-full flex-col  ">
+    <div className="flex min-h-screen w-full flex-col ">
       <Helmet title="Restaurantes | Concurso gastronômico" />
       <DefaultHeader />
-      <div className="relative w-full">
+      <div className="relative w-full top-20 sm:top-0 ">
         <img
           src={bgImage}
           alt="Imagem de fundo"
@@ -37,18 +37,16 @@ export function Restaurants() {
           <div className="flex relative w-full">
             <SearchIcon className="absolute left-3 top-3 mt-2 mb-2 size-4" />
             <Input
-              className="h-14 rounded-4xl text-base px-10"
+              className="h-14 rounded-4xl text-base px-8 sm:px-10"
               placeholder="Nome do restaurante"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
           </div>
-          <h1 className="text-white text-2xl font-semibold text-center ">
+          <h1 className="text-white text-xl sm:text-2xl font-semibold text-center ">
             Busque por um restaurante
           </h1>
         </div>
-
-
 
 
         {restaurants?.length === 0 ? (
@@ -60,12 +58,10 @@ export function Restaurants() {
             Nenhum restaurante encontrado com esse nome!
           </h1>
         ) : (
-          <div className="p-8">
-            <div className="grid  px-22 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
-              {filtredRestaurants?.map((restaurant, index) => (
-                <RestaurantCard restaurant={restaurant} key={index} />
-              ))}
-            </div>
+          <div className="py-8 grid justify-center sm:px-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+            {filtredRestaurants?.map((restaurant, index) => (
+              <RestaurantCard restaurant={restaurant} key={index} />
+            ))}
           </div>
         )}
 

@@ -54,62 +54,66 @@ export function CreateDishForm() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-[var(--color-background)]">
+    <div className="flex h-screen w-full flex-col items-center sm:bg-[var(--color-background)]">
       <RestaurantHeader />
-      <div className="flex h-full flex-col justify-center">
-        <div className="rounded-4xl border-1 bg-[var(--color-background)] p-10 shadow-2xl">
+      <div className="flex h-full flex-col justify-center ">
+        <div className="rounded-4xl border-1 bg-[var(--color-background)] py-20 px-5 sm:p-10 shadow-2xl">
           <h1 className="mb-4 text-2xl text-[var(--text-primary)]">
             Cadastrar prato
           </h1>
           <div>
             <DefaultForm onSubmit={handleSubmit(handleCreateDish)}>
-              <div className="flex gap-4">
-                <div className="flex flex-col gap-3">
-                  <Label htmlFor="dishName">
-                    Nome
-                    <Input id="dishName" {...register("name")} />
-                  </Label>
+              <div className="flex flex-col gap-4 w-full">
+
+                <div className="flex gap-4 flex-col sm:flex-row">
+                  <div className="flex flex-col gap-3">
+                    <Label htmlFor="dishName">
+                      Nome
+                      <Input id="dishName" {...register("name")} />
+                    </Label>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <Label htmlFor="dishPrice">
+                      Preço
+                      <Input id="dishPrice" {...register("price")} />
+                    </Label>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-3">
-                  <Label htmlFor="dishPrice">
-                    Preço
-                    <Input id="dishPrice" {...register("price")} />
-                  </Label>
+                <div className="flex gap-4 flex-col sm:flex-row">
+                  <div className="flex flex-col gap-3">
+                    <Label htmlFor="dishDetails">
+                      Descrição
+                      <textarea
+                        className="w-full rounded-2xl border-1 border-[var(--text-muted)] p-4"
+                        id="dishDetails"
+                        cols={30}
+                        rows={5}
+                        {...register("details")}
+                      />
+                    </Label>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="image_url">Imagem do prato</Label>
+                    <Input
+                      id="image_url"
+                      type="file"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setValue("image_url", file, { shouldValidate: true });
+                        }
+                      }}
+                    ></Input>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center sm:justify-end gap-4">
+                  <Button >CRIAR PRATO</Button>
+                  <Link to={`/restaurant-dishes/${user?.id}`}>
+                    <Button variant="muted">FECHAR</Button>
+                  </Link>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="flex flex-col gap-3">
-                  <Label htmlFor="dishDetails">
-                    Descrição
-                    <textarea
-                      className="w-full rounded-2xl border-1 border-[var(--text-muted)] p-4"
-                      id="dishDetails"
-                      cols={30}
-                      rows={5}
-                      {...register("details")}
-                    />
-                  </Label>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="image_url">Imagem do prato</Label>
-                  <Input
-                    id="image_url"
-                    type="file"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        setValue("image_url", file, { shouldValidate: true });
-                      }
-                    }}
-                  ></Input>
-                </div>
-              </div>
-              <div className="flex items-center justify-end gap-4">
-                <Button>CRIAR PRATO</Button>
-                <Link to={`/restaurant-dishes/${user?.id}`}>
-                  <Button variant="muted">FECHAR</Button>
-                </Link>
-              </div>
+
             </DefaultForm>
           </div>
         </div>

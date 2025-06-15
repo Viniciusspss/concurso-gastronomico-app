@@ -54,7 +54,7 @@ export function EditProfileForm() {
   return (
     <div className="flex h-screen w-full flex-col items-center bg-[var(--color-background)]">
       <DefaultHeader />
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center sm:top-0">
         <div className="flex flex-col rounded-2xl border-1 p-6 shadow-2xl">
           <div className="flex justify-between">
             <h1 className="mb-4 text-2xl tracking-tight text-[var(--text-primary)]">
@@ -83,38 +83,40 @@ export function EditProfileForm() {
           </div>
 
           <DefaultForm onSubmit={handleSubmit(handleEdit)}>
-            <div className="mt-4 flex gap-4">
-              <Label className="gap-1 text-[var(--text-muted)]">
-                Nome
-                <Input id="firstName" {...register("first_name")}></Input>
-              </Label>
-              <Label
-                className="gap-1 text-[var(--text-muted)]"
-                htmlFor="lastName"
-              >
-                Sobrenome
-                <Input id="lastName" {...register("last_name")}></Input>
-              </Label>
-            </div>
-            <div className="flex gap-4">
-              <Label className="gap-1 text-[var(--text-muted)]" htmlFor="email">
-                Email
-                <Input id="email" {...register("email")}></Input>
-              </Label>
+            <div className="flex flex-col gap-4">
+              <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                <Label className="gap-1 text-[var(--text-muted)]">
+                  Nome
+                  <Input id="firstName" {...register("first_name")}></Input>
+                </Label>
+                <Label
+                  className="gap-1 text-[var(--text-muted)]"
+                  htmlFor="lastName"
+                >
+                  Sobrenome
+                  <Input id="lastName" {...register("last_name")}></Input>
+                </Label>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Label className="gap-1 text-[var(--text-muted)]" htmlFor="email">
+                  Email
+                  <Input id="email" {...register("email")}></Input>
+                </Label>
 
-              <Label
-                className="gap-1 text-[var(--text-muted)]"
-                htmlFor="password"
-              >
-                Nova Senha
-                <Input id="password" type="password" {...register("password")}></Input>
-              </Label>
-            </div>
-            <div className="flex justify-end gap-4">
-              <Link to="/Dishes">
-                <Button variant="muted">Cancelar</Button>
-              </Link>
-              <Button>Salvar</Button>
+                <Label
+                  className="gap-1 text-[var(--text-muted)]"
+                  htmlFor="password"
+                >
+                  Nova Senha
+                  <Input id="password" type="password" {...register("password")}></Input>
+                </Label>
+              </div>
+              <div className="flex justify-center sm:justify-end gap-4">
+                <Link to="/Dishes">
+                  <Button variant="muted">Cancelar</Button>
+                </Link>
+                <Button>Salvar</Button>
+              </div>
             </div>
           </DefaultForm>
         </div>

@@ -28,7 +28,7 @@ export function Dishes() {
     <div className="flex w-full flex-col">
       <Helmet title="Pratos | Concurso Gastronômico" />
       <DefaultHeader />
-      <div className="relative w-full ">
+      <div className="relative w-full top-20 sm:top-0 ">
         <img src={bgImage} alt="Imagem de fundo" className="h-80 w-full " />
 
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[60%] flex flex-col items-center justify-center gap-4">
@@ -41,18 +41,18 @@ export function Dishes() {
               onChange={e => setSearch(e.target.value)}
             />
           </div>
-          <h1 className="text-white text-2xl font-semibold text-center ">
+          <h1 className="text-white text-xl sm:text-2xl font-semibold text-center ">
             Busque por um prato
           </h1>
         </div>
 
 
         {dishes.length === 0 ? (
-          <h1 className="p-8 flex w-full justify-center text-2xl text-[var(--text-muted)]">
+          <h1 className="p-8 flex w-full justify-center text-sm sm:text-2xl text-[var(--text-muted)]">
             Nenhum prato foi cadastrado até o momento!
           </h1>
         ) : filtredDishes.length === 0 ? (
-          <h1 className="p-8 flex w-full justify-center text-2xl text-[var(--text-muted)]">
+          <h1 className="p-8 flex w-full justify-center text-sm sm:text-2xl text-[var(--text-muted)]">
             Nenhum prato encontrado com esse nome!
           </h1>
         ) : (

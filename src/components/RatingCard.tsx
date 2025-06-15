@@ -25,10 +25,10 @@ export function RatingCard({ reviews }: { reviews: RatingCardProps[] }) {
 
 
     return (
-        <div className="flex flex-col bg-[var(--color-background)] rounded-2xl border-1 p-4 shadow-2xs w-130 gap-6">
+        <div className="flex flex-col bg-[var(--color-background)] rounded-2xl border-1 p-4 shadow-2xs w-130 gap-6 h-80">
             <h1 className="text-[var(--text-primary)] font-bold">Avaliações dos clientes</h1>
-            <div className="flex justify-between">
-                <div className="h-full flex flex-col justify-between ">
+            <div className="flex justify-between items-center h-full">
+                <div className="flex flex-col justify-between  gap-16">
                     <h1 className="flex items-center text-4xl font-bold gap-3">{dish.averageRating?.toFixed(1)} <Star className="w-10 h-10 fill-[var(--color-primary)] text-[var(--color-primary)] " /></h1>
                     <h2 className="text-[var(--text-muted)]">
                         {total} {total === 1 ? "avaliação" : "avaliações"}

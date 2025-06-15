@@ -49,23 +49,25 @@ export function Reviews() {
                 <DefaultHeader />
             ) : <RestaurantHeader />}
             <div className="mt-10 mb-20 flex gap-4 flex-col justify-between px-20">
-                <div className="px-6 ">
-                    <h1 className=" text-4xl font-bold text-[var(--text-primary)]">
-                        {dish?.name}
-                    </h1>
-                    <h2 className=" text-xl  text-[var(--color-primary)]">
-                        {dish.restaurant.name}
-                    </h2>
-                </div>
-                <div className="flex justify-between ">
-                    <img
-                        className="h-100 w-3/6 object-cover "
-                        src={`http://localhost:8080/api/uploads/${dish?.image_url}`}
-                    />
-                    <div className="flex flex-col  justify-between h-80 bg-[var(--color-background)]">
+
+                <div className="flex justify-center gap-15 mt-10">
+                    <div>
+
+                        <h1 className=" text-4xl font-bold text-[var(--text-primary)]">
+                            {dish?.name}
+                        </h1>
+                        <h2 className=" text-xl  text-[var(--color-primary)]">
+                            {dish.restaurant.name}
+                        </h2>
+                        <img
+                            className="h-100 w-auto object-contain rounded-xl shadow-2xl mt-2"
+                            src={`http://localhost:8080/api/uploads/${dish?.image_url}`}
+                        />
+                    </div>
+                    <div className="flex flex-col mt-18 justify-between h-80 bg-[var(--color-background)] ">
                         <RatingCard reviews={dish.reviews} />
                         {dish?.reviews.length === 0 && (
-                            <h1 className="flex w-full  justify-center text-2xl text-[var(--text-muted)]">
+                            <h1 className="flex w-full mt-5 justify-center text-2xl text-[var(--text-muted)]">
                                 Este prato ainda não foi avaliado por ninguém.
                             </h1>
                         )}
@@ -75,7 +77,7 @@ export function Reviews() {
             </div>
 
             {dish?.reviews.length > 0 && (
-                <div className="w-full py-20 bg-[var(--color-background)]">
+                <div className="w-full py-15 bg-[var(--color-background)]">
                     <h1 className="text-4xl mb-10 text-[var(--text-primary)] font-bold text-center">AVALIAÇÕES</h1>
 
                     <div className="flex gap-8 flex-col items-center ">

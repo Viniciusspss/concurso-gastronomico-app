@@ -72,7 +72,7 @@ export function SignUp() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-background)]">
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-6">
         <h1 className="flex w-full justify-center text-xl font-bold text-[var(--text-primary)]">
           CRIAR CONTA
         </h1>
@@ -121,15 +121,13 @@ export function SignUp() {
             <Input
               id="repeatPassword"
               type="password"
-              className={`${errors.repeatPassword ? "border-red-500 focus:border-red-500 " : ""
-                }`}
+
               {...register("repeatPassword", {
                 required: "repetir senha é obrigatório",
                 validate: (value) =>
                   value === watch("password") || "As senhas não coincidem",
               })}
             />
-            {errors.repeatPassword && <span className="text-red-500 text-sm">{errors.repeatPassword?.message}</span>}
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="image_url">Imagem do restaurante</Label>

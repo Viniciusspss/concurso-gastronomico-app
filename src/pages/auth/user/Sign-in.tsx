@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { loginClient } from "@/store/slices/authSlice/clientThunks";
 import { clearError } from "@/store/slices/authSlice/authSlice";
 import { toast } from "react-toastify";
+import { ChevronLeftIcon } from "lucide-react";
 
 type LoginClientFormData = {
   email: string;
@@ -17,7 +18,7 @@ type LoginClientFormData = {
 };
 
 export function SignIn() {
-  const { register, handleSubmit } = useForm<LoginClientFormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginClientFormData>();
   const navigate = useNavigate();
   const { user, errorLogin } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -50,14 +51,18 @@ export function SignIn() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-background)]">
-      <Link to="/">
+      <Link to="/" className="hidden sm:flex">
         <Button
           variant="secondary"
           size="lg"
-          className="absolute top-10 right-10 w-60"
+          className=" absolute top-10  right-10 w-60"
         >
           Escolher outra forma de login
         </Button>
+      </Link>
+      <Link to="/" className="sm:hidden flex absolute left-4 top-10" >
+        <ChevronLeftIcon />
+        Voltar
       </Link>
       <div className="flex flex-col">
         <h1 className="flex w-full justify-center text-xl font-bold text-[var(--text-primary)]">
@@ -78,8 +83,10 @@ export function SignIn() {
               <Input
                 id="email"
                 type="email"
+                className={`${errors.email} ? "border-red-500 focus:border-red-500 " : ""`}
                 {...register("email", { required: "Email é obrigatório" })}
               />
+              {errors.email && <span className="text-red-500 text-sm">{errors.email?.message}</span>}
             </Label>
           </div>
           <div className="flex">
@@ -88,8 +95,10 @@ export function SignIn() {
               <Input
                 id="password"
                 type="password"
+                className={`${errors.password} ? "border-red-500 focus:border-red-500 " : ""`}
                 {...register("password", { required: "Senha é obrigatório" })}
               />
+              {errors.password && <span className="text-red-500 text-sm">{errors.password?.message}</span>}
             </Label>
           </div>
         </div>
@@ -102,6 +111,7 @@ export function SignIn() {
             Criar conta
           </Link>
         </p>
+
       </DefaultForm>
     </div>
   );

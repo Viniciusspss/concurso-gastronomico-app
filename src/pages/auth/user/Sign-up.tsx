@@ -17,7 +17,7 @@ type SignUpFormData = ClientType & {
 };
 
 export function SignUp() {
-  const { register, handleSubmit, watch } = useForm<SignUpFormData>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<SignUpFormData>();
   const { user, errorRegister } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export function SignUp() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-background)]">
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-6">
         <h1 className="flex w-full justify-center text-xl font-bold text-[var(--text-primary)]">
           CRIAR CONTA
         </h1>
@@ -79,10 +79,12 @@ export function SignUp() {
               Nome
               <Input
                 id="firstName"
+                className={`${errors.first_name} ? "border-red-500 focus:border-red-500 " : ""`}
                 {...register("first_name", {
                   required: "Primeiro nome é obrigatório",
                 })}
               />
+              {errors.first_name && <span className="text-red-500 text-sm">{errors.first_name?.message}</span>}
             </Label>
           </div>
           <div className="flex flex-col gap-2">
@@ -90,10 +92,12 @@ export function SignUp() {
               Sobrenome
               <Input
                 id="lastName"
+                className={`${errors.last_name} ? "border-red-500 focus:border-red-500 " : ""`}
                 {...register("last_name", {
                   required: "Ultimo nome é obrigatório",
                 })}
               />
+              {errors.last_name && <span className="text-red-500 text-sm">{errors.last_name?.message}</span>}
             </Label>
           </div>
           <div className="flex flex-col gap-2">
@@ -102,8 +106,10 @@ export function SignUp() {
               <Input
                 id="email"
                 type="email"
+                className={`${errors.email} ? "border-red-500 focus:border-red-500 " : ""`}
                 {...register("email", { required: "Email é obrigatório" })}
               />
+              {errors.email && <span className="text-red-500 text-sm">{errors.email?.message}</span>}
             </Label>
           </div>
           <div className="flex flex-col gap-2">
@@ -112,8 +118,10 @@ export function SignUp() {
               <Input
                 type="password"
                 id="password"
+                className={`${errors.password} ? "border-red-500 focus:border-red-500 " : ""`}
                 {...register("password", { required: "Senha é obrigatório" })}
               />
+              {errors.password && <span className="text-red-500 text-sm">{errors.password?.message}</span>}
             </Label>
           </div>
           <div className="flex flex-col gap-2">

@@ -23,7 +23,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   return (
     <Link to={`/view-restaurant-dishes/${restaurant.id}`}>
 
-      <div className="mb-8 flex h-80 w-80 flex-col  shadow-2xl hover:cursor-pointer ">
+      <div className="mb-8 flex  w-60 sm:h-80 sm:w-80 flex-col  shadow-2xl hover:cursor-pointer ">
 
         <div className="h-55 w-full">
           <img

@@ -6,13 +6,13 @@ import { Helmet } from "react-helmet-async";
 export function About() {
   const { user } = useAppSelector((state) => state.auth);
   return (
-    <div className="flex h-screen flex-col items-center gap-15 bg-[var(--color-background)]">
+    <div className="flex min-h-screen flex-col items-center gap-15 ">
       <Helmet title="Sobre nós | Concurso gastronômico" />
       {user && "email" in user ? <DefaultHeader /> : <RestaurantHeader />}
-      <h1 className="text-3xl font-bold text-[var(--color-primary)]">
+      <h1 className="text-xl  font-bold text-[var(--color-primary)] mt-25 sm:mt-0 sm:text-3xl">
         SOBRE NÓS
       </h1>
-      <div className="flex w-[50%] flex-col items-center gap-7 rounded-4xl bg-[var(--color-background)] p-8 text-[var(--text-primary)] shadow-2xl">
+      <div className="flex mx-10 sm:mx-0 sm:w-[50%]  flex-col items-center gap-7 rounded-4xl bg-[var(--color-background)] p-8 text-[var(--text-primary)] shadow-2xl text-sm ">
         <p>
           O Cozinha Arretada é um projeto acadêmico desenvolvido com o objetivo
           de valorizar a gastronomia regional e dar visibilidade aos

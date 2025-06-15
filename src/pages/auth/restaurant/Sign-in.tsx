@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { clearError } from "@/store/slices/authSlice/authSlice";
 import { LoginRestaurant } from "@/store/slices/authSlice/restaurantThunks";
+import { ChevronLeftIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,14 +51,18 @@ export function SignIn() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-[var(--color-background)]">
-      <Link to="/">
+      <Link to="/" className="hidden sm:flex">
         <Button
           variant="secondary"
           size="lg"
-          className="absolute top-10 right-10 w-60"
+          className=" absolute top-10  right-10 w-60"
         >
           Escolher outra forma de login
         </Button>
+      </Link>
+      <Link to="/" className="sm:hidden flex absolute left-4 top-10" >
+        <ChevronLeftIcon />
+        Voltar
       </Link>
       <div className="flex flex-col">
         <h1 className="flex w-full justify-center text-xl font-bold text-[var(--text-primary)]">
