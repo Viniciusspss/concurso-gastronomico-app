@@ -3,8 +3,16 @@ import { Link } from "react-router-dom";
 import bgImage from "@/assets/backgroundImage.png";
 import logoImage from "@/assets/logoYellow.png";
 import logo from "../../assets/logo.png";
+import { useEffect } from "react";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { logout } from "@/store/slices/authSlice/authSlice";
 
 export function SelectProfile() {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(logout())
+  }, [dispatch])
+
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center bg-[var(--color-background)]">
       <div className="flex h-25 w-full items-center gap-4 bg-[var(--color-background)]">
